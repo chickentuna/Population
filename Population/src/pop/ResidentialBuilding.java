@@ -3,11 +3,11 @@ package pop;
 import java.util.LinkedList;
 import java.util.List;
 
-public class HousingBuilding extends Building {
+public class ResidentialBuilding extends Building {
 	List<Villager> occupants;
 	private int capacity;
 
-	public HousingBuilding(int capacity) {
+	public ResidentialBuilding(int capacity) {
 		this.capacity = capacity;
 		occupants = new LinkedList<Villager>();
 	}

@@ -1,6 +1,6 @@
 package pop;
 
-public class Home extends HousingBuilding {
+public class Home extends ResidentialBuilding {
 	
 	public static final int CAPACITY = 5;
 	
