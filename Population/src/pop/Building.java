@@ -35,7 +35,5 @@ public abstract class Building extends Entity {
 
 	public Type getType() {
 		return type;
-	}
-	
-	
+	}	
 }
