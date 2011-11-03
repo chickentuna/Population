@@ -6,8 +6,12 @@ import java.util.Map;
 
 public abstract class ProductionBuilding extends Building {
 	
+	protected Map<Good,Integer> stock;
+	protected Map<Job.Type, Position> workforce;
+	protected List<Production> production;
+	
+	//TODO : In Position? > List of workers (Villagers) to render presence test possible.
 	public class Position {
-		
 		private int amount;
 		private int actual;
 
@@ -19,19 +23,12 @@ public abstract class ProductionBuilding extends Building {
 		public boolean isFull() {
 			return amount == actual;
 		}
-
+		
 		public Integer set(Integer actual) {
 			return this.actual = actual;
-		}
-		
-		
+		}	
 	}
 
-	protected Map<Good,Integer> stock;
-	protected Land land;
-	protected Map<Job.Type, Position> workforce;
-	protected List<Production> production;
-	
 	public ProductionBuilding() {
 		workforce = new HashMap<Job.Type, Position>();
 		stock = new HashMap<Good,Integer>();
@@ -47,10 +44,15 @@ public abstract class ProductionBuilding extends Building {
 		return true;
 	}
 	
-	public boolean can() {
-		return isFull() && hasInput();
+	public boolean canStartProduction() {
+		return isFull() && hasInput() && workersPresent();
 	}
 	
+	private boolean workersPresent() {
+		//TODO: call presence test for each Position
+		return true;
+	}
+
 	public boolean hasInput() {
 		for (Production prod : production) {
 			Good input = prod.getInput();
@@ -64,7 +66,7 @@ public abstract class ProductionBuilding extends Building {
 	}
 
 	public Land getLand() {
-		return land;
+		return requiredLand;
 	}
 	
 	public abstract void initializeWorkforce();
@@ -73,7 +75,7 @@ public abstract class ProductionBuilding extends Building {
 		return production;
 	}
 	public ProductionBuilding setLand(Land land) {
-		this.land = land;
+		requiredLand = land;
 		return this;
 	}
 	public ProductionBuilding setProduction(List<Production> production) {
