@@ -14,7 +14,6 @@ public class WheatFarm extends Farm {
 		
 	}
 
-	@Override
 	public void initializeWorkforce() {
 		workforce.put(Job.Type.FARMER, new Position(4));
 		
