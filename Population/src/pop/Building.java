@@ -14,6 +14,15 @@ public abstract class Building extends Entity {
 		return x;
 	}
 
+	public Land getLand() {
+		return requiredLand;
+	}
+	
+	public Building setLand(Land land) {
+		requiredLand = land;
+		return this;
+	}
+	
 	public int getY() {
 		return y;
 	}

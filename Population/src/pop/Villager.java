@@ -4,7 +4,7 @@ public class Villager extends Entity {
 	
 	private String name,surname;
 	private Job job;
-	private Building home;
+	private ResidentialBuilding home;
 	private Sex sex = Sex.MALE;
 	
 	public enum Sex { MALE, FEMALE }
@@ -52,10 +52,10 @@ public class Villager extends Entity {
 		this.job = job;
 		return this;
 	}
-	public Building getHome() {
+	public ResidentialBuilding getHome() {
 		return home;
 	}
-	public Villager setHome(Building home) {
+	public Villager setHome(ResidentialBuilding home) {
 		this.home = home;
 		return this;
 	}

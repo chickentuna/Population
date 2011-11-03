@@ -67,24 +67,15 @@ public abstract class ProductionBuilding extends Building {
 				return false;
 			}
 		}
-		
-		
 		return true;
 	}
 
-	public Land getLand() {
-		return requiredLand;
-	}
-	
 	public abstract void initializeWorkforce();
 	
 	public List<Production> getProduction() {
 		return production;
 	}
-	public ProductionBuilding setLand(Land land) {
-		requiredLand = land;
-		return this;
-	}
+
 	public ProductionBuilding setProduction(List<Production> production) {
 		this.production = production;
 		return this;
