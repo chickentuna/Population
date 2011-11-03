@@ -15,7 +15,7 @@ public class WheatFarm extends Farm {
 	}
 
 	public void initializeWorkforce() {
-		workforce.put(Job.Type.FARMER, new Position(4));
+		workforce.add(new Position(this,Job.Type.FARMER, 4));
 		
 	}
 

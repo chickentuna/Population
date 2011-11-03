@@ -1,43 +1,55 @@
 package pop;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 public abstract class ProductionBuilding extends Building {
 	
 	protected Map<Good,Integer> stock;
-	protected Map<Job.Type, Position> workforce;
+	protected List<Position> workforce;
 	protected List<Production> production;
 	
-	//TODO : In Position? > List of workers (Villagers) to render presence test possible.
+	//In Position? > List of workers (Villagers) to render presence test possible
+	// DONE
 	public class Position {
+		
+		List<Villager> list;
+		Job.Type type;
 		private int amount;
-		private int actual;
+		private Building owner;
 
-		public Position(int amount) {
+		public Position(Building owner, Job.Type type, int amount) {
+			this.owner = owner;
 			this.amount = amount;
-			this.actual = 0;
+			list = new LinkedList<Villager>();
 		}
 		
-		public boolean isFull() {
-			return amount == actual;
+		public boolean isReady() {
+			for (Villager v : list) {
+				if (v.getJob().getType() != type && v.getJob().getWorkplace() == owner) {
+					return false;
+				}
+			}
+			return list.size() == amount;
 		}
 		
-		public Integer set(Integer actual) {
-			return this.actual = actual;
-		}	
+		public void attach(Villager v) {
+			list.add(v);
+		}
+		
 	}
 
 	public ProductionBuilding() {
-		workforce = new HashMap<Job.Type, Position>();
+		workforce = new LinkedList<Position>();
 		stock = new HashMap<Good,Integer>();
 		initializeWorkforce();
 	}
 	
 	public boolean isFull() {
-		for (Position pos : workforce.values()) {
-			if (!pos.isFull()) {
+		for (Position pos : workforce) {
+			if (!pos.isReady()) {
 				return false;
 			}
 		}
@@ -45,14 +57,9 @@ public abstract class ProductionBuilding extends Building {
 	}
 	
 	public boolean canStartProduction() {
-		return isFull() && hasInput() && workersPresent();
+		return isFull() && hasInput();
 	}
 	
-	private boolean workersPresent() {
-		//TODO: call presence test for each Position
-		return true;
-	}
-
 	public boolean hasInput() {
 		for (Production prod : production) {
 			Good input = prod.getInput();

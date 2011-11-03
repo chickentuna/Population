@@ -3,16 +3,16 @@ package pop;
 public class Job {
 		
 	private Building workplace;
-	private int type;
+	private Type type;
 
 	public enum Type { NONE, FARMER, MINER, PROSTITUTE, PIMP }
 	
-	public Job setType(int type) {
+	public Job setType(Type type) {
 		this.type = type;
 		return this;
 	}
 
-	public int getType() {
+	public Type getType() {
 		return type;
 	}
 
