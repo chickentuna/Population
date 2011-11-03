@@ -28,7 +28,7 @@ public abstract class ProductionBuilding extends Building {
 		
 		public boolean isReady() {
 			for (Villager v : list) {
-				if (v.getJob().getType() != type && v.getJob().getWorkplace() == owner) {
+				if (v.getJob().getType() != type && v.getJob().getWorkplace() != owner) {
 					return false;
 				}
 			}
