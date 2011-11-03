@@ -8,6 +8,10 @@ public class Production {
 	private int outputAmount = 0,inputAmount = 0;
 	private float productionTime = 0;
 	
+	public Production(Good output, int amount) {
+		this.output = output;
+		this.outputAmount = amount;
+	}
 	public Good getOutput() {
 		return output;
 	}

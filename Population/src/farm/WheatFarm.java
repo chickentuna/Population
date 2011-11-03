@@ -6,16 +6,15 @@ import pop.Production;
 
 public class WheatFarm extends Farm {
 
+	public static final int FARMERS = 4;
+	
 	public WheatFarm() {
 		super();
-		production.add(new Production()
-		.setOutput(Good.WHEAT).setOutputAmount(10)
-		);
-		
+		production.add(new Production(Good.WHEAT,10));
 	}
 
 	public void initializeWorkforce() {
-		workforce.put(Job.Type.FARMER, new Position(4));
+		workforce.put(Job.Type.FARMER, new Position(FARMERS));
 		
 	}
 

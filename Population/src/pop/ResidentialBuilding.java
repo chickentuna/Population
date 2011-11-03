@@ -10,6 +10,7 @@ public class ResidentialBuilding extends Building {
 	public ResidentialBuilding(int capacity) {
 		this.capacity = capacity;
 		occupants = new LinkedList<Villager>();
+		type = Type.HOME;
 	}
 
 	public boolean addOccupant(Villager occupant) {
