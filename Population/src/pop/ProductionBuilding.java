@@ -9,7 +9,9 @@ public abstract class ProductionBuilding extends Building {
 	
 	protected Map<Good,Integer> stock;
 	protected List<Position> workforce;
-	protected List<Production> production;
+	protected Production production;
+	protected State state = State.IDLE;
+	protected float timer;
 	
 	public class Position {
 		
@@ -45,14 +47,42 @@ public abstract class ProductionBuilding extends Building {
 		
 	}
 	
+	public enum State { IDLE, ACTIVE }	
 	
 	public ProductionBuilding() {
 		workforce = new LinkedList<Position>();
 		stock = new HashMap<Good,Integer>();
 		stock.put(Good.NONE, 0);
-		production = new LinkedList<Production>();
 		initializeWorkforce();
+		state = State.IDLE;
 	}
+	
+	public void step() {
+		if (state == State.ACTIVE) {
+			timer+=1;
+			if (timer >= production.getProductionTime()) {
+				state = State.IDLE;
+				for (
+				
+			}
+		}
+	}
+	
+	public boolean startProduction() {
+		if (can()) {
+			for (Position pos : workforce) {
+				for (Villager v : pos.workers) {
+					v.setState(Villager.State.WORKING);
+				}
+			}
+			state = State.ACTIVE;
+			timer = 0;
+			return true;
+		} 
+		else
+			return false;
+	}
+	
 	
 	public boolean isFull() {
 		for (Position pos : workforce) {
@@ -63,7 +93,7 @@ public abstract class ProductionBuilding extends Building {
 		return true;
 	}
 	
-	public boolean canStartProduction() {
+	public boolean can() {
 		return isFull() && hasInput() && workersPresent();
 	}
 	
@@ -79,11 +109,9 @@ public abstract class ProductionBuilding extends Building {
 	}
 
 	public boolean hasInput() {
-		for (Production prod : production) {
-			Good input = prod.getInput();
-			if (input !=null && !(stock.containsKey(input) && stock.get(input)>=prod.getInputAmount())) {
-				return false;
-			}
+		Good input = production.getInput();
+		if (input !=null && !(stock.containsKey(input) && stock.get(input)>=production.getInputAmount())) {
+			return false;
 		}
 		return true;
 	}
@@ -97,7 +125,7 @@ public abstract class ProductionBuilding extends Building {
 		return workforce;
 	}
 
-	public ProductionBuilding setProduction(List<Production> production) {
+	public ProductionBuilding setProduction(Production production) {
 		this.production = production;
 		return this;
 	}
