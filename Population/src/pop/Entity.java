@@ -11,6 +11,9 @@ public class Entity {
 		this.y=y;
 		bounds = new Rectangle(x,y,1,1);
 	}
+	public Entity() {
+		this(0,0);
+	}
 	
 	public void collidesWith(Entity other) {
 		return bounds.intersect(other.getBounds());
