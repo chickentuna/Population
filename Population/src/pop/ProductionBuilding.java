@@ -62,7 +62,7 @@ public abstract class ProductionBuilding extends Building {
 			timer+=1;
 			if (timer >= production.getProductionTime()) {
 				state = State.IDLE;
-				for (
+				
 				
 			}
 		}
