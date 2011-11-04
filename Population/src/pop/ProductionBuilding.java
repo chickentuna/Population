@@ -10,7 +10,7 @@ public abstract class ProductionBuilding extends Building {
 	protected Map<Good,Integer> stock;
 	protected List<Position> workforce;
 	protected Production production;
-	protected State state = State.IDLE;
+	protected State state;
 	protected float timer;
 	
 	public class Position {
@@ -109,10 +109,10 @@ public abstract class ProductionBuilding extends Building {
 	}
 
 	public boolean hasInput() {
-		LinkedList<Good> input = production.getInput();
+		HashMap<Good,Integer> input = production.getInput();
 		if (input !=null) {
-			for (Good good : input) {
-				if (!stock.containsKey(good) || (stock.get(input) < production.getInputAmount()) ) {
+			for (Good good : input.keySet()) {
+				if (!stock.containsKey(good) || (stock.get(good) < input.get(good) ) {
 					return false;
 				}
 			}
