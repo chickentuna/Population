@@ -3,14 +3,17 @@ package pop;
 
 public class Production {
 	
-	private Good output = Good.NONE;
-	private Good input = Good.NONE;
+	private List <Good> output;
+	private List <Good> input;
 	private int outputAmount = 0,inputAmount = 0;
 	private float productionTime = 0;
 	
 	public Production(Good output, int amount) {
 		this.output = output;
 		this.outputAmount = amount;
+		output = new LinkedList<Good>();
+		input = new LinkedList<Good>();
+		
 	}
 	public Good getOutput() {
 		return output;
