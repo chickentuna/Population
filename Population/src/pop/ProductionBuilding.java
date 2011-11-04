@@ -109,9 +109,13 @@ public abstract class ProductionBuilding extends Building {
 	}
 
 	public boolean hasInput() {
-		Good input = production.getInput();
-		if (input !=null && !(stock.containsKey(input) && stock.get(input)>=production.getInputAmount())) {
-			return false;
+		LinkedList<Good> input = production.getInput();
+		if (input !=null) {
+			for (Good good : input) {
+				if (!stock.containsKey(good) || (stock.get(input) < production.getInputAmount()) ) {
+					return false;
+				}
+			}
 		}
 		return true;
 	}
