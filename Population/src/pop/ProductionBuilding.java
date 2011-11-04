@@ -11,39 +11,46 @@ public abstract class ProductionBuilding extends Building {
 	protected List<Position> workforce;
 	protected List<Production> production;
 	
-	//In Position? > List of workers (Villagers) to render presence test possible
-	// DONE
 	public class Position {
 		
-		List<Villager> list;
-		Job.Type type;
+		List<Villager> workers;
+		Job job;
 		private int amount;
-		private Building owner;
 
 		public Position(Building owner, Job.Type type, int amount) {
-			this.owner = owner;
-			this.amount = amount;
-			list = new LinkedList<Villager>();
+			this.job = new Job(type).setWorkplace(owner);
+			workers = new LinkedList<Villager>();
 		}
 		
 		public boolean isReady() {
-			for (Villager v : list) {
-				if (v.getJob().getType() != type && v.getJob().getWorkplace() != owner) {
+			for (Villager v : workers) {
+				if (v.getJob() != job) {
 					return false;
 				}
 			}
-			return list.size() == amount;
+			return workers.size() == amount;
 		}
 		
-		public void attach(Villager v) {
-			list.add(v);
+		public int employ(Villager... v) {
+			int counter = 0;
+			for (Villager candidate : v) {
+				if (workers.size()<amount) {
+					workers.add(candidate);
+					candidate.setJob(job);
+					counter++;
+				}
+			}
+			return counter;
 		}
 		
 	}
-
+	
+	
 	public ProductionBuilding() {
 		workforce = new LinkedList<Position>();
 		stock = new HashMap<Good,Integer>();
+		stock.put(Good.NONE, 0);
+		production = new LinkedList<Production>();
 		initializeWorkforce();
 	}
 	
@@ -57,13 +64,17 @@ public abstract class ProductionBuilding extends Building {
 	}
 	
 	public boolean canStartProduction() {
-		return isFull() && hasInput();
+		return isFull() && hasInput() && workersPresent();
 	}
 	
+	private boolean workersPresent() {
+		return true;
+	}
+
 	public boolean hasInput() {
 		for (Production prod : production) {
 			Good input = prod.getInput();
-			if (!(stock.containsKey(input) && stock.get(input)>=prod.getInputAmount())) {
+			if (input !=null && !(stock.containsKey(input) && stock.get(input)>=prod.getInputAmount())) {
 				return false;
 			}
 		}
@@ -74,6 +85,9 @@ public abstract class ProductionBuilding extends Building {
 	
 	public List<Production> getProduction() {
 		return production;
+	}
+	public List<Position> getWorkforce() {
+		return workforce;
 	}
 
 	public ProductionBuilding setProduction(List<Production> production) {

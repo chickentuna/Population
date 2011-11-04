@@ -5,8 +5,12 @@ public class Job {
 	private Building workplace;
 	private Type type;
 
-	public enum Type { NONE, FARMER, MINER, PROSTITUTE, PIMP }
+	public enum Type { NONE, FARMER, MINER, COURTESAN }
 	
+	public Job(pop.Job.Type type) {
+		this.type = type;
+	}
+
 	public Job setType(Type type) {
 		this.type = type;
 		return this;

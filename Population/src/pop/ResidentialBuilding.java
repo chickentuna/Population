@@ -16,6 +16,7 @@ public class ResidentialBuilding extends Building {
 	public boolean addOccupant(Villager occupant) {
 		if (isFull()) {
 			occupants.add(occupant);
+			occupant.setHome(this);
 			return true;
 		}
 		return false;
