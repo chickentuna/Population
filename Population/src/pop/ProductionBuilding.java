@@ -68,6 +68,13 @@ public abstract class ProductionBuilding extends Building {
 	}
 	
 	private boolean workersPresent() {
+		for (Position pos : workforce) {
+			for (Villager v : pos.workers) {
+				if ( !v.collidesWith(this) ) {
+					return false;
+				}
+			}
+		}
 		return true;
 	}
 
