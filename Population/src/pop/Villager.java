@@ -6,8 +6,10 @@ public class Villager extends Entity {
 	private Job job;
 	private ResidentialBuilding home;
 	private Sex sex = Sex.MALE;
+	private State state = State.IDLE;
 	
 	public enum Sex { MALE, FEMALE }
+	public enum State { IDLE, WORKING, LOITERING, CARRYING, GOINGTO }
 	
 	public Sex getSex() {
 		return sex;
