@@ -3,9 +3,13 @@ package pop;
 
 public class Production {
 	
+	private Map <Good,Integer> output;
+	private Map <Good,Integer> input;
+	/*	
 	private List <Good> output;
 	private List <Good> input;
 	private int outputAmount = 0,inputAmount = 0;
+	*/
 	private float productionTime = 0;
 	
 	public Production(Good output, int amount) {
@@ -15,36 +19,25 @@ public class Production {
 		input = new LinkedList<Good>();
 		
 	}
-	public Good getOutput() {
+	
+	public HashMap<Good,Integer> getOutput() {
 		return output;
 	}
-	public Good getInput() {
+	
+	public HashMap<Good,Integer> getInput() {
 		return input;
 	}
-	public int getOutputAmount() {
-		return outputAmount;
-	}
-	public int getInputAmount() {
-		return inputAmount;
-	}
+	
 	public float getProductionTime() {
 		return productionTime;
 	}
 	
-	public Production setOutput(Good output) {
+	public Production setOutput(HashMap<Good,Integer> output) {
 		this.output = output;
 		return this;
 	}
-	public Production setInput(Good input) {
+	public Production setInput(HashMap<Good,Integer> input) {
 		this.input = input;
-		return this;
-	}
-	public Production setOutputAmount(int outputAmount) {
-		this.outputAmount = outputAmount;
-		return this;
-	}
-	public Production setInputAmount(int inputAmount) {
-		this.inputAmount = inputAmount;
 		return this;
 	}
 	public Production setProductionTime(float productionTime) {
