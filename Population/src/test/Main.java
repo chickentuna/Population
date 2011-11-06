@@ -6,8 +6,12 @@ import farm.*;
 public class Main {
 
 	public static void main(String[] args) {
+		Engine.run();
 		
-		Villager bob = new Villager();
+		
+		
+		
+		/*Villager bob = new Villager();
 		Villager mike = new Villager();
 		Villager luke = new Villager();
 		Villager jen = new Villager();
@@ -17,7 +21,7 @@ public class Main {
 		System.out.println(pos.employ(bob,mike,luke,jen));
 		System.out.println(farm.isFull());
 		System.out.println(farm.can());
-		print(farm.startProduction());
+		print(farm.startProduction());*/
 	}
 	
 	public static void print(Object o) {

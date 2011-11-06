@@ -2,7 +2,7 @@ package pop;
 
 import java.awt.Rectangle;
 
-public class Entity {
+public abstract class Entity {
 	protected int x,y;
 	
 	public Entity(int x, int y) {
@@ -27,6 +27,9 @@ public class Entity {
 	}
 	public int getY() {
 		return y;
+	}
+	public void step() {
+		
 	}
 	
 	

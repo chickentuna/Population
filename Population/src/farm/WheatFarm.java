@@ -12,7 +12,8 @@ public class WheatFarm extends Farm {
 	
 	public WheatFarm() {
 		super();
-		setProduction(new Production(new GoodMap(Good.WHEAT,10)));
+		setProduction(new Production(new GoodMap(Good.WHEAT,10)).setProductionTime(200f));
+
 	}
 
 	public void initializeWorkforce() {
