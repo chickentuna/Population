@@ -1,30 +1,23 @@
 package pop;
 
-
 public class Production {
 	
-	private Map <Good,Integer> output;
-	private Map <Good,Integer> input;
-	/*	
-	private List <Good> output;
-	private List <Good> input;
-	private int outputAmount = 0,inputAmount = 0;
-	*/
+	private GoodMap output;
+	private GoodMap input;
+
 	private float productionTime = 0;
 	
-	public Production(Good output, int amount) {
+	public Production(GoodMap output) {
 		this.output = output;
-		this.outputAmount = amount;
-		output = new LinkedList<Good>();
-		input = new LinkedList<Good>();
+		input = new GoodMap();
 		
 	}
 	
-	public HashMap<Good,Integer> getOutput() {
+	public GoodMap getOutput() {
 		return output;
 	}
 	
-	public HashMap<Good,Integer> getInput() {
+	public GoodMap getInput() {
 		return input;
 	}
 	
@@ -32,11 +25,11 @@ public class Production {
 		return productionTime;
 	}
 	
-	public Production setOutput(HashMap<Good,Integer> output) {
+	public Production setOutput(GoodMap output) {
 		this.output = output;
 		return this;
 	}
-	public Production setInput(HashMap<Good,Integer> input) {
+	public Production setInput(GoodMap input) {
 		this.input = input;
 		return this;
 	}

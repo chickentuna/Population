@@ -15,8 +15,8 @@ public class Entity {
 		this(0,0);
 	}
 	
-	public void collidesWith(Entity other) {
-		return bounds.intersect(other.getBounds());
+	public boolean collidesWith(Entity other) {
+		return bounds.intersects(other.getBounds());
 	}
 	
 	public Rectangle getBounds() {

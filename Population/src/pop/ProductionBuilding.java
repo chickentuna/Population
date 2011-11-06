@@ -13,40 +13,6 @@ public abstract class ProductionBuilding extends Building {
 	protected State state;
 	protected float timer;
 	
-	public class Position {
-		
-		List<Villager> workers;
-		Job job;
-		private int amount;
-
-		public Position(Building owner, Job.Type type, int amount) {
-			this.job = new Job(type).setWorkplace(owner);
-			workers = new LinkedList<Villager>();
-		}
-		
-		public boolean isReady() {
-			for (Villager v : workers) {
-				if (v.getJob() != job) {
-					return false;
-				}
-			}
-			return workers.size() == amount;
-		}
-		
-		public int employ(Villager... v) {
-			int counter = 0;
-			for (Villager candidate : v) {
-				if (workers.size()<amount) {
-					workers.add(candidate);
-					candidate.setJob(job);
-					counter++;
-				}
-			}
-			return counter;
-		}
-		
-	}
-	
 	public enum State { IDLE, ACTIVE }	
 	
 	public ProductionBuilding() {
@@ -112,7 +78,7 @@ public abstract class ProductionBuilding extends Building {
 		HashMap<Good,Integer> input = production.getInput();
 		if (input !=null) {
 			for (Good good : input.keySet()) {
-				if (!stock.containsKey(good) || (stock.get(good) < input.get(good) ) {
+				if (!stock.containsKey(good) || stock.get(good) < input.get(good) ) {
 					return false;
 				}
 			}
@@ -122,7 +88,7 @@ public abstract class ProductionBuilding extends Building {
 
 	public abstract void initializeWorkforce();
 	
-	public List<Production> getProduction() {
+	public Production getProduction() {
 		return production;
 	}
 	public List<Position> getWorkforce() {

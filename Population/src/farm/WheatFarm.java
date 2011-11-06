@@ -1,7 +1,9 @@
 package farm;
 
 import pop.Good;
+import pop.GoodMap;
 import pop.Job;
+import pop.Position;
 import pop.Production;
 
 public class WheatFarm extends Farm {
@@ -10,7 +12,7 @@ public class WheatFarm extends Farm {
 	
 	public WheatFarm() {
 		super();
-		production.add(new Production(Good.WHEAT,10));
+		setProduction(new Production(new GoodMap(Good.WHEAT,10)));
 	}
 
 	public void initializeWorkforce() {

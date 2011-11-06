@@ -61,5 +61,11 @@ public class Villager extends Entity {
 		this.home = home;
 		return this;
 	}
-	
+	public Villager setState(State state) {
+		this.state = state;
+		return this;
+	}
+	public State getState() {
+		return state;
+	}
 }

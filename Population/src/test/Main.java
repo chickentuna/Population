@@ -1,9 +1,6 @@
 package test;
 
-import java.util.List;
-
 import pop.*;
-import pop.ProductionBuilding.Position;
 import farm.*;
 
 public class Main {
@@ -20,7 +17,7 @@ public class Main {
 		Position pos = farm.getWorkforce().get(0);
 		System.out.println(pos.employ(bob,mike,luke,jen));
 		System.out.println(farm.isFull());
-		System.out.println(farm.canStartProduction());
+		System.out.println(farm.can());
 	}
 
 }
