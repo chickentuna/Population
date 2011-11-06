@@ -7,6 +7,11 @@ public class Job {
 
 	public enum Type { NONE, FARMER, MINER, COURTESAN }
 	
+	@Override
+	public String toString() {
+		return "Job [workplace=" + workplace + ", type=" + type + "]";
+	}
+
 	public Job(pop.Job.Type type) {
 		this.type = type;
 	}

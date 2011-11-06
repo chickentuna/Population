@@ -1,13 +1,12 @@
 package pop;
 
-import java.util.HashMap;
+
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 public abstract class ProductionBuilding extends Building {
 	
-	protected Map<Good,Integer> stock;
+	protected GoodMap stock;
 	protected List<Position> workforce;
 	protected Production production;
 	protected State state;
@@ -17,7 +16,7 @@ public abstract class ProductionBuilding extends Building {
 	
 	public ProductionBuilding() {
 		workforce = new LinkedList<Position>();
-		stock = new HashMap<Good,Integer>();
+		stock = new GoodMap();
 		stock.put(Good.NONE, 0);
 		initializeWorkforce();
 		state = State.IDLE;
@@ -37,7 +36,7 @@ public abstract class ProductionBuilding extends Building {
 	public boolean startProduction() {
 		if (can()) {
 			for (Position pos : workforce) {
-				for (Villager v : pos.workers) {
+				for (Villager v : pos.getWorkers()) {
 					v.setState(Villager.State.WORKING);
 				}
 			}
@@ -65,7 +64,7 @@ public abstract class ProductionBuilding extends Building {
 	
 	private boolean workersPresent() {
 		for (Position pos : workforce) {
-			for (Villager v : pos.workers) {
+			for (Villager v : pos.getWorkers()) {
 				if ( !v.collidesWith(this) ) {
 					return false;
 				}
@@ -75,7 +74,7 @@ public abstract class ProductionBuilding extends Building {
 	}
 
 	public boolean hasInput() {
-		HashMap<Good,Integer> input = production.getInput();
+		GoodMap input = production.getInput();
 		if (input !=null) {
 			for (Good good : input.keySet()) {
 				if (!stock.containsKey(good) || stock.get(good) < input.get(good) ) {

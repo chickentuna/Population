@@ -7,6 +7,8 @@ public abstract class Building extends Entity {
 	protected Type type;
 	protected Land requiredLand;
 	protected Map<Good, Integer> materials;
+	protected float constructionTime = 0f;
+	protected float constructionProgress = 0f;  
 	
 	public enum Type { HOME, FARM, MINE }
 	

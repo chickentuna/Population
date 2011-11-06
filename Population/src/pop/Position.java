@@ -5,13 +5,14 @@ import java.util.List;
 
 public class Position {
 	
-	List<Villager> workers;
-	Job job;
+	private List<Villager> workers;
+	private Job job;
 	private int amount;
 
 	public Position(Building owner, Job.Type type, int amount) {
 		this.job = new Job(type).setWorkplace(owner);
 		workers = new LinkedList<Villager>();
+		this.amount = amount;
 	}
 	
 	public boolean isReady() {
@@ -33,6 +34,10 @@ public class Position {
 			}
 		}
 		return counter;
+	}
+
+	public List<Villager> getWorkers() {
+		return workers;
 	}
 	
 }
