@@ -1,65 +1,35 @@
 package test;
 
-import java.util.ArrayList;
+import org.newdawn.slick.BasicGame;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.AppGameContainer;
 
-import farm.WheatFarm;
+public class Engine extends BasicGame {
+	public Engine() {
+		super("SimpleTest");
+	}
 
-import pop.*;
+	@Override
+	public void init(GameContainer container) throws SlickException {
+	}
 
-public class Engine {
+	@Override
+	public void update(GameContainer container, int delta) throws SlickException {
+	}
 
-	private static boolean running;
-	private static ArrayList<Entity> entities;
+	@Override
+	public void render(GameContainer container, Graphics g) throws SlickException {
+		g.drawString("Hello, Slick world!", 0, 100);
+	}
 
-	/**
-	 * Boucle de jeu principale.
-	 */
-	public static void run() {
-		running = true;
-		entities = new ArrayList<Entity>();
-		
-		initRoom();
-		
-		while (running) {
-			for (Entity e : entities) {
-				e.step();
-			}
-			try {
-				Thread.sleep(20);
-			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+	public static void main(String[] args) {
+		try {
+			AppGameContainer app = new AppGameContainer(new Engine());
+			app.start();
+		} catch (SlickException e) {
+			e.printStackTrace();
 		}
-
-
 	}
-
-	
-	private static void initRoom() {
-		Villager bob=(Villager) Engine.create(new Villager());
-		Villager mike=(Villager) Engine.create(new Villager());
-		Villager luke=(Villager) Engine.create(new Villager());
-		Villager jen=(Villager) Engine.create(new Villager());
-		WheatFarm farm = (WheatFarm) Engine.create(new WheatFarm());
-		Position pos = farm.getWorkforce().get(0);
-		pos.employ(bob,mike,luke,jen);
-		farm.startProduction();
-		
-	}
-
-	/**
-	 * Arrête le moteur de jeu à la prochaine occurence de la boucle principale.
-	 */
-	public static void stop() {
-		running = false;
-	}
-
-
-	public static Entity create(Entity e) {
-		entities.add(e);
-		return e;
-		
-	}
-
 }
