@@ -8,11 +8,11 @@ import pop.Production;
 
 public class WheatFarm extends Farm {
 
-	public static final int FARMERS = 4;
+	public static final int FARMERS = 5;
 	
 	public WheatFarm() {
 		super();
-		setProduction(new Production(new GoodMap(Good.WHEAT,10)).setProductionTime(200f));
+		setProduction(new Production(new GoodMap(Good.WHEAT,50)).setProductionTime(200f));
 
 	}
 

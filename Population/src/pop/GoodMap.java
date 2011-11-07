@@ -6,6 +6,7 @@ public class GoodMap extends HashMap<Good,Integer> {
 
 	private static final long serialVersionUID = -6106535498011123494L;
 	
+	
 	public GoodMap() {
 		super();
 	}
@@ -14,5 +15,11 @@ public class GoodMap extends HashMap<Good,Integer> {
 		put(good,amount);
 	}
 	
+	public int getAmount() {
+		int k=0;
+		for (Good good : keySet())
+			k+=get(good);
+		return k;
+	}	
 
 }

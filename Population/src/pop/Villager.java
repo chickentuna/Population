@@ -2,14 +2,40 @@ package pop;
 
 public class Villager extends Entity {
 	
+	static final int MAX = 10;
+	
 	private String name,surname;
 	private Job job;
 	private ResidentialBuilding home;
 	private Sex sex = Sex.MALE;
 	private State state = State.IDLE;
+	private GoodMap carrying;
 	
 	public enum Sex { MALE, FEMALE }
 	public enum State { IDLE, WORKING, LOITERING, CARRYING, GOINGTO, BUILDING }
+	
+	
+	public Villager() {
+		carrying = new GoodMap();
+	}
+	
+	//TODO: Transfer part of this method to GoodMap as "take"
+	public void collect(GoodMap pile) {
+		state = State.CARRYING;
+		for (Good good : pile.keySet()) {
+			int k = pile.get(good);
+			if (carrying.getAmount()<MAX) {
+				if (k>=MAX-carrying.getAmount()) {
+					pile.put(good, k-MAX-carrying.getAmount());
+					carrying.put(good, MAX-carrying.getAmount());
+				} else {
+					pile.put(good, 0);
+					carrying.put(good, k);
+				}
+			}
+		}
+		
+	}
 	
 	
 	public Sex getSex() {
@@ -69,4 +95,5 @@ public class Villager extends Entity {
 	public State getState() {
 		return state;
 	}
+	
 }

@@ -62,7 +62,7 @@ public abstract class ProductionBuilding extends Building {
 			v.collect(output);
 		}
 		if (!output.isEmpty()) {
-			stash(output);
+			dump(output);
 		}
 		
 		
