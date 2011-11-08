@@ -62,7 +62,7 @@ public abstract class ProductionBuilding extends Building {
 			v.collect(output);
 		}
 		if (!output.isEmpty()) {
-			dump(output);
+			GoodPile.dump(output);//TODO Add returned pile to an entity manager
 		}
 		
 		
