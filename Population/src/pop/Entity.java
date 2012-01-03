@@ -8,6 +8,7 @@ public abstract class Entity {
 	public Entity(int x, int y) {
 		this.x=x;
 		this.y=y;
+		EntityManager.spawn(this);
 	}
 	public Entity() {
 		this(0,0);

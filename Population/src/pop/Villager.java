@@ -20,6 +20,14 @@ public class Villager extends Entity {
 		state = State.IDLE;
 	}
 	
+	public void update() {
+		if (state.equals(State.CARRYING)) {
+			//TODO: Find town centre
+			
+		}
+		
+	}
+	
 	//TODO: Transfer part of this method to GoodMap as "take"
 	public void collect(GoodMap pile) {
 		state = State.CARRYING;
