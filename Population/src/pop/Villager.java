@@ -17,6 +17,7 @@ public class Villager extends Entity {
 	
 	public Villager() {
 		carrying = new GoodMap();
+		state = State.IDLE;
 	}
 	
 	//TODO: Transfer part of this method to GoodMap as "take"
