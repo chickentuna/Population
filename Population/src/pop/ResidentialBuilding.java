@@ -15,7 +15,7 @@ public class ResidentialBuilding extends Building {
 	}
 
 	public boolean addOccupant(Villager occupant) {
-		if (isFull()) {
+		if (spaceLeft()) {
 			occupants.add(occupant);
 			occupant.setHome(this);
 			return true;
@@ -23,7 +23,7 @@ public class ResidentialBuilding extends Building {
 		return false;
 	}
 	
-	public boolean isFull() {
+	public boolean spaceLeft() {
 		return occupants.size() < capacity;
 	}
 	

@@ -35,7 +35,7 @@ public class Villager extends Entity {
 			if (home!=null) {
 				home.addOccupant(this);
 			} else {
-				
+				new Hovel(x,y);
 			}
 			
 		}

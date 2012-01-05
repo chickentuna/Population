@@ -20,7 +20,7 @@ public class EntityManager {
 	public static ResidentialBuilding getFreeHome() {
 		for (Entity e : entities) {
 			if (e instanceof ResidentialBuilding) {
-				if (!((ResidentialBuilding) e).isFull())
+				if (((ResidentialBuilding) e).spaceLeft())
 					return (ResidentialBuilding) e;
 			}
 		}

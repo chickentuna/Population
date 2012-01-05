@@ -17,7 +17,8 @@ public class Engine extends BasicGame {
 	public void init(GameContainer container) throws SlickException {
 		EntityManager.init();
 		new Hovel(10f,40f);
-		for (int i=0;i<1;i++)
+		
+		for (int i=0;i<6;i++)
 			new Villager(300f,200f);
 		
 		
@@ -26,7 +27,9 @@ public class Engine extends BasicGame {
 
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException {
+		
 		for (Entity e : EntityManager.entities) {
+			System.out.println(e.getClass());
 			e.update();
 		}
 	}
