@@ -6,6 +6,8 @@ import org.newdawn.slick.Graphics;
 
 public abstract class Entity {
 	protected float x,y;
+	protected int width=1;
+	protected int height=1;
 	
 	public Entity(float x, float y) {
 		this.x=x;
@@ -19,9 +21,17 @@ public abstract class Entity {
 	public boolean collidesWith(Entity other) {
 		return getBounds().intersects(other.getBounds());
 	}
+	public boolean collisionFree() {
+		for (Entity e : EntityManager.entities) {
+			if (e instanceof Solid && e!=this && collidesWith(e)) {
+				return false;				
+			}
+		}
+		return true;
+	}
 	
 	public Rectangle getBounds() {
-		return new Rectangle((int)x,(int)y,1,1);
+		return new Rectangle((int)x,(int)y,width,height);
 		//Width & height will be regulated by the sprite
 	}
 	

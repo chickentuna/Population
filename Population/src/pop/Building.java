@@ -2,7 +2,7 @@ package pop;
 
 import java.util.Map;
 
-public abstract class Building extends Entity {
+public abstract class Building extends Entity implements Solid {
 	
 	protected Type type;
 	protected Land requiredLand;

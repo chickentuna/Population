@@ -16,9 +16,9 @@ public class Engine extends BasicGame {
 	@Override
 	public void init(GameContainer container) throws SlickException {
 		EntityManager.init();
-		new Hovel(10f,40f);
+		//new Hovel(10f,40f);
 		
-		for (int i=0;i<6;i++)
+		for (int i=0;i<10;i++)
 			new Villager(300f,200f);
 		
 		
@@ -27,18 +27,20 @@ public class Engine extends BasicGame {
 
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException {
-		
+		try {
 		for (Entity e : EntityManager.entities) {
-			System.out.println(e.getClass());
 			e.update();
 		}
+		} catch (java.util.ConcurrentModificationException e) {
+		e.printStackTrace();
+	}
 	}
 
 	@Override
 	public void render(GameContainer container, Graphics g) throws SlickException {
 		for (Entity e : EntityManager.entities) {
 			e.render(g);
-		}
+		}		
 	}
 
 	public static void main(String[] args) {

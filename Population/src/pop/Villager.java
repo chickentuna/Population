@@ -35,7 +35,11 @@ public class Villager extends Entity {
 			if (home!=null) {
 				home.addOccupant(this);
 			} else {
-				new Hovel(x,y);
+				Hovel h=new Hovel(x,y);
+				if (!h.collisionFree()) {
+					EntityManager.unspawn(h);
+				}
+				
 			}
 			
 		}
