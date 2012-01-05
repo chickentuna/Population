@@ -16,8 +16,9 @@ public class Engine extends BasicGame {
 	@Override
 	public void init(GameContainer container) throws SlickException {
 		EntityManager.init();
-		Hovel house = new Hovel(10f,40f);
-		Villager vil = new Villager(100f,100f);
+		new Hovel(10f,40f);
+		for (int i=0;i<1;i++)
+			new Villager(300f,200f);
 		
 		
 		
@@ -40,7 +41,7 @@ public class Engine extends BasicGame {
 	public static void main(String[] args) {
 		try {
 			AppGameContainer app = new AppGameContainer(new Engine());
-			
+			app.setTargetFrameRate(60);
 			app.start();
 			} catch (SlickException e) {
 			e.printStackTrace();

@@ -17,6 +17,7 @@ public class Villager extends Entity {
 	private Sex sex = Sex.MALE;
 	private State state = State.IDLE;
 	private GoodMap carrying;
+	private float speed=0.5f;
 	
 	public enum Sex { MALE, FEMALE }
 	public enum State { IDLE, WORKING, LOITERING, CARRYING, CARRYINGTO, GOINGTO, BUILDING }
@@ -31,12 +32,25 @@ public class Villager extends Entity {
 	public void update() {
 		if (home==null) {
 			home = EntityManager.getFreeHome();
-			if (home!=null)
+			if (home!=null) {
 				home.addOccupant(this);
+			} else {
+				
+			}
+			
 		}
 		if (state==State.IDLE && job==null) {
 			destination.x=(int) (x+Math.random()*200-100);
 			destination.y=(int) (y+Math.random()*200-100);
+			if (destination.x<0)
+				destination.x+=200;
+			else if (destination.x>=640)
+				destination.x-=200;
+			if (destination.y<0)
+				destination.y+=200;
+			else if (destination.y>=480)
+				destination.y-=200;
+			
 			state=State.LOITERING;
 		}
 		if (state==State.LOITERING) {
@@ -45,17 +59,20 @@ public class Villager extends Entity {
 		
 	}
 	public void goTo(Point desti) {
-		double dir = Math.atan(desti.y/desti.x) - Math.atan(y/x);
-		System.out.println(Math.cos(dir));
-		x+=0.5*Math.cos(dir);
-		y+=0.5*Math.sin(dir);
+		double dir = Math.atan((-(desti.getY()-y)/(desti.getX()-x)));
+		if (desti.getX()<x)
+			dir+=Math.toRadians(180);
+		x+=speed*Math.cos(dir);
+		y-=speed*Math.sin(dir);
+		if (Math.sqrt((Math.pow(desti.getX()-x, 2))+Math.pow(desti.getY()-y, 2)) <= speed ) {
+			state=State.IDLE;
+		}
 	}
 
 	public void render(Graphics g) {
+		
 		g.drawRect(x, y, 1, 1);
-		g.setColor(Color.red);
-		g.drawRect(destination.x, destination.y, 1, 1);
-		g.setColor(Color.white);
+		
 	}
 	
 	//TODO: Transfer part of this method to GoodMap as "take"
