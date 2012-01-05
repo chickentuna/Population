@@ -7,7 +7,8 @@ public class ResidentialBuilding extends Building {
 	List<Villager> occupants;
 	private int capacity;
 
-	public ResidentialBuilding(int capacity) {
+	public ResidentialBuilding(int capacity, float x, float y) {
+		super(x,y);
 		this.capacity = capacity;
 		occupants = new LinkedList<Villager>();
 		type = Type.HOME;

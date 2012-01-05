@@ -12,8 +12,8 @@ public abstract class Building extends Entity {
 	
 	public enum Type { HOME, FARM, MINE }
 	
-	public int getX() {
-		return x;
+	public Building(float x, float y) {
+		super(x,y);
 	}
 
 	public Land getLand() {
@@ -22,20 +22,6 @@ public abstract class Building extends Entity {
 	
 	public Building setLand(Land land) {
 		requiredLand = land;
-		return this;
-	}
-	
-	public int getY() {
-		return y;
-	}
-
-	public Building setX(int x) {
-		this.x = x;
-		return this;
-	}
-
-	public Building setY(int y) {
-		this.y = y;
 		return this;
 	}
 

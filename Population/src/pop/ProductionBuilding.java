@@ -15,7 +15,8 @@ public abstract class ProductionBuilding extends Building {
 	
 	public enum State { IDLE, ACTIVE }	
 	
-	public ProductionBuilding() {
+	public ProductionBuilding(float x,float y) {
+		super(x,y);
 		workforce = new LinkedList<Position>();
 		stock = new GoodMap();
 		stock.put(Good.NONE, 0);

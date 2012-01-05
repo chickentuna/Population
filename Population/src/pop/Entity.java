@@ -2,10 +2,12 @@ package pop;
 
 import java.awt.Rectangle;
 
+import org.newdawn.slick.Graphics;
+
 public abstract class Entity {
-	protected int x,y;
+	protected float x,y;
 	
-	public Entity(int x, int y) {
+	public Entity(float x, float y) {
 		this.x=x;
 		this.y=y;
 		EntityManager.spawn(this);
@@ -19,18 +21,22 @@ public abstract class Entity {
 	}
 	
 	public Rectangle getBounds() {
-		return new Rectangle(x,y,1,1);
+		return new Rectangle((int)x,(int)y,1,1);
 		//Width & height will be regulated by the sprite
 	}
 	
-	public int getX() {
+	public float getX() {
 		return x;
 	}
-	public int getY() {
+	public float getY() {
 		return y;
 	}
 	public void step() {
 		
+	}
+	public void update() {
+	}
+	public void render(Graphics g) {
 	}
 	
 	

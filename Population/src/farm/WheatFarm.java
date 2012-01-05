@@ -10,8 +10,8 @@ public class WheatFarm extends Farm {
 
 	public static final int FARMERS = 5;
 	
-	public WheatFarm() {
-		super();
+	public WheatFarm(float x, float y) {
+		super(x,y);
 		setProduction(new Production(new GoodMap(Good.WHEAT,50)).setProductionTime(200f));
 
 	}
