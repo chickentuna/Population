@@ -7,9 +7,9 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 public class Villager extends Entity {
-	
+
 	static final int MAX = 10;
-	
+
 	private String name,surname;
 	private Job job;
 	private Point destination = new Point();
@@ -18,17 +18,17 @@ public class Villager extends Entity {
 	private State state = State.IDLE;
 	private GoodMap carrying;
 	private float speed=0.5f;
-	
+
 	public enum Sex { MALE, FEMALE }
 	public enum State { IDLE, WORKING, LOITERING, CARRYING, CARRYINGTO, GOINGTO, BUILDING }
-	
-	
+
+
 	public Villager(float x, float y) {
 		super(x,y);
 		carrying = new GoodMap();
 		state = State.IDLE;
 	}
-	
+
 	public void update() {
 		if (home==null) {
 			home = EntityManager.getFreeHome();
@@ -39,28 +39,26 @@ public class Villager extends Entity {
 				if (!h.collisionFree()) {
 					EntityManager.unspawn(h);
 				}
-				
+
 			}
-			
+
 		}
 		if (state==State.IDLE && job==null) {
-			destination.x=(int) (x+Math.random()*200-100);
-			destination.y=(int) (y+Math.random()*200-100);
-			if (destination.x<0)
-				destination.x+=200;
-			else if (destination.x>=640)
-				destination.x-=200;
-			if (destination.y<0)
-				destination.y+=200;
-			else if (destination.y>=480)
-				destination.y-=200;
-			
-			state=State.LOITERING;
+			if ((int)(Math.random()*180) == 0) {
+				destination.x=(int) Math.abs((x+Math.random()*200-100));
+				destination.y=(int) Math.abs((y+Math.random()*200-100));
+				if (destination.x>=640)
+					destination.x-=200;
+				if (destination.y>=480)
+					destination.y-=200;
+
+				state=State.LOITERING;
+			}
 		}
 		if (state==State.LOITERING) {
 			goTo(destination);
 		}
-		
+
 	}
 	public void goTo(Point desti) {
 		double dir = Math.atan((-(desti.getY()-y)/(desti.getX()-x)));
@@ -74,11 +72,14 @@ public class Villager extends Entity {
 	}
 
 	public void render(Graphics g) {
-		
+		if (sex==Sex.FEMALE)
+			g.setColor(Color.pink);
+		else
+			g.setColor(Color.cyan);
 		g.drawRect(x, y, 1, 1);
-		
+		g.setColor(Color.white);
 	}
-	
+
 	//TODO: Transfer part of this method to GoodMap as "take"
 	public void collect(GoodMap pile) {
 		state = State.CARRYING;
@@ -94,10 +95,10 @@ public class Villager extends Entity {
 				}
 			}
 		}
-		
+
 	}
-	
-	
+
+
 	public Sex getSex() {
 		return sex;
 	}
@@ -105,7 +106,7 @@ public class Villager extends Entity {
 		this.sex = sex;
 		return this;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
@@ -141,5 +142,5 @@ public class Villager extends Entity {
 	public State getState() {
 		return state;
 	}
-	
+
 }

@@ -26,5 +26,13 @@ public class EntityManager {
 		}
 		return null;
 	}
+
+	public static int size() {
+		return entities.size();
+	}
+
+	public static Entity get(int k) {
+		return entities.get(k);
+	}
 	
 }
