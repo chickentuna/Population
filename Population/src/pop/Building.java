@@ -2,6 +2,8 @@ package pop;
 
 import java.util.Map;
 
+import mapping.Land;
+
 public abstract class Building extends Entity implements Solid {
 	
 	protected Type type;

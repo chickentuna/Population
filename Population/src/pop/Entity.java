@@ -6,13 +6,19 @@ import org.newdawn.slick.Graphics;
 
 public abstract class Entity {
 	protected float x,y;
-	protected int width=1;
-	protected int height=1;
+	protected int width;
+	protected int height;
 	
-	public Entity(float x, float y) {
+
+	public Entity(float x, float y, int w, int h) {
 		this.x=x;
 		this.y=y;
+		width=w;
+		height=h;
 		EntityManager.spawn(this);
+	}
+	public Entity(float x, float y) {
+		this(x,y,1,1);
 	}
 	public Entity() {
 		this(0,0);

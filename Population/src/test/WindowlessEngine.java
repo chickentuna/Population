@@ -8,17 +8,16 @@ import org.newdawn.slick.AppGameContainer;
 import pop.Villager.Sex;
 import pop.*;
 
-public class Engine extends BasicGame {
-	public Engine() {
-		super("Population");
+public class WindowlessEngine {
+	public WindowlessEngine() {
+		
 	}
 
-	@Override
-	public void init(GameContainer container) throws SlickException {
+
+	public void init() {
 		EntityManager.init();
 		
-		
-		for (int i=0;i<300;i++) {
+		for (int i=0;i<5;i++) {
 			Villager v = new Villager(300f,200f);
 			if ((int)(Math.random()*2) == 0)
 				v.setSex(Sex.FEMALE);			
@@ -28,27 +27,32 @@ public class Engine extends BasicGame {
 		
 	}
 
-	@Override
-	public void update(GameContainer container, int delta) throws SlickException {
+
+	public void update() {
 		for (int k=0;k<EntityManager.size();k++) {
 			EntityManager.get(k).update();
 		}
 	}
 
-	@Override
-	public void render(GameContainer container, Graphics g) throws SlickException {
+
+	public void render(Graphics g)  {
 		for (Entity e : EntityManager.entities) {
 			e.render(g);
 		}		
 	}
 
 	public static void main(String[] args) {
-		try {
-			AppGameContainer app = new AppGameContainer(new Engine());
-			app.setTargetFrameRate(60);
-			app.start();
-			} catch (SlickException e) {
-			e.printStackTrace();
+		WindowlessEngine w = new WindowlessEngine();
+		boolean run=true;
+		w.init();
+		while (run) {
+			w.update();
+			try {
+				Thread.sleep(200);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 }

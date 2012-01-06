@@ -2,6 +2,6 @@ package pop;
 
 public interface Behaviour {
 	
-	void update();
+	public void update();
 	
 }

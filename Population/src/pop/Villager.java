@@ -6,6 +6,8 @@ import java.lang.Math;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
+import strategy.Strategy;
+
 public class Villager extends Entity {
 
 	static final int MAX = 10;
@@ -18,6 +20,7 @@ public class Villager extends Entity {
 	private State state = State.IDLE;
 	private GoodMap carrying;
 	private float speed=0.5f;
+	/*private Behaviour behaviour;*/
 
 	public enum Sex { MALE, FEMALE }
 	public enum State { IDLE, WORKING, LOITERING, CARRYING, CARRYINGTO, GOINGTO, BUILDING }
@@ -27,6 +30,12 @@ public class Villager extends Entity {
 		super(x,y);
 		carrying = new GoodMap();
 		state = State.IDLE;
+		/*behaviour = new Behaviour() {
+			@Override
+			public void update() {
+				
+			}
+		};*/
 	}
 
 	public void update() {
