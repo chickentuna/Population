@@ -54,6 +54,7 @@ public abstract class Entity {
 	}
 	public void render(Graphics g) {
 	}
+
 	
 	
 }
