@@ -20,7 +20,7 @@ public class Map extends Entity {
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
-		
+	
 	}
 
 	public void render(Graphics g) {

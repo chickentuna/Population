@@ -8,10 +8,12 @@ public class Hovel extends ResidentialBuilding {
 	
 	public Hovel(float x, float y) {
 		super(CAPACITY,x,y);
-		height=10;
-		width=10;
+		height=1;
+		width=1;
+		tiles = new int[1][1];
+		tiles[0][0]=314;
 	}
 	public void render(Graphics g) {
-		g.drawRect(x, y, 10, 10);
+		
 	}
 }

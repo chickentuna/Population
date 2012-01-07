@@ -15,8 +15,16 @@ public class EntityManager {
 		generateMap();
 	}
 
-	public static boolean spawn(Entity o) {
-		return entities.add(o);
+	public static Entity spawn(Entity o) {
+		 entities.add(o);
+		 if (o.isMapItem()) {
+			 for (int k=0;k<o.getWidth();k++) {
+				 for (int i=0;i<o.getHeight();i++) {
+					 map.tm.setTileId(o.getMapX(), o.getMapY(), 1, o.getTileID(k,i));
+				 }
+			 }
+		 }
+		 return o;
 	}
 
 	public static boolean unspawn(Entity o) {
@@ -43,6 +51,20 @@ public class EntityManager {
 
 	public static void generateMap() {
 		map = new Map(0,0,620,480);
+		entities.add(map);	
+	}
+
+	public static boolean freeArea(int x, int y, int w, int h) {
 		
+		int tile;
+		for (int k=0;k<w;k++) {
+			for (int i=0;i<h;i++) {
+				tile = map.tm.getTileId(x+k, y+i, 1);
+				
+				if (tile!=0)
+					return false;
+			}
+		}
+		return true;
 	}
 }

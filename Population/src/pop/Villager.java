@@ -44,9 +44,8 @@ public class Villager extends Entity {
 			if (home!=null) {
 				home.addOccupant(this);
 			} else {
-				Hovel h=new Hovel(x,y);
-				if (!h.collisionFree()) {
-					EntityManager.unspawn(h);
+				if (EntityManager.freeArea((int)(x/32),(int)(y/32),1,1)) {
+					EntityManager.spawn(new Hovel((int)(x/32) * 32,(int)(y/32) * 32));
 				}
 
 			}
@@ -82,7 +81,7 @@ public class Villager extends Entity {
 
 	public void render(Graphics g) {
 		if (sex==Sex.FEMALE)
-			g.setColor(Color.pink);
+			g.setColor(Color.red);
 		else
 			g.setColor(Color.cyan);
 		g.drawRect(x, y, 1, 1);
