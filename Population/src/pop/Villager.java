@@ -2,6 +2,10 @@ package pop;
 
 import java.awt.Point;
 import java.lang.Math;
+import java.util.ArrayList;
+
+import mapping.Ressource;
+import mapping.Tiles;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -79,23 +83,20 @@ public class Villager extends Entity {
 			if (dice<20)
 				state=State.IDLE;
 		}
-		int [] myTiles = {
-				EntityManager.map.tm.getTileId((int)x/32+1, (int)y/32, 1),
-				EntityManager.map.tm.getTileId((int)x/32-1, (int)y/32, 1),
-				EntityManager.map.tm.getTileId((int)x/32, (int)y/32-1, 1),
-				EntityManager.map.tm.getTileId((int)x/32, (int)y/32+1, 1),
-				};
+
 		
-		Building prodBuild = null;
-		for (int k=0;k<4 && prodBuild==null;k++) {
-				prodBuild = Tiles.reqBuilding(myTiles[k]);
-				k++;
-		}
-		if (prodBuild!=null) {
-			if (dice<=200) {
-				build(prodBuild);
+		for (Ressource res : EntityManager.getRessources() ) {
+			if (distanceTo((Entity) res)<=2) {
+					if (dice<=200) {
+						build(res.getReqBuilding());
+					}
 			}
 		}
+		
+		
+
+		
+		
 		
 		
 		

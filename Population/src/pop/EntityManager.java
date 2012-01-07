@@ -2,8 +2,10 @@ package pop;
 
 import java.util.ArrayList;
 
-import mapping.Land;
 import mapping.Map;
+import mapping.Ressource;
+import mapping.Tiles;
+import mapping.Tree;
 
 public class EntityManager {
 
@@ -50,7 +52,7 @@ public class EntityManager {
 	}
 
 	public static void generateMap() {
-		map = new Map(0,0,620,480);
+		map = new Map();
 		entities.add(map);
 		map.tm.setTileId(4, 4, 1, Tiles.TREE1);
 		spawn(new Tree(4*32,4*32));
@@ -69,6 +71,16 @@ public class EntityManager {
 			}
 		}
 		return true;
+	}
+
+	public static ArrayList<Ressource> getRessources() {
+		ArrayList<Ressource> array = new ArrayList<Ressource>();
+		for (int k=0;k<entities.size();k++) {
+			if (entities.get(k) instanceof Ressource) {
+				array.add((Ressource) entities.get(k));
+			}
+		}
+		return array;
 	}
 
 }

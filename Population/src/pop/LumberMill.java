@@ -1,8 +1,10 @@
 package pop;
 
-public class Lumbermill extends ProductionBuilding {
+import mapping.Tiles;
 
-	public Lumbermill(float x, float y) {
+public class LumberMill extends ProductionBuilding {
+
+	public LumberMill(float x, float y) {
 		super(x, y);
 		height=1;
 		width=1;
@@ -10,7 +12,7 @@ public class Lumbermill extends ProductionBuilding {
 		tiles[0][0]=Tiles.LUMBERMILL;
 	}
 
-	public Lumbermill() {
+	public LumberMill() {
 		this(0, 0);
 	}
 

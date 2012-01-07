@@ -32,6 +32,9 @@ public abstract class Entity {
 		return new Rectangle((int)x,(int)y,width,height);
 		//Width & height will be regulated by the sprite
 	}
+	public int distanceTo(Entity e) {
+		return (int) (Math.abs(getMapX()-e.getMapX())+Math.abs(getMapY()-e.getMapY()));
+	}
 	
 	public float getX() {
 		return x;

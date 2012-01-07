@@ -1,4 +1,8 @@
-package pop;
+package mapping;
+
+import pop.Building;
+import pop.EntityManager;
+import pop.LumberMill;
 
 
 public class Tiles {
@@ -17,7 +21,7 @@ public class Tiles {
 
 	public static Building reqBuilding(int t) {
 		if (EntityManager.map.tm.getTileProperty(t, "ressource", "none").equals("wood"))
-			return new Lumbermill();
+			return new LumberMill();
 		return null;
 	}
 	
