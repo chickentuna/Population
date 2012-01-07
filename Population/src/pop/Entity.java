@@ -27,14 +27,6 @@ public abstract class Entity {
 	public boolean collidesWith(Entity other) {
 		return getBounds().intersects(other.getBounds());
 	}
-	public boolean collisionFree() {
-		for (Entity e : EntityManager.entities) {
-			if (e instanceof Solid && e!=this && collidesWith(e)) {
-				return false;
-			}
-		}
-		return true;
-	}
 	
 	public Rectangle getBounds() {
 		return new Rectangle((int)x,(int)y,width,height);

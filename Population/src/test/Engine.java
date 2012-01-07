@@ -16,8 +16,6 @@ public class Engine extends BasicGame {
 	@Override
 	public void init(GameContainer container) throws SlickException {
 		EntityManager.init();
-		
-		
 		for (int i=0;i<10;i++) {
 			Villager v = (Villager) EntityManager.spawn(new Villager(300f,200f));
 			if ((int)(Math.random()*2) == 0)

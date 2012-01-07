@@ -68,10 +68,34 @@ public class Villager extends Entity {
 		if (state==State.LOITERING) {
 			x+=speed*Math.cos(direction);
 			y-=speed*Math.sin(direction);
+			int myTile = EntityManager.map.tm.getTileId((int)x/32, (int)y/32, 0);
+			int myItem = EntityManager.map.tm.getTileId((int)x/32, (int)y/32, 1);
+			
+			if (Tiles.impracticable(myTile,myItem)) {
+				direction+=180;
+				x+=speed*Math.cos(direction);
+				y-=speed*Math.sin(direction);
+			}
 			if (dice<20)
 				state=State.IDLE;
 		}
-			
+		int [] myTiles = {
+				EntityManager.map.tm.getTileId((int)x/32+1, (int)y/32, 1),
+				EntityManager.map.tm.getTileId((int)x/32-1, (int)y/32, 1),
+				EntityManager.map.tm.getTileId((int)x/32, (int)y/32-1, 1),
+				EntityManager.map.tm.getTileId((int)x/32, (int)y/32+1, 1),
+				};
+		
+		Building prodBuild = null;
+		for (int k=0;k<4 && prodBuild==null;k++) {
+				prodBuild = Tiles.reqBuilding(myTiles[k]);
+				k++;
+		}
+		if (prodBuild!=null) {
+			if (dice<=200) {
+				build(prodBuild);
+			}
+		}
 		
 		
 		

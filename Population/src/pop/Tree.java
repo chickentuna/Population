@@ -1,10 +1,9 @@
 package pop;
 
-public class Tree extends Entity {
+public class Tree extends Entity implements Ressource{
 
-	public Tree(int x, int y) {
+	public Tree(float x, float y) {
 		super(x,y);
 	}
-	
 
 }

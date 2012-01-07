@@ -4,7 +4,7 @@ import java.util.Map;
 
 import mapping.Land;
 
-public abstract class Building extends Entity implements Solid {
+public abstract class Building extends Entity {
 	
 	protected Type type;
 	protected Land requiredLand;
@@ -12,7 +12,7 @@ public abstract class Building extends Entity implements Solid {
 	protected float constructionTime = 0f;
 	protected float constructionProgress = 0f;  
 	
-	public enum Type { HOME, FARM, MINE }
+	public enum Type { HOME, FARM, MINE, LUMBERMILL }
 	
 	public Building(float x, float y) {
 		super(x,y);

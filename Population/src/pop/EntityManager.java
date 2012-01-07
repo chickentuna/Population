@@ -59,15 +59,16 @@ public class EntityManager {
 
 	public static boolean freeArea(int x, int y, int w, int h) {
 		
-		int tile;
+		int tile,floor;
 		for (int k=0;k<w;k++) {
 			for (int i=0;i<h;i++) {
 				tile = map.tm.getTileId(x+k, y+i, 1);
-				
-				if (tile!=0)
+				floor = map.tm.getTileId(x+k, y+i, 0);
+				if (Tiles.impracticable(floor, tile))
 					return false;
 			}
 		}
 		return true;
 	}
+
 }
