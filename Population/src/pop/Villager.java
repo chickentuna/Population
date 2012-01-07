@@ -20,7 +20,7 @@ public class Villager extends Entity {
 	private State state = State.IDLE;
 	private GoodMap carrying;
 	private float speed=0.5f;
-	/*private Behaviour behaviour;*/
+	private double direction = 0;
 
 	public enum Sex { MALE, FEMALE }
 	public enum State { IDLE, WORKING, LOITERING, CARRYING, CARRYINGTO, GOINGTO, BUILDING }
@@ -30,27 +30,52 @@ public class Villager extends Entity {
 		super(x,y);
 		carrying = new GoodMap();
 		state = State.IDLE;
-		/*behaviour = new Behaviour() {
-			@Override
-			public void update() {
-				
-			}
-		};*/
 	}
 
+	/**
+	 * Update method for standard villagers.
+	 * @author Julien
+	 */
 	public void update() {
-		if (home==null) {
-			home = EntityManager.getFreeHome();
-			if (home!=null) {
-				home.addOccupant(this);
-			} else {
-				if (EntityManager.freeArea((int)(x/32),(int)(y/32),1,1)) {
-					EntityManager.spawn(new Hovel((int)(x/32) * 32,(int)(y/32) * 32));
+		/* TODO: implement a probabilistic algorithm to adopt this behaviour:
+		 * 1-Wander around
+		 * 2-Find a home, or build one
+		 * 3-If a resource is spotted, search for nearby production building or build one,
+		 *   then work in it
+		 * 4-Quit working somewhere
+		 * 
+		 * That's all for now.
+		 */
+		
+		double dice = (Math.random()*3000);
+		if (dice<=10) {
+			if (home==null) {
+				home = EntityManager.getFreeHome();
+				if (home!=null) {
+					home.addOccupant(this);
+				} else {
+					build(new Hovel());
+					state=State.IDLE;
 				}
-
 			}
-
 		}
+		if (state==State.IDLE) {
+			if (dice<50) {
+				direction = Math.random()*360;
+				state=State.LOITERING;
+			}
+		}
+		if (state==State.LOITERING) {
+			x+=speed*Math.cos(direction);
+			y-=speed*Math.sin(direction);
+			if (dice<20)
+				state=State.IDLE;
+		}
+			
+		
+		
+		
+		/*
 		if (state==State.IDLE && job==null) {
 			if ((int)(Math.random()*180) == 0) {
 				destination.x=(int) Math.abs((x+Math.random()*200-100));
@@ -65,9 +90,16 @@ public class Villager extends Entity {
 		}
 		if (state==State.LOITERING) {
 			goTo(destination);
-		}
+		}*/
 
 	}
+	private void build(Building b) {
+		if (EntityManager.freeArea((int)(x/32),(int)(y/32),b.getWidth(),b.getHeight())) {
+			b.setLocation((int)(x/32) * 32,(int)(y/32) * 32);
+			EntityManager.spawn(b);
+		}
+	}
+
 	public void goTo(Point desti) {
 		double dir = Math.atan((-(desti.getY()-y)/(desti.getX()-x)));
 		if (desti.getX()<x)

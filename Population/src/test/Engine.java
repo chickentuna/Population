@@ -18,7 +18,7 @@ public class Engine extends BasicGame {
 		EntityManager.init();
 		
 		
-		for (int i=0;i<200;i++) {
+		for (int i=0;i<10;i++) {
 			Villager v = (Villager) EntityManager.spawn(new Villager(300f,200f));
 			if ((int)(Math.random()*2) == 0)
 				v.setSex(Sex.FEMALE);			

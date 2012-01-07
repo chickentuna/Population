@@ -34,5 +34,7 @@ public abstract class Building extends Entity implements Solid {
 
 	public Type getType() {
 		return type;
-	}	
+	}
+
+
 }

@@ -51,7 +51,10 @@ public class EntityManager {
 
 	public static void generateMap() {
 		map = new Map(0,0,620,480);
-		entities.add(map);	
+		entities.add(map);
+		map.tm.setTileId(4, 4, 1, Tiles.TREE1);
+		spawn(new Tree(4*32,4*32));
+		
 	}
 
 	public static boolean freeArea(int x, int y, int w, int h) {

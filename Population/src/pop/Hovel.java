@@ -11,7 +11,10 @@ public class Hovel extends ResidentialBuilding {
 		height=1;
 		width=1;
 		tiles = new int[1][1];
-		tiles[0][0]=314;
+		tiles[0][0]=Tiles.HOVEL;
+	}
+	public Hovel() {
+		this(0,0);
 	}
 	public void render(Graphics g) {
 		

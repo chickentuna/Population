@@ -72,6 +72,9 @@ public abstract class Entity {
 	public int getTileID(int x, int y) {
 		return tiles[x][y];
 	}
-	
+	public void setLocation(int x, int y) {
+		this.x=x;
+		this.y=y;	
+	}	
 	
 }
