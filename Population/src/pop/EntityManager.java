@@ -73,11 +73,12 @@ public class EntityManager {
 		return true;
 	}
 
-	public static ArrayList<Ressource> getRessources() {
-		ArrayList<Ressource> array = new ArrayList<Ressource>();
+
+	public static ArrayList<Entity> get(Class clazz) {
+		ArrayList<Entity> array = new ArrayList<Entity>();
 		for (int k=0;k<entities.size();k++) {
-			if (entities.get(k) instanceof Ressource) {
-				array.add((Ressource) entities.get(k));
+			if (clazz.isInstance(entities.get(k))) {
+				array.add(entities.get(k));
 			}
 		}
 		return array;
