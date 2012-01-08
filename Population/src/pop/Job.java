@@ -5,7 +5,7 @@ public class Job {
 	private Building workplace;
 	private Type type;
 
-	public enum Type { NONE, FARMER, MINER, COURTESAN }
+	public enum Type { NONE, FARMER, MINER, COURTESAN, LUMBERJACK }
 	
 	@Override
 	public String toString() {
@@ -33,4 +33,16 @@ public class Job {
 	public Building getWorkplace() {
 		return workplace;
 	}
+	
+	public static Behaviour getBehaviour(Type type) {
+		if (type==Type.LUMBERJACK) {
+			return new Behaviour() {
+			@Override
+			public void update(Villager v) {
+				//find a tree
+			}};
+		}
+		return null;
+	}
+	
 }

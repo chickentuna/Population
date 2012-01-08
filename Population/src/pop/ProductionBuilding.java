@@ -24,6 +24,18 @@ public abstract class ProductionBuilding extends Building {
 		state = State.IDLE;
 	}
 	
+	
+	public boolean employ(Villager v) {
+		boolean flag = false;
+		for (Position pos : workforce) {
+			if (pos.employ(v)==1) {
+				flag=true;
+				break;
+			}
+		}
+		return flag;
+	}
+	
 	public void step() {
 		if (state == State.ACTIVE) {
 			timer+=1;
@@ -88,7 +100,7 @@ public abstract class ProductionBuilding extends Building {
 	
 	public boolean isFull() {
 		for (Position pos : workforce) {
-			if (!pos.isReady()) {
+			if (!pos.isFull()) {
 				return false;
 			}
 		}

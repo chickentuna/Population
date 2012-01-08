@@ -54,8 +54,15 @@ public class EntityManager {
 	public static void generateMap() {
 		map = new Map();
 		entities.add(map);
-		map.tm.setTileId(4, 4, 1, Tiles.TREE1);
-		spawn(new Tree(4*32,4*32));
+		for (int k=0;k<map.tm.getWidth();k++) {
+			for (int i=0;i<map.tm.getHeight();i++) {
+				if (map.tm.getTileId(k, i, 1)==Tiles.TREE1) {
+					spawn(new Tree(k*32,i*32));
+				}
+			}
+		}
+		
+		
 		
 	}
 
@@ -66,7 +73,7 @@ public class EntityManager {
 			for (int i=0;i<h;i++) {
 				tile = map.tm.getTileId(x+k, y+i, 1);
 				floor = map.tm.getTileId(x+k, y+i, 0);
-				if (Tiles.impracticable(floor, tile))
+				if (tile!=0 || Tiles.impracticable(floor, tile))
 					return false;
 			}
 		}

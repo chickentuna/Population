@@ -92,22 +92,26 @@ public class Villager extends Entity {
 
 		for (Entity res : EntityManager.get(Ressource.class)) {
 			if (distanceTo(res) <= 2) {
-				if (dice <= 20) {
-					build(((Ressource) res).getReqBuilding());
+				if (dice <= 2) {
+					ProductionBuilding bui = ((Ressource) res).getReqBuilding();
+					//Find production building
+					ProductionBuilding goal = null;
+					for (Entity pb : EntityManager.get(bui.getClass())) {
+						if (distanceTo(pb) <= 5 && !((ProductionBuilding)pb).isFull()) {
+							goal=(ProductionBuilding) pb;
+							break;
+						} 							
+					}
+					if (goal!=null) {
+						goal.employ(this);
+					} else {
+						build(bui);
+					}
+
+
 				}
 			}
 		}
-
-		/*
-		 * if (state==State.IDLE && job==null) { if ((int)(Math.random()*180) ==
-		 * 0) { destination.x=(int) Math.abs((x+Math.random()*200-100));
-		 * destination.y=(int) Math.abs((y+Math.random()*200-100)); if
-		 * (destination.x>=640) destination.x-=200; if (destination.y>=480)
-		 * destination.y-=200;
-		 * 
-		 * state=State.LOITERING; } } if (state==State.LOITERING) {
-		 * goTo(destination); }
-		 */
 
 	}
 
@@ -132,10 +136,14 @@ public class Villager extends Entity {
 	}
 
 	public void render(Graphics g) {
-		if (sex == Sex.FEMALE)
-			g.setColor(Color.red);
-		else
-			g.setColor(Color.cyan);
+		if (job!=null)
+			g.setColor(Color.magenta);
+		else {
+			if (sex == Sex.FEMALE)
+				g.setColor(Color.red);
+			else
+				g.setColor(Color.cyan);
+		}
 		g.drawRect(x, y, 1, 1);
 		g.setColor(Color.white);
 	}

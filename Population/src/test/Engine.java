@@ -19,11 +19,13 @@ public class Engine extends BasicGame {
 		for (int i=0;i<10;i++) {
 			Villager v = (Villager) EntityManager.spawn(new Villager(300f,200f));
 			if ((int)(Math.random()*2) == 0)
-				v.setSex(Sex.FEMALE);			
+				v.setSex(Sex.FEMALE);
 		}
-		
-		
-		
+
+	}
+	@Override
+	public void keyPressed(int i, char c) {
+		System.out.println(i+" & "+c);
 	}
 
 	@Override
@@ -31,8 +33,10 @@ public class Engine extends BasicGame {
 		for (int k=0;k<EntityManager.size();k++) {
 			EntityManager.get(k).update();
 		}
+		
 	}
 
+	
 	@Override
 	public void render(GameContainer container, Graphics g) throws SlickException {
 		for (Entity e : EntityManager.entities) {

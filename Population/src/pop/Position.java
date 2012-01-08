@@ -15,12 +15,7 @@ public class Position {
 		this.amount = amount;
 	}
 	
-	public boolean isReady() {
-		for (Villager v : workers) {
-			if (v.getJob() != job) {
-				return false;
-			}
-		}
+	public boolean isFull() {
 		return workers.size() == amount;
 	}
 	

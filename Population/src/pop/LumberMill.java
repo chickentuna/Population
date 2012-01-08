@@ -18,7 +18,7 @@ public class LumberMill extends ProductionBuilding {
 
 	@Override
 	public void initializeWorkforce() {
-		// TODO Auto-generated method stub
+		workforce.add(new Position(this,Job.Type.LUMBERJACK, 5));	
 
 	}
 

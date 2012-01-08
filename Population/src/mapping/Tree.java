@@ -1,8 +1,8 @@
 package mapping;
 
-import pop.Building;
 import pop.Entity;
 import pop.LumberMill;
+import pop.ProductionBuilding;
 
 public class Tree extends Entity implements Ressource{
 
@@ -11,7 +11,7 @@ public class Tree extends Entity implements Ressource{
 	}
 
 	@Override
-	public Building getReqBuilding() {
+	public ProductionBuilding getReqBuilding() {
 		return new LumberMill();
 	}
 

@@ -11,7 +11,7 @@ public class ResidentialBuilding extends Building {
 		super(x,y);
 		this.capacity = capacity;
 		occupants = new LinkedList<Villager>();
-		type = Type.HOME;
+		//type = Type.HOME;
 	}
 
 	public boolean addOccupant(Villager occupant) {
