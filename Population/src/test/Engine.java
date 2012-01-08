@@ -33,11 +33,7 @@ public class Engine extends BasicGame {
 		if (i==28) {
 			Cheat.perform(cheat);
 			cheat="";
-		}
-			
-		
-		System.out.println(cheat);
-		
+		}	
 	}
 
 	@Override

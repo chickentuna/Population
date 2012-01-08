@@ -11,10 +11,12 @@ public class EntityManager {
 
 	public static ArrayList<Entity> entities;
 	public static Map map;
+	public static GoodMap ressources;
 
 	public static void init() {
 		entities = new ArrayList<Entity>();
 		generateMap();
+		ressources = new GoodMap(Good.LUMBER,200);
 	}
 
 	public static Entity spawn(Entity o) {
