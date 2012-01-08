@@ -9,14 +9,17 @@ import pop.Villager.Sex;
 import pop.*;
 
 public class Engine extends BasicGame {
+	public String cheat;
+	
 	public Engine() {
 		super("Population");
+		cheat="";
 	}
 
 	@Override
 	public void init(GameContainer container) throws SlickException {
 		EntityManager.init();
-		for (int i=0;i<10;i++) {
+		for (int i=0;i<0;i++) {
 			Villager v = (Villager) EntityManager.spawn(new Villager(300f,200f));
 			if ((int)(Math.random()*2) == 0)
 				v.setSex(Sex.FEMALE);
@@ -25,7 +28,16 @@ public class Engine extends BasicGame {
 	}
 	@Override
 	public void keyPressed(int i, char c) {
-		System.out.println(i+" & "+c);
+		if (Character.isLetter(c))
+			cheat=cheat+c;
+		if (i==28) {
+			Cheat.perform(cheat);
+			cheat="";
+		}
+			
+		
+		System.out.println(cheat);
+		
 	}
 
 	@Override
