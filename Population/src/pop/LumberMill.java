@@ -10,6 +10,9 @@ public class LumberMill extends ProductionBuilding {
 		width=1;
 		tiles = new int[1][1];
 		tiles[0][0]=Tiles.LUMBERMILL;
+		setProduction(new Production(new GoodMap(Good.PLANK,50))
+		.setProductionTime(200f)
+		.setInput(new GoodMap(Good.LOG,1)));
 	}
 
 	public LumberMill() {

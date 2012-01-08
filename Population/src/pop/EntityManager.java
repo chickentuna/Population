@@ -17,6 +17,7 @@ public class EntityManager {
 		entities = new ArrayList<Entity>();
 		generateMap();
 		ressources = new GoodMap(Good.LUMBER,200);
+		ressources.put(Good.WHEAT, 200);
 	}
 
 	public static Entity spawn(Entity o) {

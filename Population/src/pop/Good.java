@@ -5,6 +5,12 @@ public enum Good {
 	 NONE, 
 	 WHEAT, 
 	 STONE, 
-	 LUMBER
+	 PLANK, LOG;
+	 
+	 public boolean isFood(Good type) {
+		 if (type == WHEAT)
+			 return true;
+		 return false;
+	 }
 	
 }
