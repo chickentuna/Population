@@ -16,7 +16,7 @@ public class EntityManager {
 	public static void init() {
 		entities = new ArrayList<Entity>();
 		generateMap();
-		ressources = new GoodMap(Good.LUMBER,200);
+		ressources = new GoodMap(Good.PLANK,200);
 		ressources.put(Good.WHEAT, 200);
 	}
 

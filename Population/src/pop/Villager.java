@@ -106,6 +106,7 @@ public class Villager extends Entity {
 						goal.employ(this);
 					} else {
 						build(bui);
+						bui.employ(this);
 					}
 
 
@@ -136,14 +137,11 @@ public class Villager extends Entity {
 	}
 
 	public void render(Graphics g) {
-		if (job!=null)
-			g.setColor(Color.magenta);
-		else {
-			if (sex == Sex.FEMALE)
-				g.setColor(Color.red);
-			else
-				g.setColor(Color.cyan);
-		}
+		if (sex == Sex.FEMALE)
+			g.setColor(Color.red);
+		else
+			g.setColor(Color.black);
+		
 		g.drawRect(x, y, 1, 1);
 		g.setColor(Color.white);
 	}

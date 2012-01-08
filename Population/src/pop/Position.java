@@ -22,7 +22,7 @@ public class Position {
 	public int employ(Villager... v) {
 		int counter = 0;
 		for (Villager candidate : v) {
-			if (workers.size()<amount) {
+			if (workers.size()<amount && candidate.getJob()==null) {
 				workers.add(candidate);
 				candidate.setJob(job);
 				counter++;
