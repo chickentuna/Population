@@ -23,7 +23,8 @@ public abstract class Entity {
 	public Entity() {
 		this(0,0);
 	}
-	
+	public void destroy() {
+	}
 	public boolean collidesWith(Entity other) {
 		return getBounds().intersects(other.getBounds());
 	}
@@ -70,6 +71,6 @@ public abstract class Entity {
 	public void setLocation(int x, int y) {
 		this.x=x;
 		this.y=y;	
-	}	
+	}
 	
 }

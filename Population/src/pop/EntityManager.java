@@ -33,6 +33,7 @@ public class EntityManager {
 	}
 
 	public static boolean unspawn(Entity o) {
+		o.destroy();
 		return entities.remove(o);
 	}
 

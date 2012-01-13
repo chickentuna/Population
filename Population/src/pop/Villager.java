@@ -2,15 +2,10 @@ package pop;
 
 import java.awt.Point;
 import java.lang.Math;
-import java.util.ArrayList;
-
 import mapping.Ressource;
 import mapping.Tiles;
-
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
-
-import strategy.Strategy;
 
 public class Villager extends Entity {
 
@@ -163,7 +158,14 @@ public class Villager extends Entity {
 		}
 
 	}
-
+	
+	public void destroy() {
+		if (home!=null)
+			home.removeOccupant(this);
+		if (job!=null)
+			((ProductionBuilding) job.getWorkplace()).unemploy(this);
+		
+	}
 	public Sex getSex() {
 		return sex;
 	}

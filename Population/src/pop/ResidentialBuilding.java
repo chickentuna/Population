@@ -22,6 +22,10 @@ public class ResidentialBuilding extends Building {
 		}
 		return false;
 	}
+	public boolean removeOccupant(Villager occupant) {
+		return occupants.remove(occupant);
+	}
+	
 	
 	public boolean spaceLeft() {
 		return occupants.size() < capacity;

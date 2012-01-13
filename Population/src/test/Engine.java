@@ -14,8 +14,8 @@ public class Engine extends BasicGame {
 	public Engine() {
 		super("Population");
 		cheat="";
-	}
-
+	}	
+	
 	@Override
 	public void init(GameContainer container) throws SlickException {
 		EntityManager.init();

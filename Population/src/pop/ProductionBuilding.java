@@ -35,6 +35,15 @@ public abstract class ProductionBuilding extends Building {
 		}
 		return flag;
 	}
+
+	public boolean unemploy(Villager v) {
+		for (Position pos : workforce) {
+			if (pos.getWorkers().remove(v)) {
+				return true;
+			}
+		}
+		return false;
+	}
 	
 	public void step() {
 		if (state == State.ACTIVE) {
@@ -147,5 +156,8 @@ public abstract class ProductionBuilding extends Building {
 		this.production = production;
 		return this;
 	}
+
+
+
 	
 }
