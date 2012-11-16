@@ -1,4 +1,4 @@
-package pop;
+package kernel;
 
 import java.awt.Rectangle;
 

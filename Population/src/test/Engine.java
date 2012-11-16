@@ -1,11 +1,13 @@
 package test;
 
+import kernel.Entity;
+import kernel.EntityManager;
+
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.AppGameContainer;
-import pop.*;
 
 public class Engine extends BasicGame {
 	public String cheat;
@@ -21,6 +23,7 @@ public class Engine extends BasicGame {
 		
 
 	}
+	
 	@Override
 	public void keyPressed(int i, char c) {
 		if (Character.isLetter(c))
@@ -36,7 +39,6 @@ public class Engine extends BasicGame {
 		for (int k=0;k<EntityManager.size();k++) {
 			EntityManager.get(k).update();
 		}
-		
 	}
 
 	
@@ -50,7 +52,7 @@ public class Engine extends BasicGame {
 	public static void main(String[] args) {
 		try {
 			AppGameContainer app = new AppGameContainer(new Engine());
-			app.setTargetFrameRate(60);
+			app.setTargetFrameRate(50);
 			app.setDisplayMode(640, 480, false);
 			app.start();
 			} catch (SlickException e) {
