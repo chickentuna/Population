@@ -5,7 +5,6 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.AppGameContainer;
-import pop.Villager.Sex;
 import pop.*;
 
 public class Engine extends BasicGame {
@@ -19,11 +18,7 @@ public class Engine extends BasicGame {
 	@Override
 	public void init(GameContainer container) throws SlickException {
 		EntityManager.init();
-		for (int i=0;i<0;i++) {
-			Villager v = (Villager) EntityManager.spawn(new Villager(300f,200f));
-			if ((int)(Math.random()*2) == 0)
-				v.setSex(Sex.FEMALE);
-		}
+		
 
 	}
 	@Override
