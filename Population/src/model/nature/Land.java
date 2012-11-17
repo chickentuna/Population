@@ -1,4 +1,4 @@
-package nature;
+package model.nature;
 
 public enum Land {
 	BEACH(Produce.CRAB),
