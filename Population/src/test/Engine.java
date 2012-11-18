@@ -2,6 +2,7 @@ package test;
 
 import kernel.Entity;
 import kernel.EntityManager;
+import model.WorldManager;
 
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
@@ -20,6 +21,7 @@ public class Engine extends BasicGame {
 	@Override
 	public void init(GameContainer container) throws SlickException {
 		EntityManager.init();
+		WorldManager.init();
 		
 
 	}
