@@ -30,7 +30,7 @@ public class EntityManager {
 		return entities.get(k);
 	}
 
-	public static ArrayList<Entity> get(Class clazz) {
+	public static ArrayList<Entity> get(Class<?> clazz) {
 		ArrayList<Entity> array = new ArrayList<Entity>();
 		for (int k=0;k<entities.size();k++) {
 			if (clazz.isInstance(entities.get(k))) {
@@ -39,5 +39,5 @@ public class EntityManager {
 		}
 		return array;
 	}
-
+	
 }

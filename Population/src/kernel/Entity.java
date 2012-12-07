@@ -18,11 +18,10 @@ public abstract class Entity {
 	public Entity(float x, float y) {
 		this(x,y,0,0);
 	}
-	public Entity() {
-		this(0,0);
-	}
+	
 	public void destroy() {
 	}
+	
 	public boolean collidesWith(Entity other) {
 		return getBounds().intersects(other.getBounds());
 	}
@@ -38,12 +37,13 @@ public abstract class Entity {
 	public float getY() {
 		return y;
 	}
-	public void step() {
-	}
+	
 	public void update() {
 	}
+	
 	public void render(Graphics g) {
 	}
+	
 	public int getWidth() {
 		return width;
 	}

@@ -2,7 +2,8 @@ package test;
 
 import kernel.Entity;
 import kernel.EntityManager;
-import model.WorldManager;
+import kernel.WorldManager;
+import model.Villager;
 
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
@@ -22,7 +23,7 @@ public class Engine extends BasicGame {
 	public void init(GameContainer container) throws SlickException {
 		EntityManager.init();
 		WorldManager.init();
-		
+		EntityManager.spawn(new Villager(125,125));
 
 	}
 	
@@ -46,6 +47,7 @@ public class Engine extends BasicGame {
 	
 	@Override
 	public void render(GameContainer container, Graphics g) throws SlickException {
+		WorldManager.render(g);
 		for (Entity e : EntityManager.entities) {
 			e.render(g);
 		}		
@@ -54,7 +56,7 @@ public class Engine extends BasicGame {
 	public static void main(String[] args) {
 		try {
 			AppGameContainer app = new AppGameContainer(new Engine());
-			app.setTargetFrameRate(50);
+			app.setTargetFrameRate(30);
 			app.setDisplayMode(640, 480, false);
 			app.start();
 			} catch (SlickException e) {
