@@ -50,7 +50,7 @@ public class Engine extends BasicGame {
 		WorldManager.render(g);
 		for (Entity e : EntityManager.entities) {
 			e.render(g);
-		}		
+		}
 	}
 
 	public static void main(String[] args) {
