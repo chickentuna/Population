@@ -6,17 +6,18 @@ import java.io.IOException;
 
 import model.World;
 import model.nature.Land;
+import static model.nature.Land.*;
 
 public class WorldParser {
 	
 	private static Land getLandFromId(int i) {
 		Land l = null;
 		switch (i) {
-		case 0 : l = Land.PLAIN; break;
-		case 1 : l = Land.SEA; break;
-		case 2 : l = Land.BEACH; break;
-		case 3 : l = Land.WOOD; break;
-		case 4 : l = Land.HILL; break;
+		case 0 : l = PLAIN; break;
+		case 1 : l = SEA; break;
+		case 2 : l = BEACH; break;
+		case 3 : l = WOOD; break;
+		case 4 : l = HILL; break;
 		}
 		return l;
 	}
