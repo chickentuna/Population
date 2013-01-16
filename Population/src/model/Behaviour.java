@@ -1,5 +1,11 @@
 package model;
 
+import java.util.Iterator;
+import java.util.LinkedList;
+
+import model.nature.Land;
+
+import static model.VState.*;
 
 public interface Behaviour {
 	
@@ -7,20 +13,38 @@ public interface Behaviour {
 
 	public static final Behaviour STANDARD = new Behaviour() {
 		public void execute(Villager owner) {
-			if (owner.state == State.IDLE) {
+			if (owner.state == IDLE) {
 				double percent = Math.random() * 100;
 				if (percent < 4) {
-					owner.state = State.WANDERING;
+					owner.state = WANDERING;
 					owner.direction = (float) Math.random() * 360;
 				}
-			} else if (owner.state == State.WANDERING) {
+			} else if (owner.state == WANDERING) {
 				double percent = Math.random() * 100;
 				if (percent < 5) {
-					owner.state = State.IDLE;
+					owner.state = IDLE;
 				}
 				owner.step_foward();
 			}
 		}
 	};
+	
+	public static final Behaviour CURIOSITY = new Behaviour() {
+		public void execute(Villager owner) {
+			LinkedList<Discoverable> surroundings  = owner.getSurroundings();
+			Iterator<Discoverable> it = surroundings.iterator();
+			while (it.hasNext()) {
+				it.next().poll();
+			}
+		}
+	};
+	
+	public static final Behaviour LUMBERJACK = new Behaviour() {
+		public void execute(Villager owner) {
+			
+		}
+	};
+	
+	
 	
 }

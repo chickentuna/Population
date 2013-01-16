@@ -31,6 +31,10 @@ public abstract class Entity {
 		//Width & height will be regulated by the sprite
 	}
 	
+	public Point getLocation() {
+		return new Point(getX(),getY());
+	}
+	
 	public float getX() {
 		return x;
 	}

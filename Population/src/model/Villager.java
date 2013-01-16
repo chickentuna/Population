@@ -12,12 +12,17 @@ import org.newdawn.slick.Graphics;
 import kernel.Entity;
 import kernel.WorldManager;
 
+import static model.VState.*;
+
 public class Villager extends Entity {
 
-	public static final int speed = 1;
+	public static final int SPEED = 1;
+	private static final int VISIBILITY_RANGE = 2;
+	
+	
 
 	private List<Behaviour> behaviours;
-	protected State state = State.IDLE;
+	protected VState state = IDLE;
 	protected float direction = 0;
 
 	public Villager(int x, int y) {
@@ -29,9 +34,9 @@ public class Villager extends Entity {
 
 	
 	protected void step_foward() {
-		float new_x = (float) (x + speed * Math.cos(direction));
-		float new_y = (float) (y - speed * Math.sin(direction));
-		Land l = WorldManager.getLand(x, y);
+		float new_x = (float) (x + SPEED * Math.cos(direction));
+		float new_y = (float) (y - SPEED * Math.sin(direction));
+		Land l = WorldManager.getLandAt(x, y);
 		if (l != null) {
 			x = new_x;
 			y = new_y;
@@ -48,6 +53,15 @@ public class Villager extends Entity {
 	public void render(Graphics g) {
 		g.setColor(Color.red);
 		g.drawRect(x, y, 1, 1);
+	}
+
+
+	public LinkedList<Discoverable> getSurroundings() {
+		LinkedList<Discoverable> surroundings = new LinkedList<>();
+		surroundings.addAll(WorldManager.getLandsAround(this, VISIBILITY_RANGE));
+		
+		
+		return surroundings;
 	}
 
 }

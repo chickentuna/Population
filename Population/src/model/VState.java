@@ -1,6 +1,6 @@
 package model;
 
-public enum State {
+public enum VState {
 	IDLE, WANDERING;
 
 }
