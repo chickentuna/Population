@@ -72,31 +72,25 @@ public class WorldManager {
 	}
 
 	public static Collection<? extends Discoverable> getLandsAround(Entity entity, int visibilityRange) {
-		LinkedList<Land>//TODO
-		LinkedList<Point> visibilityLimits = new LinkedList<>();
-		Point p = entity.getLocation();
+		LinkedList<Land> lands = new LinkedList<Land>();
+		Point centre = entity.getLocation();
+				
+		int offset = visibilityRange*world.getLandSize();
+		int debutX =  (int) (centre.getX() - offset);
+		int debutY =  (int) (centre.getY() - offset);
 		
-		visibilityLimits.addAll(around(p,visibilityRange));
-		Iterator<Point> it = visibilityLimits.iterator();
-		while (it.hasNext()) {
-			it.next();
+		for (int x = debutX ; x < centre.getX() + offset; x++) {
+			for (int y = debutY ; y < centre.getY() + offset; y++) {
+				Point p = new Point(x,y);
+				if (Point.manhattanDistance(p,centre) <= visibilityRange) {
+					Land land = getLandAt(p);
+					if (land != null)
+						lands.add(land);
+				}
+			}
 		}
-		getLandAt(entity.getLocation());
-		
-		return null;
-	}
-
-	private static Collection<Point> around(Point centre, int distance) {
-		LinkedList<Point> points = new LinkedList<>();
-		if (distance==0)
-			points.add(centre);
-		else {
-			points.add(centre.withOffset(world.getLandSize(),0));
-			points.add(centre.withOffset(-world.getLandSize(),0));
-			points.add(centre.withOffset(0,world.getLandSize()));
-			points.add(centre.withOffset(0,-world.getLandSize()));
-		}
-		return points;
+				
+		return lands;
 	}
 
 

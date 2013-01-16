@@ -3,6 +3,8 @@ package model;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import kernel.DiscoveryManager;
+
 import model.nature.Land;
 
 import static model.VState.*;
@@ -34,7 +36,7 @@ public interface Behaviour {
 			LinkedList<Discoverable> surroundings  = owner.getSurroundings();
 			Iterator<Discoverable> it = surroundings.iterator();
 			while (it.hasNext()) {
-				it.next().poll();
+				DiscoveryManager.addDiscovery(it.next());
 			}
 		}
 	};

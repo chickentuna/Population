@@ -1,7 +1,5 @@
 package kernel;
 
-import java.util.Collection;
-
 public class Point {
 	private final float x;
 	private final float y;
@@ -21,6 +19,11 @@ public class Point {
 
 	public Point withOffset(int amountX, int amountY) {
 		return new Point(x+amountX,y+amountY);
+	}
+	
+	public static int manhattanDistance(Point p1, Point p2) {
+		return (int) (Math.abs(p1.getX() - p2.getX()) + Math.abs(p1.getY() - p2.getY()));
+		
 	}
 	
 }

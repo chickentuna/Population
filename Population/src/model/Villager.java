@@ -31,6 +31,10 @@ public class Villager extends Entity {
 		behaviours.add(Behaviour.STANDARD);
 
 	}
+	
+	public void adoptBehaviour(Behaviour b) {
+		behaviours.add(b);
+	}
 
 	
 	protected void step_foward() {

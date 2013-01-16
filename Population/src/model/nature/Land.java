@@ -1,6 +1,8 @@
 package model.nature;
 
-public enum Land {
+import model.Discoverable;
+
+public enum Land implements Discoverable {
 	BEACH(Produce.CRAB),
 	PLAIN(),
 	SEA(),
@@ -13,7 +15,9 @@ public enum Land {
 	Land(Produce... produce) {
 		this.produce = produce;
 	}
-	
-	
+
+	public String getIdentifier() {
+		return this.name();
+	}
 	
 }

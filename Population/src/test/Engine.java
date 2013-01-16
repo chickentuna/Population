@@ -3,6 +3,7 @@ package test;
 import kernel.Entity;
 import kernel.EntityManager;
 import kernel.WorldManager;
+import model.Behaviour;
 import model.Villager;
 
 import org.newdawn.slick.BasicGame;
@@ -23,7 +24,9 @@ public class Engine extends BasicGame {
 	public void init(GameContainer container) throws SlickException {
 		EntityManager.init();
 		WorldManager.init();
-		EntityManager.spawn(new Villager(125,125));
+		Villager v = new Villager(125,125);
+		EntityManager.spawn(v);
+		v.adoptBehaviour(Behaviour.CURIOSITY);
 
 	}
 	
