@@ -33,7 +33,7 @@ public interface Behaviour {
 	
 	public static final Behaviour CURIOSITY = new Behaviour() {
 		public void execute(Villager owner) {
-			LinkedList<Discoverable> surroundings  = owner.getSurroundings();
+			LinkedList<Discoverable> surroundings = owner.getSurroundings();
 			Iterator<Discoverable> it = surroundings.iterator();
 			while (it.hasNext()) {
 				DiscoveryManager.addDiscovery(it.next());

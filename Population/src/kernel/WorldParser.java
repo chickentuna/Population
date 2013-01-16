@@ -1,8 +1,10 @@
 package kernel;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.StringReader;
 
 import model.World;
 import model.nature.Land;
@@ -22,8 +24,30 @@ public class WorldParser {
 		return l;
 	}
 	
-	public static World parseWorld(String str) throws IOException {
-		BufferedReader f = new BufferedReader(new FileReader("ressource\\"+str));
+	public static World parseWorld(File file) throws IOException {
+		BufferedReader f = new BufferedReader(new FileReader("ressource\\"+file));
+		String buf;
+		int ratio, width, height;
+		
+		ratio = Integer.parseInt(nextLine(f).trim());
+		width = Integer.parseInt(nextLine(f).trim());
+		height = Integer.parseInt(nextLine(f).trim());
+		World world = new World(width, height);
+		
+		for (int y = 0; y < (height)/ratio; y++) {
+			buf = nextLine(f);
+			for (int x = 0; x < (width)/ratio; x++) {
+				int id = Integer.parseInt(buf.substring(x*ratio, x*ratio+ratio));
+				world.set(x, y, getLandFromId(id));
+			}
+		}
+		
+		return world;
+	}
+	
+	//TODO: Refactor
+	public static World parseWorld(String content) throws IOException {
+		BufferedReader f = new BufferedReader(new StringReader(content));
 		String buf;
 		int ratio, width, height;
 		

@@ -17,9 +17,8 @@ import static model.VState.*;
 public class Villager extends Entity {
 
 	public static final int SPEED = 1;
-	private static final int VISIBILITY_RANGE = 2;
-	
-	
+	public static final int VISIBILITY_RANGE = 2;
+	//TODO: externalize
 
 	private List<Behaviour> behaviours;
 	protected VState state = IDLE;
@@ -28,8 +27,7 @@ public class Villager extends Entity {
 	public Villager(int x, int y) {
 		super((float) x, (float) y);
 		behaviours = new LinkedList<Behaviour>();
-		behaviours.add(Behaviour.STANDARD);
-
+	
 	}
 	
 	public void adoptBehaviour(Behaviour b) {
@@ -63,6 +61,7 @@ public class Villager extends Entity {
 	public LinkedList<Discoverable> getSurroundings() {
 		LinkedList<Discoverable> surroundings = new LinkedList<>();
 		surroundings.addAll(WorldManager.getLandsAround(this, VISIBILITY_RANGE));
+		
 		
 		
 		return surroundings;

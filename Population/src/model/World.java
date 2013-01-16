@@ -15,7 +15,7 @@ public class World {
 	}
 
 	public Land get(int x, int y) {
-		if (x > getWidth() || y > getHeight())
+		if (x >= getWidth() || y >= getHeight() || x < 0 || y < 0)
 			return null;
 		return terrain[x][y];
 	}

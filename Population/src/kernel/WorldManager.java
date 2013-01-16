@@ -1,6 +1,7 @@
 package kernel;
 
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
@@ -19,23 +20,41 @@ public class WorldManager {
 
 	private static final String world_file = "test.world";
 
-	public static Land getLandAt(float x, float y) {
-		int s = world.getLandSize();
-		return world.get((int) x / s, (int) y / s);
+	public static void init(String debug) {
+		try {
+			world = WorldParser.parseWorld(
+					"1\n" +
+					"3\n" +
+					"3\n" +
+					"000\n" +
+					"111\n" +
+					"222"
+					
+					);
+		} catch (IOException e) {
+			world = null;
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public static void init() {
+		try {
+			world = WorldParser.parseWorld(new File(world_file));
+		} catch (IOException e) {
+			world = null;
+			e.printStackTrace();
+		}
+
 	}
 
 	public static Land getLandAt(Point p) {
 		return getLandAt(p.getX(),p.getY());
 	}
 
-	public static void init() {
-		try {
-			world = WorldParser.parseWorld(world_file);
-		} catch (IOException e) {
-			world = null;
-			e.printStackTrace();
-		}
-
+	public static Land getLandAt(float x, float y) {
+		int s = world.getLandSize();
+		return world.get((int) x / s, (int) y / s);
 	}
 
 	public static void render(Graphics g) {
@@ -75,23 +94,31 @@ public class WorldManager {
 		LinkedList<Land> lands = new LinkedList<Land>();
 		Point centre = entity.getLocation();
 				
-		int offset = visibilityRange*world.getLandSize();
+		int offset = visibilityRange * world.getLandSize();
 		int debutX =  (int) (centre.getX() - offset);
 		int debutY =  (int) (centre.getY() - offset);
 		
-		for (int x = debutX ; x < centre.getX() + offset; x++) {
-			for (int y = debutY ; y < centre.getY() + offset; y++) {
+		for (int x = debutX ; x <= centre.getX() + offset; x+=world.getLandSize()) {
+			for (int y = debutY ; y <= centre.getY() + offset; y+=world.getLandSize()) {
 				Point p = new Point(x,y);
-				if (Point.manhattanDistance(p,centre) <= visibilityRange) {
+				if (Point.manhattanDistance(p,centre) <= visibilityRange*world.getLandSize()) {
 					Land land = getLandAt(p);
-					if (land != null)
+					if (land != null) {
 						lands.add(land);
+					}
 				}
 			}
 		}
 				
 		return lands;
 	}
+
+	public static World getWorld() {
+		return world;
+		
+	}
+
+	
 
 
 

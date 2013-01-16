@@ -1,4 +1,4 @@
-package test;
+package io;
 
 import kernel.Entity;
 import kernel.EntityManager;

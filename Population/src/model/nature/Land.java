@@ -20,4 +20,8 @@ public enum Land implements Discoverable {
 		return this.name();
 	}
 	
+	public String toString() {
+		return this.name();
+	}
+
 }
