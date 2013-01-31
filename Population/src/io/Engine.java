@@ -1,8 +1,8 @@
 package io;
 
-import kernel.Entity;
-import kernel.EntityManager;
-import kernel.WorldManager;
+import kernel.managers.EntityManager;
+import kernel.managers.Managers;
+import kernel.managers.WorldManager;
 import model.Behaviour;
 import model.Villager;
 
@@ -13,6 +13,8 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.AppGameContainer;
 
 public class Engine extends BasicGame {
+	public static final int TARGET_FPS = 30;
+	
 	public String cheat;
 	
 	public Engine() {
@@ -22,10 +24,10 @@ public class Engine extends BasicGame {
 	
 	@Override
 	public void init(GameContainer container) throws SlickException {
-		EntityManager.init();
-		WorldManager.init();
+		
+		Managers.cleanInit();
 		Villager v = new Villager(125,125);
-		EntityManager.spawn(v);
+		EntityManager.get().spawn(v);
 		v.adoptBehaviour(Behaviour.CURIOSITY);
 
 	}
@@ -42,24 +44,20 @@ public class Engine extends BasicGame {
 
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException {
-		for (int k=0;k<EntityManager.size();k++) {
-			EntityManager.get(k).update();
-		}
+		EntityManager.get().update();
 	}
 
 	
 	@Override
 	public void render(GameContainer container, Graphics g) throws SlickException {
-		WorldManager.render(g);
-		for (Entity e : EntityManager.entities) {
-			e.render(g);
-		}
+		WorldManager.get().render(g);
+		EntityManager.get().render(g);
 	}
 
 	public static void main(String[] args) {
 		try {
 			AppGameContainer app = new AppGameContainer(new Engine());
-			app.setTargetFrameRate(30);
+			app.setTargetFrameRate(TARGET_FPS);
 			app.setDisplayMode(640, 480, false);
 			app.start();
 			} catch (SlickException e) {

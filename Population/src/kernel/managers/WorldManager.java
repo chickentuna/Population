@@ -1,11 +1,14 @@
-package kernel;
+package kernel.managers;
 
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.LinkedList;
+
+import kernel.Entity;
+import kernel.Point;
+import kernel.WorldParser;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -16,29 +19,23 @@ import model.World;
 import model.nature.Land;
 
 public class WorldManager {
-	private static World world;
+	private final String world_file = "test.world";
+	
+	private World world;
+	private static WorldManager self = null;
 
-	private static final String world_file = "test.world";
-
-	public static void init(String debug) {
-		try {
-			world = WorldParser.parseWorld(
-					"1\n" +
-					"3\n" +
-					"3\n" +
-					"000\n" +
-					"111\n" +
-					"222"
-					
-					);
-		} catch (IOException e) {
-			world = null;
-			e.printStackTrace();
+	public static WorldManager get() {
+		if (self == null) {
+			self = new WorldManager();
 		}
-		
+		return self;
+	}
+
+	public WorldManager(String debug) {
+		this();
 	}
 	
-	public static void init() {
+	public WorldManager() {
 		try {
 			world = WorldParser.parseWorld(new File(world_file));
 		} catch (IOException e) {
@@ -48,16 +45,16 @@ public class WorldManager {
 
 	}
 
-	public static Land getLandAt(Point p) {
+	public Land getLandAt(Point p) {
 		return getLandAt(p.getX(),p.getY());
 	}
 
-	public static Land getLandAt(float x, float y) {
+	public Land getLandAt(float x, float y) {
 		int s = world.getLandSize();
 		return world.get((int) x / s, (int) y / s);
 	}
 
-	public static void render(Graphics g) {
+	public void render(Graphics g) {
 		for (int x = 0; x < world.getWidth(); x++) {
 			for (int y = 0; y < world.getHeight(); y++) {
 				Color c;
@@ -90,7 +87,7 @@ public class WorldManager {
 
 	}
 
-	public static Collection<? extends Discoverable> getLandsAround(Entity entity, int visibilityRange) {
+	public Collection<? extends Discoverable> getLandsAround(Entity entity, int visibilityRange) {
 		LinkedList<Land> lands = new LinkedList<Land>();
 		Point centre = entity.getLocation();
 				
@@ -112,9 +109,18 @@ public class WorldManager {
 				
 		return lands;
 	}
+	
+	public Land getLandUnder(Entity entity) {
+		return getLandAt(entity.getX(), entity.getY());
+	}
 
-	public static World getWorld() {
+	public World getWorld() {
 		return world;
+		
+	}
+
+	public static void get(String string) {
+		self = new WorldManager("debug");
 		
 	}
 

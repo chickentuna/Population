@@ -8,6 +8,10 @@
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="C:/Users/Fanchon et Julien/Desktop/ISIMA/eclipse-java-helios-SR1-win32-x86_64/lwjgl-2.8.1/native/windows"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/Fanchon et Julien/Desktop/ISIMA/eclipse-java-helios-SR1-win32-x86_64/guava-14.0-rc1.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="C:/Users/Fanchon et Julien/Desktop/ISIMA/eclipse-java-helios-SR1-win32-x86_64/guice-3.0/guice-3.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Fanchon et Julien/Desktop/ISIMA/eclipse-java-helios-SR1-win32-x86_64/guice-3.0/javax.inject.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Fanchon et Julien/Desktop/ISIMA/eclipse-java-helios-SR1-win32-x86_64/guice-3.0/aopalliance.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

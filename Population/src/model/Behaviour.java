@@ -3,9 +3,8 @@ package model;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-import kernel.DiscoveryManager;
-
-import model.nature.Land;
+import kernel.managers.DiscoveryManager;
+import kernel.managers.WorldManager;
 
 import static model.VState.*;
 
@@ -33,11 +32,17 @@ public interface Behaviour {
 	
 	public static final Behaviour CURIOSITY = new Behaviour() {
 		public void execute(Villager owner) {
-			LinkedList<Discoverable> surroundings = owner.getSurroundings();
+			LinkedList<Discoverable> surroundings = getSurroundings(owner);
 			Iterator<Discoverable> it = surroundings.iterator();
 			while (it.hasNext()) {
-				DiscoveryManager.addDiscovery(it.next());
+				DiscoveryManager.get().addDiscovery(it.next());
 			}
+		}
+
+		public LinkedList<Discoverable> getSurroundings(Villager owner) {
+			LinkedList<Discoverable> surroundings = new LinkedList<>();
+			surroundings.add(WorldManager.get().getLandUnder(owner));
+			return surroundings;
 		}
 	};
 	
@@ -47,6 +52,10 @@ public interface Behaviour {
 		}
 	};
 	
-	
+	public static final Behaviour SEEK_HOME = new Behaviour() {
+		public void execute(Villager owner) {
+			
+		}
+	};
 	
 }

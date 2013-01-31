@@ -10,19 +10,19 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 import kernel.Entity;
-import kernel.WorldManager;
+import kernel.managers.WorldManager;
 
 import static model.VState.*;
 
 public class Villager extends Entity {
 
-	public static final int SPEED = 1;
-	public static final int VISIBILITY_RANGE = 2;
-	//TODO: externalize
+	public static final int WALK_SPEED = 1; 
 
 	private List<Behaviour> behaviours;
+	
 	protected VState state = IDLE;
 	protected float direction = 0;
+	protected Building home = null;
 
 	public Villager(int x, int y) {
 		super((float) x, (float) y);
@@ -36,9 +36,9 @@ public class Villager extends Entity {
 
 	
 	protected void step_foward() {
-		float new_x = (float) (x + SPEED * Math.cos(direction));
-		float new_y = (float) (y - SPEED * Math.sin(direction));
-		Land l = WorldManager.getLandAt(x, y);
+		float new_x = (float) (x + WALK_SPEED * Math.cos(direction));
+		float new_y = (float) (y - WALK_SPEED * Math.sin(direction));
+		Land l = WorldManager.get().getLandAt(x, y);
 		if (l != null) {
 			x = new_x;
 			y = new_y;
@@ -58,13 +58,5 @@ public class Villager extends Entity {
 	}
 
 
-	public LinkedList<Discoverable> getSurroundings() {
-		LinkedList<Discoverable> surroundings = new LinkedList<>();
-		surroundings.addAll(WorldManager.getLandsAround(this, VISIBILITY_RANGE));
-		
-		
-		
-		return surroundings;
-	}
 
 }

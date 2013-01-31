@@ -26,16 +26,20 @@ public class WorldParser {
 	
 	public static World parseWorld(File file) throws IOException {
 		BufferedReader f = new BufferedReader(new FileReader("ressource\\"+file));
+		return parseWorld(f);
+	}
+	
+	public static World parseWorld(BufferedReader br) throws IOException {
 		String buf;
 		int ratio, width, height;
 		
-		ratio = Integer.parseInt(nextLine(f).trim());
-		width = Integer.parseInt(nextLine(f).trim());
-		height = Integer.parseInt(nextLine(f).trim());
+		ratio = Integer.parseInt(nextLine(br).trim());
+		width = Integer.parseInt(nextLine(br).trim());
+		height = Integer.parseInt(nextLine(br).trim());
 		World world = new World(width, height);
 		
 		for (int y = 0; y < (height)/ratio; y++) {
-			buf = nextLine(f);
+			buf = nextLine(br);
 			for (int x = 0; x < (width)/ratio; x++) {
 				int id = Integer.parseInt(buf.substring(x*ratio, x*ratio+ratio));
 				world.set(x, y, getLandFromId(id));
@@ -44,27 +48,9 @@ public class WorldParser {
 		
 		return world;
 	}
-	
-	//TODO: Refactor
 	public static World parseWorld(String content) throws IOException {
 		BufferedReader f = new BufferedReader(new StringReader(content));
-		String buf;
-		int ratio, width, height;
-		
-		ratio = Integer.parseInt(nextLine(f).trim());
-		width = Integer.parseInt(nextLine(f).trim());
-		height = Integer.parseInt(nextLine(f).trim());
-		World world = new World(width, height);
-		
-		for (int y = 0; y < (height)/ratio; y++) {
-			buf = nextLine(f);
-			for (int x = 0; x < (width)/ratio; x++) {
-				int id = Integer.parseInt(buf.substring(x*ratio, x*ratio+ratio));
-				world.set(x, y, getLandFromId(id));
-			}
-		}
-		
-		return world;
+		return parseWorld(f);
 	}
 	
 	private static String nextLine(BufferedReader reader) throws IOException {
