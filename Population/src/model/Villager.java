@@ -9,6 +9,8 @@ import model.nature.Land;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
+import technology.Building;
+
 import kernel.Entity;
 import kernel.managers.WorldManager;
 

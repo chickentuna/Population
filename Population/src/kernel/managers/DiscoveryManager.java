@@ -1,14 +1,12 @@
 package kernel.managers;
 
-
 import java.util.HashSet;
 
 import kernel.events.QueryEvent;
+import model.Discoverable;
 
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
-
-import model.Discoverable;
 
 public class DiscoveryManager {
 
@@ -27,7 +25,7 @@ public class DiscoveryManager {
 	public DiscoveryManager(String mode) {
 		this();
 	}
-	
+
 	public DiscoveryManager() {
 		discoveries = new HashSet<>();
 		bus = new EventBus();
@@ -44,12 +42,11 @@ public class DiscoveryManager {
 		}
 
 	}
-	
+
 	@Subscribe
 	public void on(QueryEvent e) {
-		
-	}
 
+	}
 
 	public EventBus getQueryEventBus() {
 		return bus;

@@ -9,9 +9,9 @@ public enum Land implements Discoverable {
 	LAKE(),
 	WOOD(Produce.LUMBER),
 	HILL(Produce.STONE);
-	
+
 	Produce[] produce;
-	
+
 	Land(Produce... produce) {
 		this.produce = produce;
 	}
@@ -19,7 +19,7 @@ public enum Land implements Discoverable {
 	public String getIdentifier() {
 		return this.name();
 	}
-	
+
 	public String toString() {
 		return this.name();
 	}

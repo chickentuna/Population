@@ -6,6 +6,7 @@ public class RessourceManager {
 	
 	private int food;
 	private int ressource;
+	private int tech;
 	
 	private static RessourceManager self = null;
 
@@ -17,9 +18,11 @@ public class RessourceManager {
 	}
 
 	public RessourceManager() {
+		
 		food = BASE_FOOD;
 		ressource = BASE_RESSOURCE;
 	}
+	
 
 	public int getFood() {
 		return food;

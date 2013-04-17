@@ -1,4 +1,4 @@
-package model;
+package technology;
 
 public class Building {
 
