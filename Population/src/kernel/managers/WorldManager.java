@@ -14,7 +14,6 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 import model.Discoverable;
-import model.Villager;
 import model.World;
 import model.nature.Land;
 

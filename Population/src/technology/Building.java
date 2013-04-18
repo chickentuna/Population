@@ -1,5 +1,5 @@
 package technology;
 
-public class Building {
-
+public interface Building {
+	
 }

@@ -46,6 +46,13 @@ public class WorldParser {
 			}
 		}
 		
+		for (int y = 0; y < (height)/ratio; y++) {
+			for (int x = 0; x < (width)/ratio; x++) {
+				world.setBuilding(x, y, null);
+			}
+		}
+		
+		
 		return world;
 	}
 	public static World parseWorld(String content) throws IOException {

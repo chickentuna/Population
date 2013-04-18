@@ -1,9 +1,11 @@
 package model;
 
+import technology.Building;
 import model.nature.Land;
 
 public class World {
 	private Land[][] terrain;
+	private Building[][] buildings;
 	private int land_size = 100;
 
 	public World(int size) {
@@ -12,6 +14,8 @@ public class World {
 
 	public World(int width, int height) {
 		terrain = new Land[width][height];
+		buildings = new Building[width][height];
+		
 	}
 
 	public Land get(int x, int y) {
@@ -38,5 +42,10 @@ public class World {
 
 	public int getHeight() {
 		return terrain[0].length;
+	}
+
+	public void setBuilding(int x, int y, Building building) {
+		buildings[x][y] = building;
+		
 	}
 }

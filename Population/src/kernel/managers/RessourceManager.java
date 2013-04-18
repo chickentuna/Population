@@ -18,7 +18,7 @@ public class RessourceManager {
 	}
 
 	public RessourceManager() {
-		
+		tech = 0;
 		food = BASE_FOOD;
 		ressource = BASE_RESSOURCE;
 	}

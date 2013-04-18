@@ -3,6 +3,8 @@ package model;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import technology.ResidentialBuilding;
+
 import kernel.managers.DiscoveryManager;
 import kernel.managers.WorldManager;
 
@@ -52,8 +54,11 @@ public interface Behaviour {
 		}
 	};
 	
+
 	public static final Behaviour SEEK_HOME = new Behaviour() {
 		public void execute(Villager owner) {
+			LinkedList<ResidentialBuilding> near_residences = new LinkedList<>();
+			//TODO:WorldManager.get().get
 			
 		}
 	};
