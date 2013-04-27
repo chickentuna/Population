@@ -61,4 +61,12 @@ public interface Behaviour {
 		}
 	};
 
+	public static final Behaviour LABOUR = new Behaviour() {
+
+		@Override
+		public void execute(Villager owner) {
+			// TODO: collect Produce form Land/Building, or react to Building.
+		}
+	};
+
 }

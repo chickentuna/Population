@@ -8,8 +8,6 @@ import kernel.Chance;
 import kernel.Decision;
 import model.Behaviour;
 import model.Villager;
-import model.nature.Land;
-import technology.Building;
 
 public class DecisionManager {
 
@@ -40,13 +38,21 @@ public class DecisionManager {
 		// available technologies + ressources.
 
 		LinkedList<Decision> decisions = new LinkedList<>();
-		Land on = WorldManager.get().getLandUnder(v);
-		Building in = WorldManager.get().getBuildingUnder(v);
+		// Land on = WorldManager.get().getLandUnder(v);
+		// Building in = WorldManager.get().getBuildingUnder(v);
+		decisions.add(new BehaviourDecision() {
 
-		if (in == null) {
+			@Override
+			public int getWeight() {
+				return 5;
+			}
 
-		}
+			@Override
+			public Behaviour getBehaviour() {
+				return Behaviour.LABOUR;
+			}
+		});
 
-		return null;
+		return decisions;
 	}
 }

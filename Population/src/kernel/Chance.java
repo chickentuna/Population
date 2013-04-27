@@ -25,7 +25,9 @@ public class Chance {
 
 	public static Decision pickFrom(List<Decision> possibilities) {
 		int count = possibilities.size();
-		if (count == 0) {
+		if (count == 1) {
+			return possibilities.get(0);
+		} else if (count == 0) {
 			throw new RuntimeException(
 					"Error : Picking a Decision from empty list");
 		}
