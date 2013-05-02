@@ -1,5 +1,5 @@
 package technology;
 
-public interface ResidentialBuilding extends Building {
+public interface ResidentialBuilding {
 	public int getCapacity();
 }

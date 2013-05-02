@@ -10,6 +10,7 @@ import kernel.Chance;
 import kernel.managers.DecisionManager;
 import kernel.managers.DiscoveryManager;
 import kernel.managers.WorldManager;
+import technology.BType;
 
 public interface Behaviour {
 
@@ -66,6 +67,17 @@ public interface Behaviour {
 		@Override
 		public void execute(Villager owner) {
 			// TODO: collect Produce form Land/Building, or react to Building.
+		}
+	};
+
+	public static final Behaviour BUILD = new Behaviour() {
+
+		BType building = null;
+
+		@Override
+		public void execute(Villager owner) {
+			DecisionManager.get().somethingToBuild(owner);
+
 		}
 	};
 

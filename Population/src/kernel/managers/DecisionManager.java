@@ -8,6 +8,8 @@ import kernel.Chance;
 import kernel.Decision;
 import model.Behaviour;
 import model.Villager;
+import technology.BType;
+import technology.Building;
 
 public class DecisionManager {
 
@@ -39,7 +41,24 @@ public class DecisionManager {
 
 		LinkedList<Decision> decisions = new LinkedList<>();
 		// Land on = WorldManager.get().getLandUnder(v);
-		// Building in = WorldManager.get().getBuildingUnder(v);
+		Building in = WorldManager.get().getBuildingUnder(v);
+
+		if (in == null) {
+			decisions.add(new BehaviourDecision() {
+
+				@Override
+				public int getWeight() {
+					return 1;
+				}
+
+				@Override
+				public Behaviour getBehaviour() {
+					return Behaviour.BUILD;
+				}
+
+			});
+		}
+
 		decisions.add(new BehaviourDecision() {
 
 			@Override
@@ -54,5 +73,11 @@ public class DecisionManager {
 		});
 
 		return decisions;
+	}
+
+	public BType somethingToBuild(Villager owner) {
+		return null;
+		// TODO Auto-generated method stub
+
 	}
 }
