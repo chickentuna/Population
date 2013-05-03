@@ -1,6 +1,5 @@
 package technology;
 
-import static model.nature.Land.PLAIN;
 import model.Discoverable;
 import model.nature.Land;
 
@@ -12,27 +11,27 @@ import model.nature.Land;
 //@formatter:off
 
 public enum ResidentialBuilding implements Building, Discoverable {
-	STRAW_HUT(PLAIN), 
-	STRAW_HOUSE(PLAIN),
+	HUT(2,true),
+	HOUSE(4,true),
+	BRICK_HOUSE(10, false),
+	MANSION(50, false);
 	
-	WOODEN_HUT(Land.WOOD), 
-	WOODEN_HOUSE(Land.WOOD),
+	private int capacity;
+	private boolean abstrac;
 	
-	STONE_HUT(Land.HILL), 
-	STONE_HOUSE(Land.HILL),
-	
-	SAND_HUT(Land.BEACH), 
-	SAND_HOUSE(Land.BEACH),
-	
-	BRICK_HOUSE(null),
-	MANSION(null);
-
-	private Land land;
-
-	ResidentialBuilding(Land land) {
-		this.land = land;
+	public int getCapacity() {
+		return capacity;
 	}
 
+	public boolean isAbstract() {
+		return abstrac;
+	}
+
+	ResidentialBuilding(int capacity, boolean abstrac) {
+		this.capacity = capacity;
+		this.abstrac = abstrac;
+	}
+	
 	@Override
 	public String getIdentifier() {
 		return name();
@@ -40,7 +39,7 @@ public enum ResidentialBuilding implements Building, Discoverable {
 
 	@Override
 	public Land getLand() {
-		return land;
+		return null;
 	}
 
 	@Override
