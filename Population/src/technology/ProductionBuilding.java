@@ -1,16 +1,24 @@
 package technology;
 
+import static model.nature.Land.BEACH;
+import static model.nature.Land.HILL;
+import static model.nature.Land.PLAIN;
+import static model.nature.Land.WOOD;
+import static model.nature.Produce.FISH;
+import static model.nature.Produce.ORE;
+import static model.nature.Produce.PLANKS;
+import static model.nature.Produce.WHEAT;
 import model.Discoverable;
 import model.nature.Land;
 import model.nature.Produce;
 
+//@formatter:off
 public enum ProductionBuilding implements Building, Discoverable {
 
-	WHEATFARM(Land.PLAIN, Produce.WHEAT) {
-		public String toString() {
-			return name();
-		}
-	};
+	WHEATFARM(PLAIN, WHEAT),
+	MINE(HILL, ORE),
+	FISHERY(BEACH, FISH),
+	LUMBERMILL(WOOD, PLANKS);
 
 	private Land land;
 	private Produce produce;
