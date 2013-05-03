@@ -18,7 +18,11 @@ public interface Behaviour {
 
 	public void execute(Villager owner);
 
-	public static final Behaviour STANDARD = new Behaviour() {
+	public void onAbandon();
+
+	public void onAdopt();
+
+	public static final Behaviour STANDARD = new BehaviourAdapter() {
 		public void execute(Villager owner) {
 			// Wander around
 			if (owner.state == IDLE) {
@@ -46,7 +50,7 @@ public interface Behaviour {
 
 	// TODO: scrap curiosity and have discoveries happen in an event like
 	// fashion.
-	public static final Behaviour CURIOSITY = new Behaviour() {
+	public static final Behaviour CURIOSITY = new BehaviourAdapter() {
 		public void execute(Villager owner) {
 			LinkedList<Discoverable> surroundings = getDiscoverablesAround(owner);
 			Iterator<Discoverable> it = surroundings.iterator();
@@ -64,7 +68,7 @@ public interface Behaviour {
 		}
 	};
 
-	public static final Behaviour LABOUR = new Behaviour() {
+	public static final Behaviour LABOUR = new BehaviourAdapter() {
 
 		@Override
 		public void execute(Villager owner) {
@@ -89,7 +93,7 @@ public interface Behaviour {
 		}
 	};
 
-	public static final Behaviour COLLECT = new Behaviour() {
+	public static final Behaviour COLLECT = new BehaviourAdapter() {
 
 		@Override
 		public void execute(Villager owner) {
@@ -99,7 +103,7 @@ public interface Behaviour {
 
 	};
 
-	public static final Behaviour BUILD = new Behaviour() {
+	public static final Behaviour BUILD = new BehaviourAdapter() {
 
 		@Override
 		public void execute(Villager owner) {

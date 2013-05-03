@@ -22,9 +22,11 @@ public class Villager extends Entity {
 	public static final int WALK_SPEED = 1;
 
 	private Set<Behaviour> behaviours;
+	private Set<Behaviour> toAdopt;
 	private Set<Behaviour> toAbandon; // TODO: toAdopt, refreshBehaviours() and
 										// onAdopt()+onAbandon() +
-										// BehaviourAdapter
+										// BehaviourAdapter (where did they go
+										// ?)
 
 	// Behaviour vars
 	protected VState state = IDLE;
@@ -37,10 +39,11 @@ public class Villager extends Entity {
 		super((float) x, (float) y);
 		behaviours = new HashSet<Behaviour>();
 		toAbandon = new HashSet<Behaviour>();
+		toAdopt = new HashSet<Behaviour>();
 	}
 
 	public void adoptBehaviour(Behaviour b) {
-		behaviours.add(b);
+		toAdopt.add(b);
 	}
 
 	public void abandonBehaviour(Behaviour behaviour) {
@@ -62,11 +65,26 @@ public class Villager extends Entity {
 		while (it.hasNext()) {
 			it.next().execute(this);
 		}
-		it = toAbandon.iterator();
+		refreshBehaviours();
+	}
+
+	private void refreshBehaviours() {
+
+		Iterator<Behaviour> it = toAbandon.iterator();
 		while (it.hasNext()) {
-			behaviours.remove(it.next());
+			Behaviour b = it.next();
+			behaviours.remove(b);
+			b.onAbandon();
 		}
 		toAbandon.clear();
+		it = toAdopt.iterator();
+		while (it.hasNext()) {
+			Behaviour b = it.next();
+			behaviours.add(b);
+			b.onAdopt();
+		}
+		toAdopt.clear();
+
 	}
 
 	public void render(Graphics g) {
