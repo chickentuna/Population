@@ -29,11 +29,8 @@ public class Villager extends Entity {
 	// Behaviour vars
 	protected VState state = IDLE;
 	protected float direction = 0;
-
-	HashMap<Behaviour, Progress> progress;
-
+	protected HashMap<Behaviour, Progress> progress;
 	protected Building building = null;
-	// protected Progress progress = null;
 	protected Produce collecting = null;
 
 	public Villager(int x, int y) {
@@ -112,7 +109,7 @@ public class Villager extends Entity {
 	}
 
 	public void clearProgressFor(Behaviour b) {
-		progress.put(b, null);
+		progress.remove(b);
 
 	}
 

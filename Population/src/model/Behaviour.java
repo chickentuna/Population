@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import kernel.Chance;
 import kernel.managers.DecisionManager;
 import kernel.managers.DiscoveryManager;
+import kernel.managers.RessourceManager;
 import kernel.managers.WorldManager;
 import technology.BType;
 import technology.Building;
@@ -97,11 +98,23 @@ public interface Behaviour {
 	};
 
 	public static final Behaviour COLLECT = new BehaviourAdapter() {
+		public final static int DURATION = 1;
 
 		@Override
 		public void execute(Villager owner) {
-			// TODO Turn produce in "collecting" into ressources.
 
+			if (owner.collecting == null) {
+				owner.adoptBehaviour(STANDARD);
+				owner.abandonBehaviour(this);
+			}
+			if (owner.getProgressFor(this) == null) {
+				owner.setProgressFor(this, DURATION);
+			}
+			if (owner.getProgressFor(this).getPercentage() == 100) {
+				owner.clearProgressFor(this);
+				RessourceManager.get().add(owner.collecting);
+				owner.collecting = null;
+			}
 		}
 
 	};
@@ -112,7 +125,7 @@ public interface Behaviour {
 		public void execute(Villager owner) {
 			if (owner.building == null) {
 				owner.setBuilding(DecisionManager.get().somethingToBuild(owner));
-			}
+			}// TODO: build
 
 		}
 	};

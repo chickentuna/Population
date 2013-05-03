@@ -2,6 +2,8 @@ package kernel.managers;
 
 import model.Behaviour;
 import model.Villager;
+import model.nature.PType;
+import model.nature.Produce;
 
 public class RessourceManager {
 	private static final int BASE_FOOD = 20;
@@ -50,6 +52,14 @@ public class RessourceManager {
 	public void villagerDeath(Villager v) {
 		population--;
 		EntityManager.get().unspawn(v);
+	}
+
+	public void add(Produce produce) {
+		if (produce.getType() == PType.FOOD) {
+			food += produce.getValue();
+		} else if (produce.getType() == PType.RESSOURCE) {
+			ressource += produce.getValue();
+		}
 	}
 
 }
