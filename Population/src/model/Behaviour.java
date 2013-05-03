@@ -69,11 +69,15 @@ public interface Behaviour {
 	};
 
 	public static final Behaviour LABOUR = new BehaviourAdapter() {
+		public static final int DURATION = 4;
 
+		// TODO: Villagers should have a hashmap : vars <-> Behaviour, so
+		// several Behaviours may run at the same time
+		// ->Implement owner.getProgressFor(this).
 		@Override
 		public void execute(Villager owner) {
 			if (owner.progress == null) {
-				owner.progress = new Progress(4);
+				owner.progress = new Progress(DURATION);
 			}
 			if (owner.progress.getPercentage() == 100) {
 				owner.progress = null;
