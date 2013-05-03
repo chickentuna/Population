@@ -9,11 +9,12 @@ import static model.nature.Produce.ORE;
 import static model.nature.Produce.PLANKS;
 import static model.nature.Produce.WHEAT;
 import model.Discoverable;
+import model.Producer;
 import model.nature.Land;
 import model.nature.Produce;
 
 //@formatter:off
-public enum ProductionBuilding implements Building, Discoverable {
+public enum ProductionBuilding implements Building, Discoverable, Producer {
 
 	WHEATFARM(PLAIN, WHEAT),
 	MINE(HILL, ORE),
@@ -21,9 +22,9 @@ public enum ProductionBuilding implements Building, Discoverable {
 	LUMBERMILL(WOOD, PLANKS);
 
 	private Land land;
-	private Produce produce;
+	private Produce[] produce;
 
-	private ProductionBuilding(Land land, Produce produce) {
+	private ProductionBuilding(Land land, Produce... produce) {
 		this.land = land;
 		this.produce = produce;
 	}
@@ -31,10 +32,6 @@ public enum ProductionBuilding implements Building, Discoverable {
 	@Override
 	public Land getLand() {
 		return land;
-	}
-
-	public Produce getProduce() {
-		return produce;
 	}
 
 	@Override
@@ -45,5 +42,13 @@ public enum ProductionBuilding implements Building, Discoverable {
 	@Override
 	public BType getType() {
 		return BType.PRODUCTION;
+	}
+
+	@Override
+	public Produce getProduce() {
+		//TODO: change to get random Produce
+		if (produce.length==0)
+			return null;
+		return produce[0];
 	}
 }

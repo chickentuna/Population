@@ -7,10 +7,12 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 import kernel.Chance;
+import kernel.Progress;
 import kernel.managers.DecisionManager;
 import kernel.managers.DiscoveryManager;
 import kernel.managers.WorldManager;
 import technology.BType;
+import technology.Building;
 
 public interface Behaviour {
 
@@ -66,17 +68,44 @@ public interface Behaviour {
 
 		@Override
 		public void execute(Villager owner) {
-			// TODO: collect Produce form Land/Building, or react to Building.
+			if (owner.progress == null) {
+				owner.progress = new Progress(4);
+			}
+			if (owner.progress.getPercentage() == 100) {
+				owner.progress = null;
+				Producer producer;
+				Building in = WorldManager.get().getBuildingUnder(owner);
+				if (in != null && in.getType() == BType.PRODUCTION) {
+					producer = (Producer) in;
+				} else {
+					producer = WorldManager.get().getLandUnder(owner);
+				}
+
+				owner.collecting = producer.getProduce();
+				owner.abandonBehaviour(this);
+				owner.adoptBehaviour(COLLECT);
+			}
+
 		}
+	};
+
+	public static final Behaviour COLLECT = new Behaviour() {
+
+		@Override
+		public void execute(Villager owner) {
+			// TODO Auto-generated method stub
+
+		}
+
 	};
 
 	public static final Behaviour BUILD = new Behaviour() {
 
-		BType building = null;
-
 		@Override
 		public void execute(Villager owner) {
-			DecisionManager.get().somethingToBuild(owner);
+			if (owner.building == null) {
+				owner.setBuilding(DecisionManager.get().somethingToBuild(owner));
+			}
 
 		}
 	};

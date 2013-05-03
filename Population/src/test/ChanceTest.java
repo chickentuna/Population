@@ -19,11 +19,21 @@ public class ChanceTest {
 			public int getWeight() {
 				return 1;
 			}
+
+			@Override
+			public Object getParam() {
+				return null;
+			}
 		};
 		Decision d2 = new Decision() {
 			@Override
 			public int getWeight() {
 				return 2;
+			}
+
+			@Override
+			public Object getParam() {
+				return null;
 			}
 		};
 		Decision d3 = new Decision() {
@@ -31,11 +41,21 @@ public class ChanceTest {
 			public int getWeight() {
 				return 3;
 			}
+
+			@Override
+			public Object getParam() {
+				return null;
+			}
 		};
 		Decision d4 = new Decision() {
 			@Override
 			public int getWeight() {
 				return 1;
+			}
+
+			public Object getParam() {
+				// TODO Auto-generated method stub
+				return null;
 			}
 		};
 

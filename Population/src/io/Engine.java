@@ -2,9 +2,8 @@ package io;
 
 import kernel.managers.EntityManager;
 import kernel.managers.Managers;
+import kernel.managers.RessourceManager;
 import kernel.managers.WorldManager;
-import model.Behaviour;
-import model.Villager;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
@@ -22,14 +21,13 @@ public class Engine extends BasicGame {
 		cheat = "";
 	}
 
+	// TODO: scrap auto-render, have a view take care of everything. In other
+	// words, implement MVC.
+
 	@Override
 	public void init(GameContainer container) throws SlickException {
 		Managers.cleanInit();
-		Villager v = new Villager(125, 125);
-		EntityManager.get().spawn(v);
-		v.adoptBehaviour(Behaviour.CURIOSITY);
-		v.adoptBehaviour(Behaviour.STANDARD);
-
+		RessourceManager.get().villagerBirth(125, 125);
 	}
 
 	@Override

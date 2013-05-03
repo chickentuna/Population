@@ -2,13 +2,15 @@ package model;
 
 import static model.VState.IDLE;
 
+import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Set;
 
 import kernel.Entity;
+import kernel.Progress;
 import kernel.managers.WorldManager;
 import model.nature.Land;
+import model.nature.Produce;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -19,16 +21,22 @@ public class Villager extends Entity {
 
 	public static final int WALK_SPEED = 1;
 
-	private List<Behaviour> behaviours;
-	private List<Behaviour> toAbandon;
+	private Set<Behaviour> behaviours;
+	private Set<Behaviour> toAbandon; // TODO: toAdopt, refreshBehaviours() and
+										// onAdopt()+onAbandon() +
+										// BehaviourAdapter
+
+	// Behaviour vars
 	protected VState state = IDLE;
 	protected float direction = 0;
-	protected Building home = null;
+	protected Building building = null;
+	protected Progress progress = null;
+	protected Produce collecting = null;
 
 	public Villager(int x, int y) {
 		super((float) x, (float) y);
-		behaviours = new LinkedList<Behaviour>();
-		toAbandon = new LinkedList<Behaviour>();
+		behaviours = new HashSet<Behaviour>();
+		toAbandon = new HashSet<Behaviour>();
 	}
 
 	public void adoptBehaviour(Behaviour b) {
@@ -64,6 +72,10 @@ public class Villager extends Entity {
 	public void render(Graphics g) {
 		g.setColor(Color.red);
 		g.drawRect(x, y, 1, 1);
+	}
+
+	public void setBuilding(Building b) {
+		building = b;
 	}
 
 }

@@ -3,12 +3,11 @@ package kernel.managers;
 import java.util.LinkedList;
 import java.util.List;
 
-import kernel.BehaviourDecision;
 import kernel.Chance;
 import kernel.Decision;
 import model.Behaviour;
 import model.Villager;
-import technology.BType;
+import model.nature.Land;
 import technology.Building;
 
 public class DecisionManager {
@@ -27,12 +26,12 @@ public class DecisionManager {
 	}
 
 	public Behaviour somethingUseful(Villager v) {
-		List<Decision> possibilities = UsefulPossibilitiesFor(v);
-		if (possibilities == null)
+		List<Decision> poss = UsefulPossibilitiesFor(v);
+		if (poss == null)
 			return Behaviour.STANDARD;
 
-		Decision choice = Chance.pickFrom(possibilities);
-		return ((BehaviourDecision) choice).getBehaviour();
+		Decision choice = Chance.pickFrom(poss);
+		return (Behaviour) (choice.getParam());
 	}
 
 	private List<Decision> UsefulPossibilitiesFor(Villager v) {
@@ -40,11 +39,10 @@ public class DecisionManager {
 		// available technologies + ressources.
 
 		LinkedList<Decision> decisions = new LinkedList<>();
-		// Land on = WorldManager.get().getLandUnder(v);
 		Building in = WorldManager.get().getBuildingUnder(v);
 
 		if (in == null) {
-			decisions.add(new BehaviourDecision() {
+			decisions.add(new Decision() {
 
 				@Override
 				public int getWeight() {
@@ -52,14 +50,14 @@ public class DecisionManager {
 				}
 
 				@Override
-				public Behaviour getBehaviour() {
+				public Object getParam() {
 					return Behaviour.BUILD;
 				}
 
 			});
 		}
 
-		decisions.add(new BehaviourDecision() {
+		decisions.add(new Decision() {
 
 			@Override
 			public int getWeight() {
@@ -67,7 +65,7 @@ public class DecisionManager {
 			}
 
 			@Override
-			public Behaviour getBehaviour() {
+			public Behaviour getParam() {
 				return Behaviour.LABOUR;
 			}
 		});
@@ -75,9 +73,22 @@ public class DecisionManager {
 		return decisions;
 	}
 
-	public BType somethingToBuild(Villager owner) {
-		return null;
-		// TODO Auto-generated method stub
+	public Building somethingToBuild(Villager v) {
+		List<Decision> poss = getBuildingPossibilities(v);
+		if (poss.size() == 0)
+			return null;
 
+		Decision choice = Chance.pickFrom(poss);
+		return (Building) (choice.getParam());
+	}
+
+	private List<Decision> getBuildingPossibilities(Villager v) {
+		List<Decision> poss = new LinkedList<Decision>();
+		Land on = WorldManager.get().getLandUnder(v);
+
+		int food = RessourceManager.get().getFood();
+		int population = RessourceManager.get().getPopulation();
+
+		return poss;
 	}
 }

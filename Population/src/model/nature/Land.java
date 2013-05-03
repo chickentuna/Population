@@ -5,9 +5,10 @@ import static model.nature.Produce.CRAB;
 import static model.nature.Produce.LOG;
 import static model.nature.Produce.STONE;
 import model.Discoverable;
+import model.Producer;
 
 //@formatter:off
-public enum Land implements Discoverable {
+public enum Land implements Discoverable, Producer {
 	BEACH(CRAB),
 	PLAIN(APPLE),
 	SEA(),
@@ -27,6 +28,19 @@ public enum Land implements Discoverable {
 
 	public String toString() {
 		return this.name();
+	}
+
+	@Override
+	public Produce getProduce() {
+		if (produce.length == 0)
+			return null;
+		if (produce.length == 1) {
+			return produce[0];
+		}
+		return produce[(int)(Math.random()*produce.length)]; 
+		//TODO: Produce should have a field 'chance' to indicate probability of finding it
+		// for lands/buildings that produce multiple things
+		
 	}
 
 }
