@@ -28,6 +28,11 @@ public class Engine extends BasicGame {
 	public void init(GameContainer container) throws SlickException {
 		Managers.cleanInit();
 		RessourceManager.get().villagerBirth(125, 125);
+		RessourceManager.get().villagerBirth(100, 100);
+		RessourceManager.get().villagerBirth(250, 125);
+		RessourceManager.get().villagerBirth(125, 250);
+		RessourceManager.get().villagerBirth(0, 0);
+
 	}
 
 	@Override
@@ -58,6 +63,7 @@ public class Engine extends BasicGame {
 			AppGameContainer app = new AppGameContainer(new Engine());
 			app.setTargetFrameRate(TARGET_FPS);
 			app.setDisplayMode(640, 480, false);
+			app.setResizable(true);
 			app.start();
 		} catch (SlickException e) {
 			e.printStackTrace();

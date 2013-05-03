@@ -50,7 +50,12 @@ public class WorldManager {
 
 	public Land getLandAt(float x, float y) {
 		int s = world.getLandSize();
-		return world.getLand((int) x / s, (int) y / s);
+		if (x < 0)
+			x -= world.getLandSize();
+		if (y < 0)
+			y -= world.getLandSize();
+
+		return world.getLand((int) (x / (float) s), (int) (y / (float) s));
 	}
 
 	public Building getBuildingAt(float x, float y) {

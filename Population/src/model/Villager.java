@@ -53,7 +53,7 @@ public class Villager extends Entity {
 	protected void step_foward() {
 		float new_x = (float) (x + WALK_SPEED * Math.cos(direction));
 		float new_y = (float) (y - WALK_SPEED * Math.sin(direction));
-		Land l = WorldManager.get().getLandAt(x, y);
+		Land l = WorldManager.get().getLandAt(new_x, new_y);
 		if (l != null) {
 			x = new_x;
 			y = new_y;
@@ -89,7 +89,13 @@ public class Villager extends Entity {
 
 	public void render(Graphics g) {
 		g.setColor(Color.red);
-		g.drawRect(x, y, 1, 1);// TODO: debug info
+		g.drawRect(x, y, 1, 1);
+		float off = 0;
+		Iterator<Behaviour> it = behaviours.iterator();
+		while (it.hasNext()) {
+			g.drawString(it.next().name(), x, y + off);
+			off += 10;
+		}
 	}
 
 	public void setBuilding(Building b) {

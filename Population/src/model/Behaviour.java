@@ -32,7 +32,7 @@ public enum Behaviour {
 			}
 
 			// Activity
-			if (Chance.onceEveryXMinutes(2)) {
+			if (Chance.onceEveryXSeconds(20)) {
 				Behaviour todo = DecisionManager.get().somethingUseful(owner);
 				owner.abandonBehaviour(this);
 				owner.adoptBehaviour(todo);

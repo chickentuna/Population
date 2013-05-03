@@ -8,7 +8,7 @@ import java.util.List;
 public class Chance {
 
 	public static boolean oneOutOf(int n) {
-		return Math.random() * 100 < 100 / n;
+		return (int) (Math.random() * n) == 0;
 	}
 
 	public static boolean onceEveryXSeconds(double x) {

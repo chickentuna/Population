@@ -8,6 +8,45 @@ import kernel.Decision;
 public class ChanceTest {
 
 	public static void main(String[] args) {
+
+	}
+
+	public static void onceEveryXSecondsTest() {
+		int n1 = 0;
+		int n2 = 0;
+		int n10 = 0;
+		int n20 = 0;
+
+		long start = System.currentTimeMillis();
+		long cur = 0;
+
+		while (System.currentTimeMillis() - start < 120_000) {
+
+			if (Chance.onceEveryXSeconds(1))
+				n1++;
+			if (Chance.onceEveryXSeconds(2))
+				n2++;
+			if (Chance.onceEveryXSeconds(10))
+				n10++;
+			if (Chance.onceEveryXSeconds(20))
+				n20++;
+		}
+		System.out.println("1 : " + n1 + "\n2 : " + n2 + "\n10 : " + n10
+				+ "\n20 : " + n20);
+	}
+
+	public static void oneOutOfTest() {
+		int n = 0;
+
+		for (int i = 0; i < 10000; i++) {
+			if (Chance.oneOutOf(500))
+				n++;
+		}
+		System.out.println(n);
+
+	}
+
+	public static void pickFromTest() {
 		int ones = 0;
 		int twos = 0;
 		int threes = 0;
