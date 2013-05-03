@@ -1,8 +1,5 @@
 package model;
 
-import static model.VState.IDLE;
-import static model.VState.WANDERING;
-
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -14,27 +11,22 @@ import kernel.managers.WorldManager;
 import technology.BType;
 import technology.Building;
 
-public interface Behaviour {
+public enum Behaviour {
 
-	public void execute(Villager owner);
-
-	public void onAbandon();
-
-	public void onAdopt();
-
-	public static final Behaviour STANDARD = new BehaviourAdapter() {
+	STANDARD {
 		public void execute(Villager owner) {
+
 			// Wander around
-			if (owner.state == IDLE) {
+			if (owner.state == VState.IDLE) {
 				double percent = Math.random() * 100;
 				if (percent < 4) {
-					owner.state = WANDERING;
+					owner.state = VState.WANDERING;
 					owner.direction = (float) Math.random() * 360;
 				}
-			} else if (owner.state == WANDERING) {
+			} else if (owner.state == VState.WANDERING) {
 				double percent = Math.random() * 100;
 				if (percent < 5) {
-					owner.state = IDLE;
+					owner.state = VState.IDLE;
 				}
 				owner.step_foward();
 			}
@@ -46,11 +38,11 @@ public interface Behaviour {
 				owner.adoptBehaviour(todo);
 			}
 		}
-	};
+	},
 
 	// TODO: scrap curiosity and have discoveries happen in an event like
 	// fashion.
-	public static final Behaviour CURIOSITY = new BehaviourAdapter() {
+	CURIOSITY {
 		public void execute(Villager owner) {
 			LinkedList<Discoverable> surroundings = getDiscoverablesAround(owner);
 			Iterator<Discoverable> it = surroundings.iterator();
@@ -66,9 +58,9 @@ public interface Behaviour {
 
 			return discoverables;
 		}
-	};
+	},
 
-	public static final Behaviour LABOUR = new BehaviourAdapter() {
+	LABOUR {
 		public static final int DURATION = 4;
 
 		// TODO: labour should be different for each type of poduce.
@@ -95,9 +87,9 @@ public interface Behaviour {
 			}
 
 		}
-	};
+	},
 
-	public static final Behaviour COLLECT = new BehaviourAdapter() {
+	COLLECT {
 		public final static int DURATION = 1;
 
 		@Override
@@ -117,17 +109,23 @@ public interface Behaviour {
 			}
 		}
 
-	};
+	},
 
-	public static final Behaviour BUILD = new BehaviourAdapter() {
-
+	BUILD {
 		@Override
 		public void execute(Villager owner) {
 			if (owner.building == null) {
 				owner.setBuilding(DecisionManager.get().somethingToBuild(owner));
-			}// TODO: build
-
+			}// TODO: build.
 		}
 	};
+
+	public void onAdopt() {
+	}
+
+	public void onAbandon() {
+	}
+
+	public abstract void execute(Villager owner);
 
 }

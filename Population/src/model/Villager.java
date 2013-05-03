@@ -89,7 +89,7 @@ public class Villager extends Entity {
 
 	public void render(Graphics g) {
 		g.setColor(Color.red);
-		g.drawRect(x, y, 1, 1);
+		g.drawRect(x, y, 1, 1);// TODO: debug info
 	}
 
 	public void setBuilding(Building b) {
