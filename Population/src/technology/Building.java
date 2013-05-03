@@ -1,5 +1,7 @@
 package technology;
 
-public interface Building {
+import model.nature.Land;
 
+public interface Building {
+	public Land getLand();
 }

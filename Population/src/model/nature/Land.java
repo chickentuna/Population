@@ -1,20 +1,19 @@
 package model.nature;
 
+import static model.nature.Produce.APPLE;
 import static model.nature.Produce.CRAB;
-import static model.nature.Produce.LUMBER;
+import static model.nature.Produce.LOG;
 import static model.nature.Produce.STONE;
 import model.Discoverable;
 
-//TODO: have decisions manager check if labour is possible for 
-// villager before adding it to possiblities
-
 //@formatter:off
 public enum Land implements Discoverable {
+	ANY,
 	BEACH(CRAB),
-	PLAIN(),    
+	PLAIN(APPLE),
 	SEA(),
 	LAKE(),
-	WOOD(LUMBER),
+	WOOD(LOG),
 	HILL(STONE);
 
 	Produce[] produce;

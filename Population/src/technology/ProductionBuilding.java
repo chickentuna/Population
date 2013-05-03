@@ -28,6 +28,7 @@ public enum ProductionBuilding implements Building, Discoverable {
 		this.produce = produce;
 	}
 
+	@Override
 	public Land getLand() {
 		return land;
 	}
