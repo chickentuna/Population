@@ -1,16 +1,31 @@
 package technology;
 
 import static model.nature.Land.PLAIN;
-import static model.nature.Land.ANY;
 import model.Discoverable;
 import model.nature.Land;
 
+/**
+ * TODO: instead of each type of house with land + capacity, have a structure
+ * closer to : land -> house material housetype -> capacity
+ */
+
 //@formatter:off
+
 public enum ResidentialBuilding implements Building, Discoverable {
 	STRAW_HUT(PLAIN), 
 	STRAW_HOUSE(PLAIN),
-	BRICK_HOUSE(PLAIN),
-	MANSION(ANY);
+	
+	WOODEN_HUT(Land.WOOD), 
+	WOODEN_HOUSE(Land.WOOD),
+	
+	STONE_HUT(Land.HILL), 
+	STONE_HOUSE(Land.HILL),
+	
+	SAND_HUT(Land.BEACH), 
+	SAND_HOUSE(Land.BEACH),
+	
+	BRICK_HOUSE(null),
+	MANSION(null);
 
 	private Land land;
 

@@ -24,7 +24,6 @@ public class Engine extends BasicGame {
 
 	@Override
 	public void init(GameContainer container) throws SlickException {
-
 		Managers.cleanInit();
 		Villager v = new Villager(125, 125);
 		EntityManager.get().spawn(v);

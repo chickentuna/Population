@@ -8,7 +8,6 @@ import model.Discoverable;
 
 //@formatter:off
 public enum Land implements Discoverable {
-	ANY,
 	BEACH(CRAB),
 	PLAIN(APPLE),
 	SEA(),
