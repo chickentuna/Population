@@ -2,6 +2,7 @@ package model;
 
 import static model.VState.IDLE;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -23,16 +24,16 @@ public class Villager extends Entity {
 
 	private Set<Behaviour> behaviours;
 	private Set<Behaviour> toAdopt;
-	private Set<Behaviour> toAbandon; // TODO: toAdopt, refreshBehaviours() and
-										// onAdopt()+onAbandon() +
-										// BehaviourAdapter (where did they go
-										// ?)
+	private Set<Behaviour> toAbandon;
 
 	// Behaviour vars
 	protected VState state = IDLE;
 	protected float direction = 0;
+
+	HashMap<Behaviour, Progress> progress;
+
 	protected Building building = null;
-	protected Progress progress = null;
+	// protected Progress progress = null;
 	protected Produce collecting = null;
 
 	public Villager(int x, int y) {
@@ -40,6 +41,8 @@ public class Villager extends Entity {
 		behaviours = new HashSet<Behaviour>();
 		toAbandon = new HashSet<Behaviour>();
 		toAdopt = new HashSet<Behaviour>();
+		progress = new HashMap<>();
+
 	}
 
 	public void adoptBehaviour(Behaviour b) {
@@ -94,6 +97,23 @@ public class Villager extends Entity {
 
 	public void setBuilding(Building b) {
 		building = b;
+	}
+
+	public Progress getProgressFor(Behaviour behaviour) {
+		if (!progress.containsKey(behaviour)) {
+			progress.put(behaviour, null);
+			return null;
+		}
+		return progress.get(behaviour);
+	}
+
+	public void setProgressFor(Behaviour b, int duration) {
+		progress.put(b, new Progress(duration));
+	}
+
+	public void clearProgressFor(Behaviour b) {
+		progress.put(b, null);
+
 	}
 
 }

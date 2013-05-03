@@ -7,7 +7,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 import kernel.Chance;
-import kernel.Progress;
 import kernel.managers.DecisionManager;
 import kernel.managers.DiscoveryManager;
 import kernel.managers.WorldManager;
@@ -71,16 +70,16 @@ public interface Behaviour {
 	public static final Behaviour LABOUR = new BehaviourAdapter() {
 		public static final int DURATION = 4;
 
-		// TODO: Villagers should have a hashmap : vars <-> Behaviour, so
-		// several Behaviours may run at the same time
-		// ->Implement owner.getProgressFor(this).
+		// TODO: labour should be different for each type of poduce.
+		// -> Get produce before end. and set vars for it.
+
 		@Override
 		public void execute(Villager owner) {
-			if (owner.progress == null) {
-				owner.progress = new Progress(DURATION);
+			if (owner.getProgressFor(this) == null) {
+				owner.setProgressFor(this, DURATION);
 			}
-			if (owner.progress.getPercentage() == 100) {
-				owner.progress = null;
+			if (owner.getProgressFor(this).getPercentage() == 100) {
+				owner.clearProgressFor(this);
 				Producer producer;
 				Building in = WorldManager.get().getBuildingUnder(owner);
 				if (in != null && in.getType() == BType.PRODUCTION) {
@@ -101,7 +100,7 @@ public interface Behaviour {
 
 		@Override
 		public void execute(Villager owner) {
-			// TODO Auto-generated method stub
+			// TODO Turn produce in "collecting" into ressources.
 
 		}
 
