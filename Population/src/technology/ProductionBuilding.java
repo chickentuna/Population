@@ -41,4 +41,9 @@ public enum ProductionBuilding implements Building, Discoverable {
 	public String getIdentifier() {
 		return this.name();
 	}
+
+	@Override
+	public BType getType() {
+		return BType.PRODUCTION;
+	}
 }

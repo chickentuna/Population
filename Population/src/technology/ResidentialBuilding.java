@@ -42,4 +42,9 @@ public enum ResidentialBuilding implements Building, Discoverable {
 	public Land getLand() {
 		return land;
 	}
+
+	@Override
+	public BType getType() {
+		return BType.RESIDENTIAL;
+	}
 }
