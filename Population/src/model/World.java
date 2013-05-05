@@ -1,7 +1,7 @@
 package model;
 
 import model.nature.Land;
-import technology.Building;
+import model.technology.Building;
 
 public class World {
 	private Land[][] terrain;

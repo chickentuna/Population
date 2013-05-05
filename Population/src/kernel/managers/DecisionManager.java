@@ -8,7 +8,7 @@ import kernel.Decision;
 import model.Behaviour;
 import model.Villager;
 import model.nature.Land;
-import technology.Building;
+import model.technology.Building;
 
 public class DecisionManager {
 

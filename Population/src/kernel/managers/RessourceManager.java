@@ -1,5 +1,7 @@
 package kernel.managers;
 
+import io.Engine;
+import kernel.events.VillagerEvent;
 import model.Behaviour;
 import model.Villager;
 import model.nature.PType;
@@ -47,11 +49,13 @@ public class RessourceManager {
 		Villager v = new Villager(x, y);
 		v.adoptBehaviour(Behaviour.STANDARD);
 		EntityManager.get().spawn(v);
+		Engine.gameBus.post(new VillagerEvent(VillagerEvent.BIRTH, v));
 	}
 
 	public void villagerDeath(Villager v) {
 		population--;
 		EntityManager.get().unspawn(v);
+		Engine.gameBus.post(new VillagerEvent(VillagerEvent.DEATH, v));
 	}
 
 	public void add(Produce produce) {

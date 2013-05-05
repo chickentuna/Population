@@ -3,7 +3,6 @@ package io;
 import kernel.managers.EntityManager;
 import kernel.managers.Managers;
 import kernel.managers.RessourceManager;
-import kernel.managers.WorldManager;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
@@ -11,22 +10,34 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
+import view.DebugView;
+import view.View;
+
+import com.google.common.eventbus.EventBus;
+
 public class Engine extends BasicGame {
 	public static final int TARGET_FPS = 30;
 
 	public String cheat;
+	public View view;
+	public static EventBus gameBus; // Put this somewhere else
 
 	public Engine() {
 		super("Population");
 		cheat = "";
 	}
 
-	// TODO: scrap auto-render, have a view take care of everything. In other
-	// words, implement MVC.
-
 	@Override
 	public void init(GameContainer container) throws SlickException {
+		// Start Managers
 		Managers.cleanInit();
+
+		// Start View
+		view = new DebugView();
+		gameBus = new EventBus();
+		gameBus.register(view);
+
+		// Start Game
 		RessourceManager.get().villagerBirth(125, 125);
 		RessourceManager.get().villagerBirth(100, 100);
 		RessourceManager.get().villagerBirth(250, 125);
@@ -54,7 +65,7 @@ public class Engine extends BasicGame {
 	@Override
 	public void render(GameContainer container, Graphics g)
 			throws SlickException {
-		WorldManager.get().render(g);
+		view.render(g);
 		EntityManager.get().render(g);
 	}
 

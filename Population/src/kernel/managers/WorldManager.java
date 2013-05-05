@@ -1,8 +1,5 @@
 package kernel.managers;
 
-import io.graphics.Sprite;
-import io.graphics.SpriteLoader;
-
 import java.io.File;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -13,16 +10,10 @@ import kernel.WorldParser;
 import model.Discoverable;
 import model.World;
 import model.nature.Land;
-
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
-
-import technology.Building;
+import model.technology.Building;
 
 public class WorldManager {
 	private final String world_file = "test.world";
-	private Image worldImage;
 	private World world;
 	private static WorldManager self = null;
 
@@ -40,55 +31,10 @@ public class WorldManager {
 	private WorldManager() {
 		try {
 			world = WorldParser.parseWorld(new File(world_file));
-			int s = world.getLandSize();
-			worldImage = Image.createOffscreenImage(s * world.getWidth(), s
-					* world.getHeight());
-			generateWorldImage();
 		} catch (Exception e) {
 			e.printStackTrace();
-			world = null;
-			worldImage = null;
 		}
 
-	}
-
-	private void generateWorldImage() throws SlickException {
-		Graphics g = worldImage.getGraphics();
-		int s = world.getLandSize();
-
-		for (int x = 0; x < world.getWidth(); x++) {
-			for (int y = 0; y < world.getHeight(); y++) {
-				Land l = world.getLand(x, y);
-
-				Point coord = tileCoordsFor(x, y);
-				Sprite trn = SpriteLoader.get(l.name());
-				int t = trn.getTileSize();
-				// TODO: implement autotiles
-				g.drawImage(trn, x * s, y * s, s, s, coord.getX() * t,
-						coord.getY() * t, coord.getX() * t + t, coord.getX()
-								* t + t);
-				g.flush();
-			}
-		}
-	}
-
-	private Point tileCoordsFor(int x, int y) {
-		byte b = 0;
-		int tx = 0, ty = 0;
-		Land l = world.getLand(x, y);
-		if (world.getLand(x - 1, y) == l)
-			b |= 1;
-		if (world.getLand(x + 1, y) == l)
-			b |= 2;
-		if (world.getLand(x, y - 1) == l)
-			b |= 4;
-		if (world.getLand(x, y + 1) == l)
-			b |= 8;
-
-		if ((b & 4) == 0)
-			tx = 1;
-
-		return new Point(tx, ty);
 	}
 
 	public Land getLandAt(Point p) {
@@ -113,10 +59,6 @@ public class WorldManager {
 	// TODO: If not all forest tiles are the sameat, the used tile should me
 	// save somwhere instead of recalculated. -> Make a large graphic upon
 	// parse, then render that
-
-	public void render(Graphics g) {
-		g.drawImage(worldImage, 0, 0);
-	}
 
 	public Collection<? extends Discoverable> getLandsAround(Entity entity,
 			int visibilityRange) {

@@ -8,8 +8,8 @@ import kernel.managers.DecisionManager;
 import kernel.managers.DiscoveryManager;
 import kernel.managers.RessourceManager;
 import kernel.managers.WorldManager;
-import technology.BType;
-import technology.Building;
+import model.technology.BType;
+import model.technology.Building;
 
 public enum Behaviour {
 
@@ -68,9 +68,6 @@ public enum Behaviour {
 
 		@Override
 		public void execute(Villager owner) {
-			if (owner.getProgressFor(this) == null) {
-				owner.setProgressFor(this, DURATION);
-			}
 			if (owner.getProgressFor(this).getPercentage() == 100) {
 				owner.clearProgressFor(this);
 				Producer producer;
@@ -85,7 +82,11 @@ public enum Behaviour {
 				owner.abandonBehaviour(this);
 				owner.adoptBehaviour(COLLECT);
 			}
+		}
 
+		@Override
+		public void onAdopt(Villager owner) {
+			owner.setProgressFor(this, DURATION);
 		}
 	},
 
@@ -94,19 +95,18 @@ public enum Behaviour {
 
 		@Override
 		public void execute(Villager owner) {
-
-			if (owner.collecting == null) {
-				owner.adoptBehaviour(STANDARD);
-				owner.abandonBehaviour(this);
-			}
-			if (owner.getProgressFor(this) == null) {
-				owner.setProgressFor(this, DURATION);
-			}
 			if (owner.getProgressFor(this).getPercentage() == 100) {
 				owner.clearProgressFor(this);
 				RessourceManager.get().add(owner.collecting);
 				owner.collecting = null;
+				owner.adoptBehaviour(STANDARD);
+				owner.abandonBehaviour(this);
 			}
+		}
+
+		@Override
+		public void onAdopt(Villager owner) {
+			owner.setProgressFor(this, DURATION);
 		}
 
 	},
@@ -120,10 +120,10 @@ public enum Behaviour {
 		}
 	};
 
-	public void onAdopt() {
+	public void onAdopt(Villager owner) {
 	}
 
-	public void onAbandon() {
+	public void onAbandon(Villager owner) {
 	}
 
 	public abstract void execute(Villager owner);

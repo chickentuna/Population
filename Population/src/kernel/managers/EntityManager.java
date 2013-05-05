@@ -2,15 +2,17 @@ package kernel.managers;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-
-import org.newdawn.slick.Graphics;
+import java.util.LinkedList;
 
 import kernel.Entity;
 
+import org.newdawn.slick.Graphics;
 
 public class EntityManager {
 
 	public ArrayList<Entity> entities;
+	public LinkedList<Entity> toSpawn;
+	public LinkedList<Entity> toUnspawn;
 
 	private static EntityManager self = null;
 
@@ -24,20 +26,22 @@ public class EntityManager {
 	public EntityManager(String mode) {
 		this();
 	}
-	
-	
+
 	public EntityManager() {
-		entities = new ArrayList<Entity>();
+		entities = new ArrayList<>();
+		toSpawn = new LinkedList<>();
+		toUnspawn = new LinkedList<>();
 	}
 
 	public Entity spawn(Entity o) {
-		entities.add(o);
+		toSpawn.add(o);
 		return o;
 	}
 
-	public boolean unspawn(Entity o) {
-		o.destroy();
-		return entities.remove(o);
+	// TODO: spawn & unspawn : no concurrent modification of list. Must use
+	// refresh system
+	public void unspawn(Entity o) {
+		toUnspawn.add(o);
 	}
 
 	public Entity get(int k) {
@@ -46,7 +50,7 @@ public class EntityManager {
 
 	public ArrayList<Entity> get(Class<?> clazz) {
 		ArrayList<Entity> array = new ArrayList<Entity>();
-		for (int k=0;k<entities.size();k++) {
+		for (int k = 0; k < entities.size(); k++) {
 			if (clazz.isInstance(entities.get(k))) {
 				array.add(entities.get(k));
 			}
@@ -59,6 +63,24 @@ public class EntityManager {
 		while (it.hasNext()) {
 			it.next().update();
 		}
+		refreshEntities();
+	}
+
+	private void refreshEntities() {
+		Iterator<Entity> it = toUnspawn.iterator();
+		while (it.hasNext()) {
+			Entity b = it.next();
+			entities.remove(b);
+			b.destroy();
+		}
+		toUnspawn.clear();
+		it = toSpawn.iterator();
+		while (it.hasNext()) {
+			Entity b = it.next();
+			entities.add(b);
+		}
+		toSpawn.clear();
+
 	}
 
 	public void render(Graphics g) {
@@ -66,7 +88,7 @@ public class EntityManager {
 		while (it.hasNext()) {
 			it.next().render(g);
 		}
-		
+
 	}
-	
+
 }

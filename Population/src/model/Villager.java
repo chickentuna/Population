@@ -12,11 +12,9 @@ import kernel.Progress;
 import kernel.managers.WorldManager;
 import model.nature.Land;
 import model.nature.Produce;
+import model.technology.Building;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
-
-import technology.Building;
 
 public class Villager extends Entity {
 
@@ -74,28 +72,25 @@ public class Villager extends Entity {
 		while (it.hasNext()) {
 			Behaviour b = it.next();
 			behaviours.remove(b);
-			b.onAbandon();
+			b.onAbandon(this);
 		}
 		toAbandon.clear();
 		it = toAdopt.iterator();
 		while (it.hasNext()) {
 			Behaviour b = it.next();
 			behaviours.add(b);
-			b.onAdopt();
+			b.onAdopt(this);
 		}
 		toAdopt.clear();
 
 	}
 
 	public void render(Graphics g) {
-		g.setColor(Color.red);
-		g.drawRect(x, y, 1, 1);
-		float off = 0;
-		Iterator<Behaviour> it = behaviours.iterator();
-		while (it.hasNext()) {
-			g.drawString(it.next().name(), x, y + off);
-			off += 10;
-		}
+		/*
+		 * g.setColor(Color.red); g.drawRect(x, y, 1, 1); float off = 0;
+		 * Iterator<Behaviour> it = behaviours.iterator(); while (it.hasNext())
+		 * { g.drawString(it.next().name(), x, y + off); off += 11; }
+		 */
 	}
 
 	public void setBuilding(Building b) {
@@ -117,6 +112,14 @@ public class Villager extends Entity {
 	public void clearProgressFor(Behaviour b) {
 		progress.remove(b);
 
+	}
+
+	public VState getState() {
+		return state;
+	}
+
+	public Set<Behaviour> getBehaviours() {
+		return behaviours;
 	}
 
 }
