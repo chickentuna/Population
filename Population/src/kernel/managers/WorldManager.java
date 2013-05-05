@@ -63,6 +63,7 @@ public class WorldManager {
 				Point coord = tileCoordsFor(x, y);
 				Sprite trn = SpriteLoader.get(l.name());
 				int t = trn.getTileSize();
+				// TODO: implement autotiles
 				g.drawImage(trn, x * s, y * s, s, s, coord.getX() * t,
 						coord.getY() * t, coord.getX() * t + t, coord.getX()
 								* t + t);
