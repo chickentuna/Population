@@ -9,7 +9,7 @@ import org.newdawn.slick.SlickException;
 public class SpriteLoader {
 	static HashMap<String, Sprite> cache = new HashMap<>();
 
-	static { // TODO: change this yucky code of nauseating grossness
+	static void init() { //First tries
 		try {
 			Sprite i = new Sprite("ressource" + OS.getSlash() + "worldmap1.png");
 			int tx = 16 * 3;

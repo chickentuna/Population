@@ -20,7 +20,6 @@ public class Engine extends BasicGame {
 
 	public String cheat;
 	public View view;
-	public static EventBus gameBus; // Put this somewhere else
 
 	public Engine() {
 		super("Population");
@@ -34,8 +33,7 @@ public class Engine extends BasicGame {
 
 		// Start View
 		view = new DebugView();
-		gameBus = new EventBus();
-		gameBus.register(view);
+		GameBus.register(view);
 
 		// Start Game
 		RessourceManager.get().villagerBirth(125, 125);
