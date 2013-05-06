@@ -51,4 +51,13 @@ public enum ProductionBuilding implements Building, Discoverable, Producer {
 			return null;
 		return produce[0];
 	}
+
+	@Override
+	public int getWeight() {
+		int weight = 0;
+		for (int k = 0; k<produce.length; k++) {
+			weight += produce[k].getValue(); //TODO: have this ponderated by produce probability?
+		}
+		return weight;
+	}
 }

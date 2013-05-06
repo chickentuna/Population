@@ -2,14 +2,21 @@ package kernel.managers;
 
 import java.io.File;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 
+import kernel.Decision;
+import kernel.DecisionAdapter;
 import kernel.Entity;
 import kernel.Point;
 import kernel.WorldParser;
 import model.Discoverable;
+import model.Producer;
+import model.Villager;
 import model.World;
 import model.nature.Land;
+import model.technology.BType;
 import model.technology.Building;
 
 public class WorldManager {
@@ -60,8 +67,7 @@ public class WorldManager {
 	// save somwhere instead of recalculated. -> Make a large graphic upon
 	// parse, then render that
 
-	public Collection<? extends Discoverable> getLandsAround(Entity entity,
-			int visibilityRange) {
+	public Collection<Land> getLandsAround(Entity entity, int visibilityRange) {
 		LinkedList<Land> lands = new LinkedList<Land>();
 		Point centre = entity.getLocation();
 
@@ -103,6 +109,54 @@ public class WorldManager {
 
 	public Building getBuildingUnder(Entity e) {
 		return getBuildingAt(e.getX(), e.getY());
+	}
+
+	public List<Point> getLocationsAround(Entity entity, int dist) {
+		LinkedList<Point> points = new LinkedList<>();
+
+		Point centre = entity.getLocation();
+
+		int offset = dist * world.getLandSize();
+		int debutX = (int) (centre.getX() - offset);
+		int debutY = (int) (centre.getY() - offset);
+
+		for (int x = debutX; x <= centre.getX() + offset; x += world.getLandSize()) {
+			for (int y = debutY; y <= centre.getY() + offset; y += world.getLandSize()) {
+				Point p = new Point(x, y);
+				if (Point.manhattanDistance(p, centre) <= dist	* world.getLandSize()) {
+					points.add(p);
+				}
+			}
+		}
+
+		return points;
+	}
+
+	public Building getBuildingAt(Point p) {
+		return getBuildingAt(p.getX(), p.getY());
+	}
+
+	public List<Decision> getProductionDecisionsAround(Entity entity, int dist) {
+		LinkedList<Decision> decisions = new LinkedList<>();
+		List<Point> locations = getLocationsAround(entity,dist);
+		
+		Iterator<Point> it = locations.iterator();
+		while (it.hasNext()) {
+			Point p = it.next();
+			Producer param = null;
+			final Building b = getBuildingAt(p);
+			if (b!= null && b.getType() == BType.PRODUCTION) {
+				param = (Producer) b;
+			} else {
+				final Land l = getLandAt(p);
+				if (l!= null) {
+					param = l; 
+				}
+			}
+			decisions.add(new DecisionAdapter(param.getWeight(), param));
+		}
+		
+		return decisions;
 	}
 
 }

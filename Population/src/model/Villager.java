@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 import kernel.Entity;
+import kernel.Point;
 import kernel.Progress;
 import kernel.managers.WorldManager;
 import model.nature.Land;
@@ -24,13 +25,15 @@ public class Villager extends Entity {
 	private Set<Behaviour> toAdopt;
 	private Set<Behaviour> toAbandon;
 
-	// Behaviour vars
-	protected VState state = IDLE;
 	
+	protected VState state = IDLE;
+	// Behaviour vars
 	protected float direction = 0;
 	protected HashMap<Behaviour, Progress> progress;
 	protected Building building = null;
 	protected Produce collecting = null;
+	protected Point goingTo = null;
+	protected Behaviour intention = null;
 
 	public Villager(int x, int y) {
 		super((float) x, (float) y);
@@ -49,6 +52,7 @@ public class Villager extends Entity {
 		toAbandon.add(behaviour);
 	}
 
+	//TODO: implement path_finding ? Or rather a safe guard for the GOING Behaviour
 	protected void step_foward() {
 		float new_x = (float) (x + WALK_SPEED * Math.cos(direction));
 		float new_y = (float) (y - WALK_SPEED * Math.sin(direction));
@@ -68,14 +72,8 @@ public class Villager extends Entity {
 	}
 
 	private void refreshBehaviours() {
-
-		Iterator<Behaviour> it = toAbandon.iterator();
-		while (it.hasNext()) {
-			Behaviour b = it.next();
-			behaviours.remove(b);
-			b.onAbandon(this);
-		}
-		toAbandon.clear();
+		Iterator<Behaviour> it;
+		
 		it = toAdopt.iterator();
 		while (it.hasNext()) {
 			Behaviour b = it.next();
@@ -83,7 +81,14 @@ public class Villager extends Entity {
 			b.onAdopt(this);
 		}
 		toAdopt.clear();
-
+		
+		it = toAbandon.iterator();
+		while (it.hasNext()) {
+			Behaviour b = it.next();
+			behaviours.remove(b);
+			b.onAbandon(this);
+		}
+		toAbandon.clear();
 	}
 
 	public void render(Graphics g) {

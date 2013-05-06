@@ -19,6 +19,7 @@ public enum Produce {
 	
 	private int value;
 	private PType type;
+	//TODO: add chance (for probability of finding this produce compared to others)
 
 	Produce(int value, PType type) {
 		this.value = value;

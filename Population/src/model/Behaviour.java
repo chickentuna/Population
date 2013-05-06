@@ -2,8 +2,11 @@ package model;
 
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 
 import kernel.Chance;
+import kernel.Decision;
+import kernel.Point;
 import kernel.managers.DecisionManager;
 import kernel.managers.DiscoveryManager;
 import kernel.managers.RessourceManager;
@@ -69,10 +72,11 @@ public enum Behaviour {
 
 	LABOUR {
 		public static final int DURATION = 4;
-
-		// TODO: labour should be different for each type of poduce.
+		// TODO: labour duration should be different for each type of poduce.
 		// -> Get produce before end. and set vars for it.
 
+		//TODO: Have villager check surroundings for a better labour opportuniy before labouring here 
+		// (small chance of staying)
 		@Override
 		public void execute(Villager owner) {
 			if (owner.getProgressFor(this).getPercentage() == 100) {
@@ -93,8 +97,22 @@ public enum Behaviour {
 
 		@Override
 		public void onAdopt(Villager owner) {
+			Point better = getBetterSolution(owner);
+			if (better == null) {			
 			owner.setProgressFor(this, DURATION);
 			owner.state = VState.LABOURING;
+			} else {
+				owner.abandonBehaviour(this);
+				owner.goingTo = better;
+				owner.intention = this;
+				owner.adoptBehaviour(GOING);
+			}
+		}
+
+		private Point getBetterSolution(Villager v) {
+			//Get a list of points plus their score.
+			List<Decision> places = WorldManager.get().getProductionDecisionsAround(v, 2);
+			return (Point)Chance.pickFrom(places).getParam();
 		}
 	},
 
@@ -127,6 +145,26 @@ public enum Behaviour {
 				owner.setBuilding(DecisionManager.get().somethingToBuild(owner));
 			}// TODO: build.
 		}
+	}, 
+	
+	GOING {
+
+		@Override
+		public void onAdopt(Villager owner) {
+			owner.direction = new Point(owner.getX(), owner.getY()).directionTo(owner.goingTo);
+		}
+		
+		@Override
+		public void execute(Villager owner) {
+			owner.step_foward();
+			if (/*TODO: Villager has arrived at destination*/true) {
+				owner.abandonBehaviour(this);
+				owner.adoptBehaviour(owner.intention);
+				owner.intention = null;
+				owner.goingTo = null;
+			}
+		}
+		
 	};
 
 	public void onAdopt(Villager owner) {

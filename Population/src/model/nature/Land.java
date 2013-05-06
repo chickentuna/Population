@@ -43,4 +43,13 @@ public enum Land implements Discoverable, Producer {
 		
 	}
 
+	@Override
+	public int getWeight() {
+		int weight = 0;
+		for (int k = 0; k<produce.length; k++) {
+			weight += produce[k].getValue(); //TODO: This code appears twice. (once in ProductionBuilding)
+		}
+		return weight;
+	}
+
 }

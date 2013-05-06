@@ -30,5 +30,10 @@ public class Point {
 	public String toString() {
 		return "Point [x=" + x + ", y=" + y + "]";
 	}
+
+	public float directionTo(Point other) {
+		//TODO: direction algo.
+		return 0;
+	}
 	
 }
