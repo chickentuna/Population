@@ -1,6 +1,6 @@
 package kernel;
 
-public class Point {
+public class Point implements Locatable {
 	private final float x;
 	private final float y;
 	

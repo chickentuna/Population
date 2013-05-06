@@ -150,14 +150,9 @@ public enum Behaviour {
 	GOING {
 
 		@Override
-		public void onAdopt(Villager owner) {
-			owner.direction = new Point(owner.getX(), owner.getY()).directionTo(owner.goingTo);
-		}
-		
-		@Override
 		public void execute(Villager owner) {
-			owner.step_foward();
-			if (/*TODO: Villager has arrived at destination*/true) {
+			owner.step_towards(owner.goingTo);
+			if (WorldManager.onSameTile(owner, owner.goingTo)) {
 				owner.abandonBehaviour(this);
 				owner.adoptBehaviour(owner.intention);
 				owner.intention = null;

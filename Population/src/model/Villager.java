@@ -128,4 +128,9 @@ public class Villager extends Entity {
 		return behaviours;
 	}
 
+	public void step_towards(Point point) {
+		direction = new Point(x, y).directionTo(point);
+		step_foward();		
+	}//TODO: this is where path finding will be implemented
+
 }

@@ -9,6 +9,7 @@ import java.util.List;
 import kernel.Decision;
 import kernel.DecisionAdapter;
 import kernel.Entity;
+import kernel.Locatable;
 import kernel.Point;
 import kernel.WorldParser;
 import model.Discoverable;
@@ -157,6 +158,11 @@ public class WorldManager {
 		}
 		
 		return decisions;
+	}
+
+	public static boolean onSameTile(Locatable l1, Locatable l2) {
+		//TODO: onSameTile()
+		return false;
 	}
 
 }
