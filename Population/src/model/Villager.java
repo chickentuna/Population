@@ -26,6 +26,7 @@ public class Villager extends Entity {
 
 	// Behaviour vars
 	protected VState state = IDLE;
+	
 	protected float direction = 0;
 	protected HashMap<Behaviour, Progress> progress;
 	protected Building building = null;
@@ -39,7 +40,7 @@ public class Villager extends Entity {
 		progress = new HashMap<>();
 
 	}
-
+	
 	public void adoptBehaviour(Behaviour b) {
 		toAdopt.add(b);
 	}

@@ -14,8 +14,15 @@ import model.technology.Building;
 public enum Behaviour {
 
 	STANDARD {
+		
+		@Override
+		public void onAdopt(Villager owner) {
+			owner.state = VState.IDLE;
+		}
+		
+		@Override
 		public void execute(Villager owner) {
-
+			
 			// Wander around
 			if (owner.state == VState.IDLE) {
 				double percent = Math.random() * 100;
@@ -87,6 +94,7 @@ public enum Behaviour {
 		@Override
 		public void onAdopt(Villager owner) {
 			owner.setProgressFor(this, DURATION);
+			owner.state = VState.LABOURING;
 		}
 	},
 
@@ -107,6 +115,7 @@ public enum Behaviour {
 		@Override
 		public void onAdopt(Villager owner) {
 			owner.setProgressFor(this, DURATION);
+			owner.state = VState.COLLECTING;
 		}
 
 	},
