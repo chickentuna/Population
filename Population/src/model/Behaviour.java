@@ -152,7 +152,7 @@ public enum Behaviour {
 		@Override
 		public void execute(Villager owner) {
 			owner.step_towards(owner.goingTo);
-			if (WorldManager.onSameTile(owner, owner.goingTo)) {
+			if (WorldManager.get().onSameTile(owner, owner.goingTo)) {
 				owner.abandonBehaviour(this);
 				owner.adoptBehaviour(owner.intention);
 				owner.intention = null;

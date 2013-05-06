@@ -160,7 +160,7 @@ public class WorldManager {
 		return decisions;
 	}
 
-	public static boolean onSameTile(Locatable l1, Locatable l2) {
+	public boolean onSameTile(Locatable l1, Locatable l2) {
 		//TODO: onSameTile()
 		return false;
 	}
