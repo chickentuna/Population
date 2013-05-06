@@ -64,7 +64,6 @@ public class Engine extends BasicGame {
 	public void render(GameContainer container, Graphics g)
 			throws SlickException {
 		view.render(g);
-		EntityManager.get().render(g);
 	}
 
 	public static void main(String[] args) {

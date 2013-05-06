@@ -83,12 +83,4 @@ public class EntityManager {
 
 	}
 
-	public void render(Graphics g) {
-		Iterator<Entity> it = entities.iterator();
-		while (it.hasNext()) {
-			it.next().render(g);
-		}
-
-	}
-
 }

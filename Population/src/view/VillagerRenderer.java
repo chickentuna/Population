@@ -55,9 +55,6 @@ public class VillagerRenderer implements Renderer {
 
 	public void on(VillagerEvent e) {
 		switch (e.getType()) {
-		case VillagerEvent.MOVE:
-
-			break;
 		default:
 			break;
 		}

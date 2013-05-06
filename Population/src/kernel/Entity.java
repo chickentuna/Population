@@ -45,9 +45,6 @@ public abstract class Entity {
 	public void update() {
 	}
 	
-	public void render(Graphics g) {
-	}
-	
 	public int getWidth() {
 		return width;
 	}

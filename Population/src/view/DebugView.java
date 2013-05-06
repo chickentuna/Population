@@ -25,14 +25,18 @@ public class DebugView implements View {
 
 	public void render(Graphics g) {
 		worldRenderer.render(g);
+		renderVillagers(g);
+		renderGUI(g);
+	}
+
+	private void renderVillagers(Graphics g) {
 		Iterator<VillagerRenderer> it = villagers.values().iterator();
 		while (it.hasNext()) {
 			it.next().render(g);
-		}
-		drawGUI(g);
+		}		
 	}
 
-	private void drawGUI(Graphics g) {
+	private void renderGUI(Graphics g) {
 		int food = RessourceManager.get().getFood();
 		int res = RessourceManager.get().getRessource();
 		int pop = RessourceManager.get().getPopulation();
