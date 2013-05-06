@@ -15,31 +15,33 @@ public class VillagerRenderer implements Renderer {
 	public final static int WALKING = 1;
 	public final static int LABOUR = 2;
 	public final static int COLLECT = 3;
-
-	Villager villager;
-	int spriteIndex;
+	
+	private Villager villager;
+	//private int spriteIndex;
 
 	public VillagerRenderer(Villager v) {
 		villager = v;
 	}
 
-	// For rendering, get Images from View? No, views arnt just about sprites.
-	// Is the View class at all modulable ? Not really but whatever.
+	// For rendering, get Images from View? No, views arnt just about sprites. How to get sprites?
 	@Override
 	public void render(Graphics g) {
+		Color c = Color.red;
 		switch (villager.getState()) {
 		case COLLECTING:
+			c = new Color(.5f, .5f, 1f);
 			break;
 		case IDLE:
 			break;
 		case LABOURING:
+			c = Color.orange;
 			break;
 		case WANDERING:
 			break;
 		default:
 			break;
 		}
-		g.setColor(Color.red);
+		g.setColor(c);
 		g.drawRect(villager.getX(), villager.getY(), 1, 1);
 		float off = 0;
 		Iterator<Behaviour> it = villager.getBehaviours().iterator();
