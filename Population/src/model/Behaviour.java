@@ -73,10 +73,7 @@ public enum Behaviour {
 	LABOUR {
 		public static final int DURATION = 4;
 		// TODO: labour duration should be different for each type of poduce.
-		// -> Get produce before end. and set vars for it.
 
-		//TODO: Have villager check surroundings for a better labour opportuniy before labouring here 
-		// (small chance of staying)
 		@Override
 		public void execute(Villager owner) {
 			if (owner.getProgressFor(this).getPercentage() == 100) {
@@ -97,15 +94,17 @@ public enum Behaviour {
 
 		@Override
 		public void onAdopt(Villager owner) {
-			Point better = getBetterSolution(owner);
-			if (better == null) {			
-			owner.setProgressFor(this, DURATION);
-			owner.state = VState.LABOURING;
+			
+			if (owner.intention == this) {
+				owner.setProgressFor(this, DURATION);
+				owner.state = VState.LABOURING;
+				owner.intention = null;
 			} else {
+				Point better = getBetterSolution(owner);
 				owner.abandonBehaviour(this);
 				owner.goingTo = better;
 				owner.intention = this;
-				owner.adoptBehaviour(GOING);
+				owner.adoptBehaviour(GOING); //TODO: never adopt in onAdopt, for it is in use. Total revamp required
 			}
 		}
 
@@ -155,7 +154,6 @@ public enum Behaviour {
 			if (WorldManager.get().onSameTile(owner, owner.goingTo)) {
 				owner.abandonBehaviour(this);
 				owner.adoptBehaviour(owner.intention);
-				owner.intention = null;
 				owner.goingTo = null;
 			}
 		}
