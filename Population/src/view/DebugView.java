@@ -41,7 +41,7 @@ public class DebugView implements View {
 		int res = RessourceManager.get().getRessource();
 		int pop = RessourceManager.get().getPopulation();
 		g.setColor(Color.green);
-		g.drawString("food: " + food + " res: " + res+ "pop: "+pop, 0, 400);
+		g.drawString("food: " + food + " res: " + res+ " pop: "+pop, 0, 400);
 	}
 
 	@Subscribe
