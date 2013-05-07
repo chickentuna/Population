@@ -143,18 +143,19 @@ public class WorldManager {
 		
 		Iterator<Point> it = locations.iterator();
 		while (it.hasNext()) {
-			Point p = it.next();
+			Point point = it.next();
 			Producer param = null;
-			final Building b = getBuildingAt(p);
+			final Building b = getBuildingAt(point);
 			if (b!= null && b.getType() == BType.PRODUCTION) {
 				param = (Producer) b;
 			} else {
-				final Land l = getLandAt(p);
+				final Land l = getLandAt(point); //TODO: Somewhere in the decision manager, check if land can indeed produce.
 				if (l!= null) {
 					param = l; 
 				}
 			}
-			decisions.add(new DecisionAdapter(param.getWeight(), param));
+			if (param != null)
+				decisions.add(new DecisionAdapter(param.getWeight(), point));
 		}
 		
 		return decisions;
