@@ -104,7 +104,8 @@ public enum Behaviour {
 				owner.abandonBehaviour(this);
 				owner.goingTo = better;
 				owner.intention = this;
-				owner.adoptBehaviour(GOING); //TODO: never adopt in onAdopt, for it is in use. Total revamp required
+				owner.adoptBehaviour(GOING);
+				//TODO: onAdopt everybody, THEN move them around ?
 			}
 		}
 

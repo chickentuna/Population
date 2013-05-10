@@ -5,6 +5,7 @@ import static model.VState.IDLE;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Set;
 
 import kernel.Entity;
@@ -72,23 +73,28 @@ public class Villager extends Entity {
 	}
 
 	private void refreshBehaviours() {
+		HashSet<Behaviour> toAdoptCache = new HashSet<>(toAdopt);
+				
 		Iterator<Behaviour> it;
 		
-		it = toAdopt.iterator();
+		toAbandon.clear();
+		toAdopt.clear();
+		
+		it = toAdoptCache.iterator();
 		while (it.hasNext()) {
 			Behaviour b = it.next();
 			behaviours.add(b);
 			b.onAdopt(this);
-		}
-		toAdopt.clear();
+		}		
 		
-		it = toAbandon.iterator();
+		HashSet<Behaviour> toAbandonCache = new HashSet<>(toAbandon);
+		
+		it = toAbandonCache.iterator();
 		while (it.hasNext()) {
 			Behaviour b = it.next();
 			behaviours.remove(b);
 			b.onAbandon(this);
 		}
-		toAbandon.clear();
 	}
 
 	public void render(Graphics g) {
