@@ -5,8 +5,8 @@ import java.util.List;
 
 import kernel.Chance;
 import kernel.Decision;
-import model.Behaviour;
 import model.Villager;
+import model.behaviour.Behaviour;
 import model.nature.Land;
 import model.technology.Building;
 
@@ -27,9 +27,9 @@ public class DecisionManager {
 
 	public Behaviour somethingUseful(Villager v) {
 		List<Decision> poss = UsefulPossibilitiesFor(v);
-		if (poss == null)
-			return Behaviour.STANDARD;
-
+		/*if (poss == null)
+			return Behaviour.STANDARD;*/
+		
 		Decision choice = Chance.pickFrom(poss);
 		return (Behaviour) (choice.getParam());
 	}
@@ -40,7 +40,7 @@ public class DecisionManager {
 
 		LinkedList<Decision> decisions = new LinkedList<>();
 		Building in = WorldManager.get().getBuildingUnder(v);
-
+/*
 		if (in == null) {
 			decisions.add(new Decision() {
 
@@ -69,7 +69,7 @@ public class DecisionManager {
 				return Behaviour.LABOUR;
 			}
 		});
-
+*/
 		return decisions;
 	}
 

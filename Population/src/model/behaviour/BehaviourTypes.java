@@ -1,4 +1,4 @@
-package model;
+package model.behaviour;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -11,45 +11,59 @@ import kernel.managers.DecisionManager;
 import kernel.managers.DiscoveryManager;
 import kernel.managers.RessourceManager;
 import kernel.managers.WorldManager;
+import model.Discoverable;
+import model.Producer;
+import model.VState;
+import model.Villager;
 import model.technology.BType;
 import model.technology.Building;
 
-public enum Behaviour {
+public enum BehaviourTypes {
 
 	STANDARD {
-		
-		@Override
-		public void onAdopt(Villager owner) {
-			owner.state = VState.IDLE;
-		}
-		
-		@Override
-		public void execute(Villager owner) {
-			
-			// Wander around
-			if (owner.state == VState.IDLE) {
-				double percent = Math.random() * 100;
-				if (percent < 4) {
-					owner.state = VState.WANDERING;
-					owner.direction = (float) Math.random() * 360;
-				}
-			} else if (owner.state == VState.WANDERING) {
-				double percent = Math.random() * 100;
-				if (percent < 5) {
-					owner.state = VState.IDLE;
-				}
-				owner.step_foward();
-			}
 
-			// Activity
-			if (Chance.onceEveryXSeconds(20)) {
-				Behaviour todo = DecisionManager.get().somethingUseful(owner);
-				owner.abandonBehaviour(this);
-				owner.adoptBehaviour(todo);
-			}
-		}
-	},
+		@Override
+		public Behaviour getBase() {
+			return new Behaviour() {
 
+				@Override
+				public void onAdopt(Villager owner) {
+					owner.setState(VState.IDLE);
+				}
+
+				@Override
+				public void execute(Villager owner) {
+
+					// Wander around
+					if (owner.getState() == VState.IDLE) {
+						double percent = Math.random() * 100;
+						if (percent < 4) {
+							owner.setState(VState.WANDERING);
+							owner.setDirection((float) Math.random() * 360);
+						}
+					} else if (owner.getState() == VState.WANDERING) {
+						double percent = Math.random() * 100;
+						if (percent < 5) {
+							owner.setState(VState.IDLE);
+						}
+						owner.step_foward();
+					}
+
+					// Activity
+					if (Chance.onceEveryXSeconds(20)) {
+						Behaviour todo = DecisionManager.get().somethingUseful(
+								owner);
+						owner.abandonBehaviour(this);
+						owner.adoptBehaviour(todo);
+					}
+				}
+			};
+		}
+	};
+
+	
+	
+	/*
 	// TODO: scrap curiosity and have discoveries happen in an event like
 	// fashion.
 	CURIOSITY {
@@ -72,6 +86,7 @@ public enum Behaviour {
 
 	LABOUR {
 		public static final int DURATION = 4;
+
 		// TODO: labour duration should be different for each type of poduce.
 
 		@Override
@@ -94,7 +109,7 @@ public enum Behaviour {
 
 		@Override
 		public void onAdopt(Villager owner) {
-			
+
 			if (owner.intention == this) {
 				owner.setProgressFor(this, DURATION);
 				owner.state = VState.LABOURING;
@@ -105,14 +120,15 @@ public enum Behaviour {
 				owner.goingTo = better;
 				owner.intention = this;
 				owner.adoptBehaviour(GOING);
-				//TODO: onAdopt everybody, THEN move them around ?
+				// TODO: onAdopt everybody, THEN move them around ?
 			}
 		}
 
 		private Point getBetterSolution(Villager v) {
-			//Get a list of points plus their score.
-			List<Decision> places = WorldManager.get().getProductionDecisionsAround(v, 2);
-			return (Point)Chance.pickFrom(places).getParam();
+			// Get a list of points plus their score.
+			List<Decision> places = WorldManager.get()
+					.getProductionDecisionsAround(v, 2);
+			return (Point) Chance.pickFrom(places).getParam();
 		}
 	},
 
@@ -145,8 +161,8 @@ public enum Behaviour {
 				owner.setBuilding(DecisionManager.get().somethingToBuild(owner));
 			}// TODO: build.
 		}
-	}, 
-	
+	},
+
 	GOING {
 
 		@Override
@@ -158,15 +174,9 @@ public enum Behaviour {
 				owner.goingTo = null;
 			}
 		}
-		
-	};
 
-	public void onAdopt(Villager owner) {
-	}
+	};*/
 
-	public void onAbandon(Villager owner) {
-	}
-
-	public abstract void execute(Villager owner);
+	public abstract Behaviour getBase();
 
 }

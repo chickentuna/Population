@@ -2,8 +2,8 @@ package kernel.managers;
 
 import io.GameBus;
 import kernel.events.VillagerEvent;
-import model.Behaviour;
 import model.Villager;
+import model.behaviour.Behaviour;
 import model.nature.PType;
 import model.nature.Produce;
 
@@ -47,7 +47,6 @@ public class RessourceManager {
 	public void villagerBirth(int x, int y) {
 		population++;
 		Villager v = new Villager(x, y);
-		v.adoptBehaviour(Behaviour.STANDARD);
 		EntityManager.get().spawn(v);
 		GameBus.post(new VillagerEvent(VillagerEvent.BIRTH, v));
 	}

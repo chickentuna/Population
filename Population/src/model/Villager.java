@@ -2,16 +2,14 @@ package model;
 
 import static model.VState.IDLE;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Set;
-
+import java.util.List;
 import kernel.Entity;
 import kernel.Point;
 import kernel.Progress;
 import kernel.managers.WorldManager;
+import model.behaviour.Behaviour;
 import model.nature.Land;
 import model.nature.Produce;
 import model.technology.Building;
@@ -22,9 +20,9 @@ public class Villager extends Entity {
 
 	public static final int WALK_SPEED = 1;
 
-	private Set<Behaviour> behaviours;
-	private Set<Behaviour> toAdopt;
-	private Set<Behaviour> toAbandon;
+	private List<Behaviour> behaviours;
+	private List<Behaviour> toAdopt;
+	private List<Behaviour> toAbandon;
 
 	
 	protected VState state = IDLE;
@@ -38,9 +36,9 @@ public class Villager extends Entity {
 
 	public Villager(int x, int y) {
 		super((float) x, (float) y);
-		behaviours = new HashSet<Behaviour>();
-		toAbandon = new HashSet<Behaviour>();
-		toAdopt = new HashSet<Behaviour>();
+		behaviours = new ArrayList<Behaviour>();
+		toAbandon = new ArrayList<Behaviour>();
+		toAdopt = new ArrayList<Behaviour>();
 		progress = new HashMap<>();
 
 	}
@@ -54,7 +52,7 @@ public class Villager extends Entity {
 	}
 
 	//TODO: implement path_finding ? Or rather a safe guard for the GOING Behaviour
-	protected void step_foward() {
+	public void step_foward() {
 		float new_x = (float) (x + WALK_SPEED * Math.cos(direction));
 		float new_y = (float) (y - WALK_SPEED * Math.sin(direction));
 		Land l = WorldManager.get().getLandAt(new_x, new_y);
@@ -65,36 +63,7 @@ public class Villager extends Entity {
 	}
 
 	public void update() {
-		Iterator<Behaviour> it = behaviours.iterator();
-		while (it.hasNext()) {
-			it.next().execute(this);
-		}
-		refreshBehaviours();
-	}
-
-	private void refreshBehaviours() {
-		HashSet<Behaviour> toAdoptCache = new HashSet<>(toAdopt);
-				
-		Iterator<Behaviour> it;
-		
-		toAbandon.clear();
-		toAdopt.clear();
-		
-		it = toAdoptCache.iterator();
-		while (it.hasNext()) {
-			Behaviour b = it.next();
-			behaviours.add(b);
-			b.onAdopt(this);
-		}		
-		
-		HashSet<Behaviour> toAbandonCache = new HashSet<>(toAbandon);
-		
-		it = toAbandonCache.iterator();
-		while (it.hasNext()) {
-			Behaviour b = it.next();
-			behaviours.remove(b);
-			b.onAbandon(this);
-		}
+	
 	}
 
 	public void render(Graphics g) {
@@ -130,7 +99,7 @@ public class Villager extends Entity {
 		return state;
 	}
 
-	public Set<Behaviour> getBehaviours() {
+	public List<Behaviour> getBehaviours() {
 		return behaviours;
 	}
 
@@ -138,5 +107,15 @@ public class Villager extends Entity {
 		direction = new Point(x, y).directionTo(point);
 		step_foward();		
 	}//TODO: this is where path finding will be implemented
+
+	public void setState(VState state) {
+		this.state = state;
+		
+	}
+
+	public void setDirection(float f) {
+		this.direction = direction;
+		
+	}
 
 }
