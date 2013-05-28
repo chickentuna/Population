@@ -6,7 +6,6 @@ import kernel.managers.DiscoveryManager;
 import model.Discoverable;
 import model.nature.Land;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import com.google.common.eventbus.EventBus;

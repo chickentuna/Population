@@ -3,7 +3,6 @@ package kernel.managers;
 import io.GameBus;
 import kernel.events.VillagerEvent;
 import model.Villager;
-import model.behaviour.Behaviour;
 import model.nature.PType;
 import model.nature.Produce;
 
@@ -34,6 +33,10 @@ public class RessourceManager {
 
 	public int getFood() {
 		return food;
+	}
+	
+	public int getTech() {
+		return tech;
 	}
 
 	public int getRessource() {

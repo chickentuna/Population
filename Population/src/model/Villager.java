@@ -11,8 +11,6 @@ import kernel.Progress;
 import kernel.managers.WorldManager;
 import model.behaviour.Behaviour;
 import model.nature.Land;
-import model.nature.Produce;
-import model.technology.Building;
 
 import org.newdawn.slick.Graphics;
 
@@ -108,8 +106,7 @@ public class Villager extends Entity {
 	}
 
 	public void setDirection(float f) {
-		this.direction = direction;
-		
+		this.direction = f;
 	}
 
 }
