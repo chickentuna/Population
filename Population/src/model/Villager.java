@@ -24,9 +24,8 @@ public class Villager extends Entity {
 
 	
 	protected VState state = IDLE;
-	// Behaviour vars
 	protected float direction = 0;
-	protected HashMap<Behaviour, Progress> progress;
+	protected HashMap<Behaviour, Progress> progress; //TODO: place in the Behaviour
 	
 
 

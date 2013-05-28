@@ -33,7 +33,7 @@ public enum BehaviourTypes {
 				}
 
 				@Override
-				public void execute(Villager owner) {
+				protected void execution(Villager owner) {
 
 					// Wander around
 					if (owner.getState() == VState.IDLE) {
@@ -52,10 +52,12 @@ public enum BehaviourTypes {
 
 					// Activity
 					if (Chance.onceEveryXSeconds(20)) {
-						Behaviour todo = DecisionManager.get().somethingUseful(
-								owner);
-						owner.abandonBehaviour(this);
-						owner.adoptBehaviour(todo);
+						Behaviour todo = DecisionManager.get().somethingUseful(owner);
+						if (todo !=null) {
+							active = false;
+							waitingFor = todo;
+							owner.adoptBehaviour(todo);
+						}
 					}
 				}
 			};
@@ -68,7 +70,7 @@ public enum BehaviourTypes {
 		@Override
 		public Behaviour create() {
 			return new Behaviour() {
-				public void execute(Villager owner) {
+				protected void execution(Villager owner) {
 					LinkedList<Discoverable> surroundings = getDiscoverablesAround(owner);
 					Iterator<Discoverable> it = surroundings.iterator();
 					while (it.hasNext()) {
@@ -103,7 +105,7 @@ public enum BehaviourTypes {
 				protected Point goingTo = null;
 
 				@Override
-				public void execute(Villager owner) {
+				protected void execution(Villager owner) {
 					if (owner.getProgressFor(this).getPercentage() == 100) {
 						owner.clearProgressFor(this);
 						Producer producer;
@@ -156,7 +158,7 @@ public enum BehaviourTypes {
 				protected Produce collecting = null;
 
 				@Override
-				public void execute(Villager owner) {
+				protected void execution(Villager owner) {
 					if (owner.getProgressFor(this).getPercentage() == 100) {
 						owner.clearProgressFor(this);
 						RessourceManager.get().add(collecting);
@@ -183,7 +185,7 @@ public enum BehaviourTypes {
 				protected Building building = null;
 
 				@Override
-				public void execute(Villager owner) {
+				protected void execution(Villager owner) {
 					if (building == null) {
 						building = DecisionManager.get().somethingToBuild(owner);
 					}// TODO: build.
@@ -200,7 +202,7 @@ public enum BehaviourTypes {
 				protected Behaviour intention = null;
 
 				@Override
-				public void execute(Villager owner) {
+				protected void execution(Villager owner) {
 					owner.step_towards(goingTo);
 					if (WorldManager.get().onSameTile(owner, goingTo)) {
 						owner.abandonBehaviour(this);
