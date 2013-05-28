@@ -14,7 +14,7 @@ import kernel.managers.WorldManager;
 import model.technology.BType;
 import model.technology.Building;
 
-public enum Behaviour {
+public enum Behaviour { //TODO: no enums. Behaviours should not be static and should be distibuted by a factory.
 
 	STANDARD {
 		
