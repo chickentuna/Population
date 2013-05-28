@@ -9,6 +9,6 @@ public abstract class Behaviour {
 	public void onAdopt(Villager owner) {		
 	}
 
-	
-	
+	public void onAbandon(Villager owner) {		
+	}	
 }

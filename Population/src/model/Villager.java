@@ -29,10 +29,8 @@ public class Villager extends Entity {
 	// Behaviour vars
 	protected float direction = 0;
 	protected HashMap<Behaviour, Progress> progress;
-	protected Building building = null;
-	protected Produce collecting = null;
-	protected Point goingTo = null;
-	protected Behaviour intention = null;
+	
+
 
 	public Villager(int x, int y) {
 		super((float) x, (float) y);
@@ -72,10 +70,6 @@ public class Villager extends Entity {
 		 * Iterator<Behaviour> it = behaviours.iterator(); while (it.hasNext())
 		 * { g.drawString(it.next().name(), x, y + off); off += 11; }
 		 */
-	}
-
-	public void setBuilding(Building b) {
-		building = b;
 	}
 
 	public Progress getProgressFor(Behaviour behaviour) {

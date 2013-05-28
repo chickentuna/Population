@@ -15,6 +15,7 @@ import model.Discoverable;
 import model.Producer;
 import model.VState;
 import model.Villager;
+import model.nature.Produce;
 import model.technology.BType;
 import model.technology.Building;
 
@@ -23,7 +24,7 @@ public enum BehaviourTypes {
 	STANDARD {
 
 		@Override
-		public Behaviour getBase() {
+		public Behaviour create() {
 			return new Behaviour() {
 
 				@Override
@@ -59,124 +60,159 @@ public enum BehaviourTypes {
 				}
 			};
 		}
-	};
+	},
 
-	
-	
-	/*
 	// TODO: scrap curiosity and have discoveries happen in an event like
 	// fashion.
 	CURIOSITY {
-		public void execute(Villager owner) {
-			LinkedList<Discoverable> surroundings = getDiscoverablesAround(owner);
-			Iterator<Discoverable> it = surroundings.iterator();
-			while (it.hasNext()) {
-				DiscoveryManager.get().addDiscovery(it.next());
-			}
-		}
+		@Override
+		public Behaviour create() {
+			return new Behaviour() {
+				public void execute(Villager owner) {
+					LinkedList<Discoverable> surroundings = getDiscoverablesAround(owner);
+					Iterator<Discoverable> it = surroundings.iterator();
+					while (it.hasNext()) {
+						DiscoveryManager.get().addDiscovery(it.next());
+					}
+				}
 
-		// TODO: have discoveries unlock ONLY when you arrive on new land.
-		public LinkedList<Discoverable> getDiscoverablesAround(Villager owner) {
-			LinkedList<Discoverable> discoverables = new LinkedList<>();
-			discoverables.add(WorldManager.get().getLandUnder(owner));
+				// TODO: have discoveries unlock ONLY when you arrive on new
+				// land.
+				public LinkedList<Discoverable> getDiscoverablesAround(
+						Villager owner) {
+					LinkedList<Discoverable> discoverables = new LinkedList<>();
+					discoverables.add(WorldManager.get().getLandUnder(owner));
 
-			return discoverables;
+					return discoverables;
+				}
+			};
 		}
 	},
 
 	LABOUR {
-		public static final int DURATION = 4;
-
-		// TODO: labour duration should be different for each type of poduce.
 
 		@Override
-		public void execute(Villager owner) {
-			if (owner.getProgressFor(this).getPercentage() == 100) {
-				owner.clearProgressFor(this);
-				Producer producer;
-				Building in = WorldManager.get().getBuildingUnder(owner);
-				if (in != null && in.getType() == BType.PRODUCTION) {
-					producer = (Producer) in;
-				} else {
-					producer = WorldManager.get().getLandUnder(owner);
+		public Behaviour create() {
+			return new Behaviour() {
+				// TODO: labour duration should be different for each type of
+				// poduce.
+				public static final int DURATION = 4;
+
+				protected Produce collecting = null;
+				protected Behaviour intention = null;
+				protected Point goingTo = null;
+
+				@Override
+				public void execute(Villager owner) {
+					if (owner.getProgressFor(this).getPercentage() == 100) {
+						owner.clearProgressFor(this);
+						Producer producer;
+						Building in = WorldManager.get()
+								.getBuildingUnder(owner);
+						if (in != null && in.getType() == BType.PRODUCTION) {
+							producer = (Producer) in;
+						} else {
+							producer = WorldManager.get().getLandUnder(owner);
+						}
+
+						collecting = producer.getProduce();
+						owner.abandonBehaviour(this);
+						owner.adoptBehaviour(COLLECT.create());
+					}
 				}
 
-				owner.collecting = producer.getProduce();
-				owner.abandonBehaviour(this);
-				owner.adoptBehaviour(COLLECT);
-			}
-		}
+				@Override
+				public void onAdopt(Villager owner) {
 
-		@Override
-		public void onAdopt(Villager owner) {
+					if (intention == this) {
+						owner.setProgressFor(this, DURATION);
+						owner.setState(VState.LABOURING);
+						intention = null;
+					} else {
+						Point better = getBetterSolution(owner);
+						owner.abandonBehaviour(this);
+						goingTo = better;
+						intention = this;
+						owner.adoptBehaviour(GOING.create());
 
-			if (owner.intention == this) {
-				owner.setProgressFor(this, DURATION);
-				owner.state = VState.LABOURING;
-				owner.intention = null;
-			} else {
-				Point better = getBetterSolution(owner);
-				owner.abandonBehaviour(this);
-				owner.goingTo = better;
-				owner.intention = this;
-				owner.adoptBehaviour(GOING);
-				// TODO: onAdopt everybody, THEN move them around ?
-			}
-		}
+					}
+				}
 
-		private Point getBetterSolution(Villager v) {
-			// Get a list of points plus their score.
-			List<Decision> places = WorldManager.get()
-					.getProductionDecisionsAround(v, 2);
-			return (Point) Chance.pickFrom(places).getParam();
+				private Point getBetterSolution(Villager v) {
+					// Get a list of points plus their score.
+					List<Decision> places = WorldManager.get()
+							.getProductionDecisionsAround(v, 2);
+					return (Point) Chance.pickFrom(places).getParam();
+				}
+			};
 		}
 	},
 
 	COLLECT {
-		public final static int DURATION = 1;
-
 		@Override
-		public void execute(Villager owner) {
-			if (owner.getProgressFor(this).getPercentage() == 100) {
-				owner.clearProgressFor(this);
-				RessourceManager.get().add(owner.collecting);
-				owner.collecting = null;
-				owner.adoptBehaviour(STANDARD);
-				owner.abandonBehaviour(this);
-			}
-		}
+		public Behaviour create() {
+			return new Behaviour() {
+				public final static int DURATION = 1;
+				protected Produce collecting = null;
 
-		@Override
-		public void onAdopt(Villager owner) {
-			owner.setProgressFor(this, DURATION);
-			owner.state = VState.COLLECTING;
-		}
+				@Override
+				public void execute(Villager owner) {
+					if (owner.getProgressFor(this).getPercentage() == 100) {
+						owner.clearProgressFor(this);
+						RessourceManager.get().add(collecting);
+						collecting = null;
+						owner.adoptBehaviour(STANDARD.create());
+						owner.abandonBehaviour(this);
+					}
+				}
 
+				@Override
+				public void onAdopt(Villager owner) {
+					owner.setProgressFor(this, DURATION);
+					owner.setState(VState.COLLECTING);
+				}
+
+			};
+		}
 	},
 
 	BUILD {
 		@Override
-		public void execute(Villager owner) {
-			if (owner.building == null) {
-				owner.setBuilding(DecisionManager.get().somethingToBuild(owner));
-			}// TODO: build.
+		public Behaviour create() {
+			return new Behaviour() {
+				protected Building building = null;
+
+				@Override
+				public void execute(Villager owner) {
+					if (building == null) {
+						building = DecisionManager.get().somethingToBuild(owner);
+					}// TODO: build.
+				}
+			};
 		}
 	},
 
 	GOING {
-
 		@Override
-		public void execute(Villager owner) {
-			owner.step_towards(owner.goingTo);
-			if (WorldManager.get().onSameTile(owner, owner.goingTo)) {
-				owner.abandonBehaviour(this);
-				owner.adoptBehaviour(owner.intention);
-				owner.goingTo = null;
-			}
+		public Behaviour create() {
+			return new Behaviour() {
+				protected Point goingTo = null;
+				protected Behaviour intention = null;
+
+				@Override
+				public void execute(Villager owner) {
+					owner.step_towards(goingTo);
+					if (WorldManager.get().onSameTile(owner, goingTo)) {
+						owner.abandonBehaviour(this);
+						owner.adoptBehaviour(intention);
+						goingTo = null;
+					}
+				}
+
+			};
 		}
+	};
 
-	};*/
-
-	public abstract Behaviour getBase();
+	public abstract Behaviour create();
 
 }
