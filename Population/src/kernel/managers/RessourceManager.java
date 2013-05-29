@@ -3,7 +3,6 @@ package kernel.managers;
 import io.GameBus;
 import kernel.events.VillagerEvent;
 import model.Villager;
-import model.behaviour.Behaviour;
 import model.behaviour.BehaviourTypes;
 import model.nature.PType;
 import model.nature.Produce;

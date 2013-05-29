@@ -2,7 +2,7 @@ package model;
 
 import static model.VState.IDLE;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Iterator;
 import java.util.List;
 import kernel.Entity;
@@ -29,10 +29,9 @@ public class Villager extends Entity {
 
 	public Villager(int x, int y) {
 		super((float) x, (float) y);
-		behaviours = new ArrayList<Behaviour>();
-		toAbandon = new ArrayList<Behaviour>();
-		toAdopt = new ArrayList<Behaviour>();
-
+		behaviours = new LinkedList<Behaviour>();
+		toAbandon = new LinkedList<Behaviour>();
+		toAdopt = new LinkedList<Behaviour>();
 	}
 	
 	public void adoptBehaviour(Behaviour b) {
@@ -65,18 +64,19 @@ public class Villager extends Entity {
 
 	private void refreshBehaviours() {
 		Iterator<Behaviour> it = toAdopt.iterator();
-		while (it.hasNext()) {
+			while (it.hasNext()) {
 			Behaviour b = it.next();
 			behaviours.add(b);
 			b.onAdopt(this);
 		}
-		
+		toAdopt.clear();
 		it = toAbandon.iterator();
 		while (it.hasNext()) {
 			Behaviour b = it.next();
 			behaviours.remove(b);
 			b.onAbandon(this);
 		}
+		toAbandon.clear();
 	}
 
 	public void render(Graphics g) {

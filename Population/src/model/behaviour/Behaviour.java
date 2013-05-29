@@ -1,8 +1,5 @@
 package model.behaviour;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-
 import model.Villager;
 
 public abstract class Behaviour {
@@ -37,7 +34,7 @@ public abstract class Behaviour {
 			this.getClass().getField(name).set(this, value);
 		} catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
 			e.printStackTrace();
-			
+			/*
 			System.err.println("In class : "+this.getClass());
 			
 			Field[] flds = this.getClass().getFields();
@@ -46,6 +43,7 @@ public abstract class Behaviour {
 				s+=flds[k];
 			}
 			System.err.println("fields : "+s+". asked for : "+name);
+			*/
 		}
 		
 	}
