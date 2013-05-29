@@ -157,7 +157,7 @@ public enum BehaviourTypes {
 		public Behaviour create() {
 			return new Behaviour() {
 				public final static int DURATION = 1;
-				protected Produce collecting = null;
+				public Produce collecting = null;
 				protected Progress progress = null;
 				
 				@Override
