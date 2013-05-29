@@ -56,7 +56,6 @@ public class Villager extends Entity {
 	}
 
 	public void update() {
-        System.out.println("bjkfldmqfkldms");
 		refreshBehaviours();
 		Iterator<Behaviour> it = behaviours.iterator();
 		while (it.hasNext()) {
@@ -97,12 +96,7 @@ public class Villager extends Entity {
 
         toAbandon.clear();
 
-        System.out.println("todos counts "+todos.size());
-
-        System.out.println("fdjsklfdmksm");
-
         for (Runnable action : todos) {
-            System.out.println("fdjsklfdmksm");
             action.run();
         }
 
