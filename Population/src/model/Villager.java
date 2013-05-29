@@ -5,6 +5,8 @@ import static model.VState.IDLE;
 import java.util.LinkedList;
 import java.util.Iterator;
 import java.util.List;
+
+import com.google.common.collect.Lists;
 import kernel.Entity;
 import kernel.Point;
 import kernel.managers.WorldManager;
@@ -54,6 +56,7 @@ public class Villager extends Entity {
 	}
 
 	public void update() {
+        System.out.println("bjkfldmqfkldms");
 		refreshBehaviours();
 		Iterator<Behaviour> it = behaviours.iterator();
 		while (it.hasNext()) {
@@ -63,20 +66,48 @@ public class Villager extends Entity {
 	}
 
 	private void refreshBehaviours() {
-		Iterator<Behaviour> it = toAdopt.iterator();
-			while (it.hasNext()) {
-			Behaviour b = it.next();
-			behaviours.add(b);
-			b.onAdopt(this);
+        List<Runnable> todos = Lists.newArrayList();
+
+        Iterator<Behaviour> it = toAdopt.iterator();
+        final Villager self = this;
+
+		while (it.hasNext()) {
+            final Behaviour b = it.next();
+            todos.add(new Runnable() {
+                @Override
+                public void run() {
+                    System.out.println("test1");
+                    behaviours.add(b);
+                    b.onAdopt(self);
+                }
+            });
 		}
-		toAdopt.clear();
+
+        toAdopt.clear();
 		it = toAbandon.iterator();
 		while (it.hasNext()) {
-			Behaviour b = it.next();
-			behaviours.remove(b);
-			b.onAbandon(this);
+            final Behaviour b = it.next();
+            todos.add(new Runnable() {
+                @Override
+                public void run() {
+                    System.out.println("test2");
+                    behaviours.remove(b);
+                    b.onAbandon(self);
+                }
+            });
 		}
-		toAbandon.clear();
+
+        toAbandon.clear();
+
+        System.out.println("todos counts "+todos.size());
+
+        System.out.println("fdjsklfdmksm");
+
+        for (Runnable action : todos) {
+            System.out.println("fdjsklfdmksm");
+            action.run();
+        }
+
 	}
 
 	public void render(Graphics g) {
