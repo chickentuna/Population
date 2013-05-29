@@ -28,25 +28,6 @@ public abstract class Behaviour {
 	public boolean isActive() {
 		return active;
 	}
-
-	public void setParam(String name, Object value) {
-		try {
-			this.getClass().getField(name).set(this, value);
-		} catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
-			e.printStackTrace();
-			/*
-			System.err.println("In class : "+this.getClass());
-			
-			Field[] flds = this.getClass().getFields();
-			String s = "";
-			for (int k=0; k < flds.length; k++) {
-				s+=flds[k];
-			}
-			System.err.println("fields : "+s+". asked for : "+name);
-			*/
-		}
-		
-	}
 	
 	public void deactivate() {
 		active=false;

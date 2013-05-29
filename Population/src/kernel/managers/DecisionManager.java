@@ -6,7 +6,7 @@ import kernel.Chance;
 import kernel.Decision;
 import model.Villager;
 import model.behaviour.Behaviour;
-import model.behaviour.BehaviourTypes;
+import model.behaviour.LabourBehaviour;
 import model.nature.Land;
 import model.technology.Building;
 
@@ -69,7 +69,7 @@ public class DecisionManager {
 
 			@Override
 			public Object getParam() {
-				return BehaviourTypes.LABOUR.create();
+				return new LabourBehaviour();
 			}
 		});
 
