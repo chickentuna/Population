@@ -76,7 +76,6 @@ public class Villager extends Entity {
             todos.add(new Runnable() {
                 @Override
                 public void run() {
-                    System.out.println("test1");
                     behaviours.add(b);
                     b.onAdopt(self);
                 }
@@ -90,7 +89,6 @@ public class Villager extends Entity {
             todos.add(new Runnable() {
                 @Override
                 public void run() {
-                    System.out.println("test2");
                     behaviours.remove(b);
                     b.onAbandon(self);
                 }
