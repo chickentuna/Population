@@ -55,7 +55,7 @@ public enum BehaviourTypes {
 					if (Chance.onceEveryXSeconds(20)) {
 						Behaviour todo = DecisionManager.get().somethingUseful(owner);
 						if (todo !=null) {
-							active = false;
+							deactivate();
 							waitingFor = todo;
 							owner.adoptBehaviour(todo);
 						}
@@ -102,17 +102,15 @@ public enum BehaviourTypes {
 				public static final int DURATION = 4;
 
 				protected Produce collecting = null;
-				protected Behaviour intention = null;
-				protected Point goingTo = null;
 				protected Progress progress = null;
+				private Villager owner;
 
 				@Override
 				protected void execution(Villager owner) {
-					if (owner.getProgressFor(this).getPercentage() == 100) {
-						owner.clearProgressFor(this);
+					if (progress.getPercentage() == 100) {
+						progress = null;
 						Producer producer;
-						Building in = WorldManager.get()
-								.getBuildingUnder(owner);
+						Building in = WorldManager.get().getBuildingUnder(owner);
 						if (in != null && in.getType() == BType.PRODUCTION) {
 							producer = (Producer) in;
 						} else {
@@ -127,31 +125,25 @@ public enum BehaviourTypes {
 
 				@Override
 				public void onAdopt(Villager owner) {
-
-					Point better = getBetterSolution(owner);
-					goingTo = better;
-					active = false;
-					owner.adoptBehaviour(GOING.create());
-					//TODO: Give goingTo to this behaviours.
-					
-					/*if (intention == this) {
-						owner.setProgressFor(this, DURATION);
-						owner.setState(VState.LABOURING);
-						intention = null;
-					} else {
-						Point better = getBetterSolution(owner);
-						owner.abandonBehaviour(this);
-						goingTo = better;
-						intention = this;
-						owner.adoptBehaviour(GOING.create());
-
-					}*/
+					this.owner= owner; 
+					Point better = getBetterSolution();
+					deactivate();
+					waitingFor = GOING.create();
+					waitingFor.setParam("goingTo", better);
+					owner.adoptBehaviour(waitingFor);
+				}
+				
+				@Override
+				public void activate() {
+					super.activate();
+					progress = new Progress(DURATION);
+					owner.setState(VState.LABOURING);
+					owner = null;
 				}
 
-				private Point getBetterSolution(Villager v) {
+				private Point getBetterSolution() {
 					// Get a list of points plus their score.
-					List<Decision> places = WorldManager.get()
-							.getProductionDecisionsAround(v, 2);
+					List<Decision> places = WorldManager.get().getProductionDecisionsAround(owner, 2);
 					return (Point) Chance.pickFrom(places).getParam();
 				}
 			};
@@ -164,7 +156,8 @@ public enum BehaviourTypes {
 			return new Behaviour() {
 				public final static int DURATION = 1;
 				protected Produce collecting = null;
-
+				protected Point goingTo = null;
+				
 				@Override
 				protected void execution(Villager owner) {
 					if (owner.getProgressFor(this).getPercentage() == 100) {
