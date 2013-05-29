@@ -119,7 +119,9 @@ public enum BehaviourTypes {
 
 						collecting = producer.getProduce();
 						owner.abandonBehaviour(this);
-						owner.adoptBehaviour(COLLECT.create());
+						Behaviour intention = COLLECT.create();
+						intention.setParam("collecting", collecting);
+						owner.adoptBehaviour(intention);
 					}
 				}
 
@@ -156,7 +158,7 @@ public enum BehaviourTypes {
 			return new Behaviour() {
 				public final static int DURATION = 1;
 				protected Produce collecting = null;
-				protected Point goingTo = null;
+				protected Progress progress = null;
 				
 				@Override
 				protected void execution(Villager owner) {
@@ -171,8 +173,8 @@ public enum BehaviourTypes {
 
 				@Override
 				public void onAdopt(Villager owner) {
-					owner.setProgressFor(this, DURATION);
-					owner.setState(VState.COLLECTING);
+					progress = new Progress(DURATION);
+					owner.setState(VState.COLLECTING);//TODO: Villager must be told what he is collecting
 				}
 
 			};
