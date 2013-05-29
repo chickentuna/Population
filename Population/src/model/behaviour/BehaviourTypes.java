@@ -18,6 +18,7 @@ import model.Villager;
 import model.nature.Produce;
 import model.technology.BType;
 import model.technology.Building;
+import kernel.Progress;
 
 public enum BehaviourTypes {
 
@@ -103,6 +104,7 @@ public enum BehaviourTypes {
 				protected Produce collecting = null;
 				protected Behaviour intention = null;
 				protected Point goingTo = null;
+				protected Progress progress = null;
 
 				@Override
 				protected void execution(Villager owner) {
@@ -126,7 +128,13 @@ public enum BehaviourTypes {
 				@Override
 				public void onAdopt(Villager owner) {
 
-					if (intention == this) {
+					Point better = getBetterSolution(owner);
+					goingTo = better;
+					active = false;
+					owner.adoptBehaviour(GOING.create());
+					//TODO: Give goingTo to this behaviours.
+					
+					/*if (intention == this) {
 						owner.setProgressFor(this, DURATION);
 						owner.setState(VState.LABOURING);
 						intention = null;
@@ -137,7 +145,7 @@ public enum BehaviourTypes {
 						intention = this;
 						owner.adoptBehaviour(GOING.create());
 
-					}
+					}*/
 				}
 
 				private Point getBetterSolution(Villager v) {

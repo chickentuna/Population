@@ -3,7 +3,7 @@ package model.behaviour;
 import model.Villager;
 
 public abstract class Behaviour {
-	protected boolean active = false;
+	protected boolean active = true;
 	protected Behaviour waitingFor = null;
 	
 	protected abstract void execution(Villager owner);
