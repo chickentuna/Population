@@ -3,11 +3,10 @@ package model;
 import static model.VState.IDLE;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import kernel.Entity;
 import kernel.Point;
-import kernel.Progress;
 import kernel.managers.WorldManager;
 import model.behaviour.Behaviour;
 import model.nature.Land;
@@ -27,8 +26,6 @@ public class Villager extends Entity {
 	private VState state = IDLE;
 	private float direction = 0;
 	private Produce collecting;
-	
-
 
 	public Villager(int x, int y) {
 		super((float) x, (float) y);
@@ -58,7 +55,28 @@ public class Villager extends Entity {
 	}
 
 	public void update() {
-	
+		refreshBehaviours();
+		Iterator<Behaviour> it = behaviours.iterator();
+		while (it.hasNext()) {
+			Behaviour b = it.next();
+			b.execute(this);
+		}
+	}
+
+	private void refreshBehaviours() {
+		Iterator<Behaviour> it = toAdopt.iterator();
+		while (it.hasNext()) {
+			Behaviour b = it.next();
+			behaviours.add(b);
+			b.onAdopt(this);
+		}
+		
+		it = toAbandon.iterator();
+		while (it.hasNext()) {
+			Behaviour b = it.next();
+			behaviours.remove(b);
+			b.onAbandon(this);
+		}
 	}
 
 	public void render(Graphics g) {
@@ -93,7 +111,9 @@ public class Villager extends Entity {
 
 	public void setCollecting(Produce collecting) {
 		this.collecting = collecting;
-		
 	}
 
+	public Produce getCollecting() {
+		return collecting;
+	}
 }

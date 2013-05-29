@@ -42,7 +42,7 @@ public class DecisionManager {
 		LinkedList<Decision> decisions = new LinkedList<>();
 		Building in = WorldManager.get().getBuildingUnder(v);
 
-		if (in == null) {
+		/*if (in == null) {
 			// TODO: incorporate what to build here (if anything can be built,
 			// of course)
 			decisions.add(new Decision() {
@@ -58,7 +58,7 @@ public class DecisionManager {
 				}
 
 			});
-		}
+		}*/
 
 		decisions.add(new Decision() {
 

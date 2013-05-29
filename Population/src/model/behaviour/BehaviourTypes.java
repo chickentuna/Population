@@ -203,7 +203,7 @@ public enum BehaviourTypes {
 		@Override
 		public Behaviour create() {
 			return new Behaviour() {
-				protected Point goingTo = null;
+				public Point goingTo = null;
 				protected Behaviour intention = null;
 
 				@Override
