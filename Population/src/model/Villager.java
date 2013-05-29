@@ -11,6 +11,7 @@ import kernel.Progress;
 import kernel.managers.WorldManager;
 import model.behaviour.Behaviour;
 import model.nature.Land;
+import model.nature.Produce;
 
 import org.newdawn.slick.Graphics;
 
@@ -23,9 +24,9 @@ public class Villager extends Entity {
 	private List<Behaviour> toAbandon;
 
 	
-	protected VState state = IDLE;
-	protected float direction = 0;
-	protected HashMap<Behaviour, Progress> progress; //TODO: place in the Behaviour
+	private VState state = IDLE;
+	private float direction = 0;
+	private Produce collecting;
 	
 
 
@@ -34,7 +35,6 @@ public class Villager extends Entity {
 		behaviours = new ArrayList<Behaviour>();
 		toAbandon = new ArrayList<Behaviour>();
 		toAdopt = new ArrayList<Behaviour>();
-		progress = new HashMap<>();
 
 	}
 	
@@ -69,23 +69,6 @@ public class Villager extends Entity {
 		 */
 	}
 
-	public Progress getProgressFor(Behaviour behaviour) {
-		if (!progress.containsKey(behaviour)) {
-			progress.put(behaviour, null);
-			return null;
-		}
-		return progress.get(behaviour);
-	}
-
-	public void setProgressFor(Behaviour b, int duration) {
-		progress.put(b, new Progress(duration));
-	}
-
-	public void clearProgressFor(Behaviour b) {
-		progress.remove(b);
-
-	}
-
 	public VState getState() {
 		return state;
 	}
@@ -106,6 +89,11 @@ public class Villager extends Entity {
 
 	public void setDirection(float f) {
 		this.direction = f;
+	}
+
+	public void setCollecting(Produce collecting) {
+		this.collecting = collecting;
+		
 	}
 
 }

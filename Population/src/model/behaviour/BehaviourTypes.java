@@ -162,19 +162,21 @@ public enum BehaviourTypes {
 				
 				@Override
 				protected void execution(Villager owner) {
-					if (owner.getProgressFor(this).getPercentage() == 100) {
-						owner.clearProgressFor(this);
+					if (progress.getPercentage() == 100) {
 						RessourceManager.get().add(collecting);
-						collecting = null;
-						owner.adoptBehaviour(STANDARD.create());
+						owner.setCollecting(null);
 						owner.abandonBehaviour(this);
+						//TODO: consider automating abandonment process: if deactivated and NOT waiting, owner.abandon();
+						owner.setState(VState.IDLE);
+						deactivate();
 					}
 				}
 
 				@Override
 				public void onAdopt(Villager owner) {
 					progress = new Progress(DURATION);
-					owner.setState(VState.COLLECTING);//TODO: Villager must be told what he is collecting
+					owner.setState(VState.COLLECTING);
+					owner.setCollecting(collecting);
 				}
 
 			};
