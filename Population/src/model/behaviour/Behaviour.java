@@ -9,8 +9,13 @@ public abstract class Behaviour {
 	protected abstract void execution(Villager owner);
 	
 	public void execute(Villager owner) {
-		if (isActive())
+		if (isActive()) {
 			execution(owner);
+		} else if (waitingFor!=null) {
+			if (!waitingFor.isActive()) {
+				active = true;
+			}
+		}
 	}
 	
 	public void onAdopt(Villager owner) {		
