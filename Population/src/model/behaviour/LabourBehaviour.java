@@ -49,7 +49,7 @@ public class LabourBehaviour extends Behaviour {
 		Point better = getBetterSolution();
 		deactivate();
 		waitingFor = new GoingBehaviour(better);
-		owner.adoptBehaviour(waitingFor);
+		owner.adoptBehaviour(waitingFor); //legacy CoModification exception soucre. (For info)
 	}
 	
 	@Override
