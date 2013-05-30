@@ -57,28 +57,24 @@ public class EntityManager {
 	}
 
 	public void update() {
-		Iterator<Entity> it = entities.iterator();
-		while (it.hasNext()) {
-			it.next().update();
-		}
 		refreshEntities();
+		for (Entity e : entities) {
+			e.update();
+		}
 	}
 
 	private void refreshEntities() {
-		Iterator<Entity> it = toUnspawn.iterator();
-		while (it.hasNext()) {
-			Entity b = it.next();
-			entities.remove(b);
-			b.destroy();
+		
+		for (Entity e : toUnspawn) {
+			entities.remove(e);
+			e.destroy();//TODO:This may modify entity list, so put it in differed execution
 		}
 		toUnspawn.clear();
-		it = toSpawn.iterator();
-		while (it.hasNext()) {
-			Entity b = it.next();
-			entities.add(b);
+		
+		for (Entity e : toSpawn) {
+			entities.add(e);
 		}
 		toSpawn.clear();
-
 	}
 
 }

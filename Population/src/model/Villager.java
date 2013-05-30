@@ -7,10 +7,12 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.google.common.collect.Lists;
+
 import kernel.Entity;
 import kernel.Point;
 import kernel.managers.WorldManager;
 import model.behaviour.Behaviour;
+import model.behaviour.GoingBehaviour;
 import model.nature.Land;
 import model.nature.Produce;
 
@@ -44,7 +46,7 @@ public class Villager extends Entity {
 		toAbandon.add(behaviour);
 	}
 
-	//TODO: implement path_finding ? Or rather a safe guard for the GOING Behaviour
+	//TODO: Place in Behaviours
 	public void step_foward() {
 		float new_x = (float) (x + WALK_SPEED * Math.cos(direction));
 		float new_y = (float) (y - WALK_SPEED * Math.sin(direction));
@@ -57,9 +59,8 @@ public class Villager extends Entity {
 
 	public void update() {
 		refreshBehaviours();
-		Iterator<Behaviour> it = behaviours.iterator();
-		while (it.hasNext()) {
-			Behaviour b = it.next();
+		
+		for (Behaviour b : behaviours) {
 			b.execute(this);
 		}
 	}
@@ -67,9 +68,9 @@ public class Villager extends Entity {
 	private void refreshBehaviours() {
         List<Runnable> todos = Lists.newArrayList();
 
-        Iterator<Behaviour> it = toAdopt.iterator();
         final Villager self = this;
 
+        Iterator<Behaviour> it = toAdopt.iterator();
 		while (it.hasNext()) {
             final Behaviour b = it.next();
             todos.add(new Runnable() {
@@ -80,9 +81,9 @@ public class Villager extends Entity {
                 }
             });
 		}
-
         toAdopt.clear();
-		it = toAbandon.iterator();
+
+        it = toAbandon.iterator();
 		while (it.hasNext()) {
             final Behaviour b = it.next();
             todos.add(new Runnable() {
@@ -138,5 +139,9 @@ public class Villager extends Entity {
 
 	public Produce getCollecting() {
 		return collecting;
+	}
+
+	public float getDirection() {
+		return direction;
 	}
 }

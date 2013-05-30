@@ -21,6 +21,7 @@ public class PointTest {
 		assertEquals("O to 5;-5",-Math.PI/4,o.directionTo(c),delta);
 		assertEquals("O to -5;0",Math.PI,o.directionTo(d),delta);
 		
+		
 	}
 
 }

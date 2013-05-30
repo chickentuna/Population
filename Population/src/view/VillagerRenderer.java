@@ -2,9 +2,11 @@ package view;
 
 import java.util.Iterator;
 
+import kernel.Point;
 import kernel.events.VillagerEvent;
 import model.Villager;
 import model.behaviour.Behaviour;
+import model.behaviour.GoingBehaviour;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -36,7 +38,12 @@ public class VillagerRenderer implements Renderer {
 		case LABOURING:
 			c = Color.orange;
 			break;
-		case WANDERING:
+		case GOING:
+			g.setColor(Color.black);
+			Point p =((GoingBehaviour) villager.getBehaviours().get(2)).getGoingTo();
+			g.drawOval(p.getX()-5, p.getY()-5, 10, 10);
+			g.drawLine(villager.getX(), villager.getY(), p.getX(), p.getY());
+			g.drawString("" + villager.getDirection(), villager.getX(), villager.getY()-15);
 			break;
 		default:
 			break;

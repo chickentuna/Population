@@ -33,15 +33,14 @@ public class Chance {
 		}
 		int total = 0;
 
-		Iterator<Decision> it = possibilities.iterator();
-		while (it.hasNext()) {
-			total += it.next().getWeight();
+		for (Decision d : possibilities) {
+			total += d.getWeight();
 		}
 
 		double percent = Math.random();
 		int n = (int) (percent * total);
 		int x = 0;
-		it = possibilities.iterator();
+		Iterator<Decision> it = possibilities.iterator();
 		while (it.hasNext()) {
 			Decision decision = it.next();
 			x += decision.getWeight();

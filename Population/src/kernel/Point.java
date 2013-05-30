@@ -35,7 +35,7 @@ public class Point implements Locatable {
 		float dy = other.y - y;
 		float dx = other.x - x;
 		
-		return (float) Math.atan2(dy,dx);
+		return (float) Math.atan2(-dy,dx);
 	}
 	
 }

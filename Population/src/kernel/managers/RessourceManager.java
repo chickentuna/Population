@@ -1,5 +1,6 @@
 package kernel.managers;
 
+import test.DebugBehaviour;
 import io.GameBus;
 import kernel.events.VillagerEvent;
 import model.Villager;
@@ -52,6 +53,8 @@ public class RessourceManager {
 		population++;
 		Villager v = new Villager(x, y);
 		v.adoptBehaviour(new StandardBehaviour());
+		//v.adoptBehaviour(new DebugBehaviour());
+		
 		EntityManager.get().spawn(v);
 		GameBus.post(new VillagerEvent(VillagerEvent.BIRTH, v));
 	}
