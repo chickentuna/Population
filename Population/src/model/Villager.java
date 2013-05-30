@@ -120,7 +120,7 @@ public class Villager extends Entity {
 
 	public void step_towards(Point point) {
 		direction = new Point(x, y).directionTo(point);
-		step_foward();		
+		step_foward();
 	}//TODO: this is where path finding will be implemented
 
 	public void setState(VState state) {

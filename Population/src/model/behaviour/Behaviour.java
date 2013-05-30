@@ -12,13 +12,17 @@ public abstract class Behaviour {
 		if (isActive()) {
 			execution(owner);
 		} else if (waitingFor!=null) {
-			if (!waitingFor.isActive()) {
+			if (!waitingFor.isComplete()) {
 				waitingFor = null;
 				activate();
 			}
 		}
 	}
 	
+	private boolean isComplete() {
+		return (!isActive() && waitingFor == null);
+	}
+
 	public void onAdopt(Villager owner) {		
 	}
 

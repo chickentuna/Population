@@ -19,7 +19,6 @@ public class GoingBehaviour extends Behaviour {
 		owner.step_towards(goingTo);
 		if (WorldManager.get().onSameTile(owner, goingTo)) {
 			owner.abandonBehaviour(this);
-			owner.adoptBehaviour(intention);
 			goingTo = null;
 		}
 	}
