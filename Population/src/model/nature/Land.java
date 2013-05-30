@@ -7,6 +7,8 @@ import static model.nature.Produce.STONE;
 import model.Discoverable;
 import model.Producer;
 
+//TODO: Lands as classes
+
 //@formatter:off
 public enum Land implements Discoverable, Producer {
 	BEACH(CRAB),
