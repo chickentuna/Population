@@ -2,8 +2,6 @@ package kernel;
 
 import java.awt.Rectangle;
 
-import org.newdawn.slick.Graphics;
-
 public abstract class Entity implements Locatable {
 	protected float x,y;
 	protected int width;

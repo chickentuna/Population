@@ -6,8 +6,6 @@ import java.util.LinkedList;
 
 import kernel.Entity;
 
-import org.newdawn.slick.Graphics;
-
 public class EntityManager {
 
 	public ArrayList<Entity> entities;

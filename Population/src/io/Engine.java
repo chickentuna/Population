@@ -13,8 +13,6 @@ import org.newdawn.slick.SlickException;
 import view.DebugView;
 import view.View;
 
-import com.google.common.eventbus.EventBus;
-
 public class Engine extends BasicGame {
 	public static final int TARGET_FPS = 30;
 

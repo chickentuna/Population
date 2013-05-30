@@ -2,19 +2,17 @@ package model;
 
 import static model.VState.IDLE;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.Set;
+import java.util.Iterator;
+import java.util.List;
 
+import com.google.common.collect.Lists;
 import kernel.Entity;
 import kernel.Point;
-import kernel.Progress;
 import kernel.managers.WorldManager;
+import model.behaviour.Behaviour;
 import model.nature.Land;
 import model.nature.Produce;
-import model.technology.Building;
 
 import org.newdawn.slick.Graphics;
 
@@ -22,27 +20,20 @@ public class Villager extends Entity {
 
 	public static final int WALK_SPEED = 1;
 
-	private Set<Behaviour> behaviours;
-	private Set<Behaviour> toAdopt;
-	private Set<Behaviour> toAbandon;
+	private List<Behaviour> behaviours;
+	private List<Behaviour> toAdopt;
+	private List<Behaviour> toAbandon;
 
 	
-	protected VState state = IDLE;
-	// Behaviour vars
-	protected float direction = 0;
-	protected HashMap<Behaviour, Progress> progress;
-	protected Building building = null;
-	protected Produce collecting = null;
-	protected Point goingTo = null;
-	protected Behaviour intention = null;
+	private VState state = IDLE;
+	private float direction = 0;
+	private Produce collecting;
 
 	public Villager(int x, int y) {
 		super((float) x, (float) y);
-		behaviours = new HashSet<Behaviour>();
-		toAbandon = new HashSet<Behaviour>();
-		toAdopt = new HashSet<Behaviour>();
-		progress = new HashMap<>();
-
+		behaviours = new LinkedList<Behaviour>();
+		toAbandon = new LinkedList<Behaviour>();
+		toAdopt = new LinkedList<Behaviour>();
 	}
 	
 	public void adoptBehaviour(Behaviour b) {
@@ -54,7 +45,7 @@ public class Villager extends Entity {
 	}
 
 	//TODO: implement path_finding ? Or rather a safe guard for the GOING Behaviour
-	protected void step_foward() {
+	public void step_foward() {
 		float new_x = (float) (x + WALK_SPEED * Math.cos(direction));
 		float new_y = (float) (y - WALK_SPEED * Math.sin(direction));
 		Land l = WorldManager.get().getLandAt(new_x, new_y);
@@ -65,36 +56,50 @@ public class Villager extends Entity {
 	}
 
 	public void update() {
+		refreshBehaviours();
 		Iterator<Behaviour> it = behaviours.iterator();
 		while (it.hasNext()) {
-			it.next().execute(this);
+			Behaviour b = it.next();
+			b.execute(this);
 		}
-		refreshBehaviours();
 	}
 
 	private void refreshBehaviours() {
-		HashSet<Behaviour> toAdoptCache = new HashSet<>(toAdopt);
-				
-		Iterator<Behaviour> it;
-		
-		toAbandon.clear();
-		toAdopt.clear();
-		
-		it = toAdoptCache.iterator();
+        List<Runnable> todos = Lists.newArrayList();
+
+        Iterator<Behaviour> it = toAdopt.iterator();
+        final Villager self = this;
+
 		while (it.hasNext()) {
-			Behaviour b = it.next();
-			behaviours.add(b);
-			b.onAdopt(this);
-		}		
-		
-		HashSet<Behaviour> toAbandonCache = new HashSet<>(toAbandon);
-		
-		it = toAbandonCache.iterator();
-		while (it.hasNext()) {
-			Behaviour b = it.next();
-			behaviours.remove(b);
-			b.onAbandon(this);
+            final Behaviour b = it.next();
+            todos.add(new Runnable() {
+                @Override
+                public void run() {
+                    behaviours.add(b);
+                    b.onAdopt(self);
+                }
+            });
 		}
+
+        toAdopt.clear();
+		it = toAbandon.iterator();
+		while (it.hasNext()) {
+            final Behaviour b = it.next();
+            todos.add(new Runnable() {
+                @Override
+                public void run() {
+                    behaviours.remove(b);
+                    b.onAbandon(self);
+                }
+            });
+		}
+
+        toAbandon.clear();
+
+        for (Runnable action : todos) {
+            action.run();
+        }
+
 	}
 
 	public void render(Graphics g) {
@@ -105,38 +110,33 @@ public class Villager extends Entity {
 		 */
 	}
 
-	public void setBuilding(Building b) {
-		building = b;
-	}
-
-	public Progress getProgressFor(Behaviour behaviour) {
-		if (!progress.containsKey(behaviour)) {
-			progress.put(behaviour, null);
-			return null;
-		}
-		return progress.get(behaviour);
-	}
-
-	public void setProgressFor(Behaviour b, int duration) {
-		progress.put(b, new Progress(duration));
-	}
-
-	public void clearProgressFor(Behaviour b) {
-		progress.remove(b);
-
-	}
-
 	public VState getState() {
 		return state;
 	}
 
-	public Set<Behaviour> getBehaviours() {
+	public List<Behaviour> getBehaviours() {
 		return behaviours;
 	}
 
 	public void step_towards(Point point) {
 		direction = new Point(x, y).directionTo(point);
-		step_foward();		
+		step_foward();
 	}//TODO: this is where path finding will be implemented
 
+	public void setState(VState state) {
+		this.state = state;
+		
+	}
+
+	public void setDirection(float f) {
+		this.direction = f;
+	}
+
+	public void setCollecting(Produce collecting) {
+		this.collecting = collecting;
+	}
+
+	public Produce getCollecting() {
+		return collecting;
+	}
 }

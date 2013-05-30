@@ -1,11 +1,7 @@
 package view;
 
-import java.util.Iterator;
-
 import kernel.events.VillagerEvent;
-import model.Behaviour;
 import model.Villager;
-
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
@@ -43,14 +39,14 @@ public class VillagerRenderer implements Renderer {
 		}
 		g.setColor(c);
 		g.drawRect(villager.getX(), villager.getY(), 1, 1);
-		float off = 0;
+		/*float off = 0;
 		Iterator<Behaviour> it = villager.getBehaviours().iterator();
 		while (it.hasNext()) {
-			g.drawString(it.next().name(), villager.getX(), villager.getY()
+			g.drawString(""+it.next(), villager.getX(), villager.getY()
 					+ off);
 			off += 11;
 		}
-
+*/
 	}
 
 	public void on(VillagerEvent e) {

@@ -18,7 +18,6 @@ public class ChanceTest {
 		int n20 = 0;
 
 		long start = System.currentTimeMillis();
-		long cur = 0;
 
 		while (System.currentTimeMillis() - start < 120_000) {
 
