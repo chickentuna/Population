@@ -12,7 +12,7 @@ public abstract class Behaviour {
 		if (isActive()) {
 			execution(owner);
 		} else if (waitingFor!=null) {
-			if (!waitingFor.isComplete()) {
+			if (waitingFor.isComplete()) {
 				waitingFor = null;
 				activate();
 			}
@@ -41,4 +41,12 @@ public abstract class Behaviour {
 		active=true;
 	}
 	
+	public String toString() {
+		String x;
+		if (isActive())
+			x = "O";
+		else
+			x = "X";
+		return getClass().getSimpleName() + "["+x+"]";
+	}
 }
