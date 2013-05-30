@@ -5,7 +5,7 @@ import kernel.managers.WorldManager;
 import model.VState;
 import model.Villager;
 
-public class GoingBehaviour extends Behaviour {
+public final class GoingBehaviour extends Behaviour {
 
 	protected Point goingTo = null;
 	protected Behaviour intention = null;
@@ -25,6 +25,8 @@ public class GoingBehaviour extends Behaviour {
 		owner.step_towards(goingTo);
 		if (WorldManager.get().onSameTile(owner, goingTo)) {
 			owner.abandonBehaviour(this);
+			deactivate();
+			owner.setState(VState.IDLE);
 			goingTo = null;
 		}
 	}

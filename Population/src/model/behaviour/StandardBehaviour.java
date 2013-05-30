@@ -5,7 +5,7 @@ import kernel.managers.DecisionManager;
 import model.VState;
 import model.Villager;
 
-public class StandardBehaviour extends Behaviour {
+public final class StandardBehaviour extends Behaviour {
 
 	@Override
 	public void onAdopt(Villager owner) {

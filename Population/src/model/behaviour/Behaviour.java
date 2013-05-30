@@ -26,7 +26,8 @@ public abstract class Behaviour {
 	public void onAdopt(Villager owner) {		
 	}
 
-	public void onAbandon(Villager owner) {		
+	public void onAbandon(Villager owner) {
+		//deactivate();
 	}
 	
 	public boolean isActive() {
@@ -47,6 +48,6 @@ public abstract class Behaviour {
 			x = "O";
 		else
 			x = "X";
-		return getClass().getSimpleName() + "["+x+"]";
+		return getClass().getSimpleName() + "["+x+"]\n>"+waitingFor;
 	}
 }

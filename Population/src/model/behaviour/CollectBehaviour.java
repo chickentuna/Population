@@ -6,7 +6,7 @@ import model.VState;
 import model.Villager;
 import model.nature.Produce;
 
-public class CollectBehaviour extends Behaviour {
+public final class CollectBehaviour extends Behaviour {
 
 	public final static int DURATION = 1;
 	public Produce collecting = null;

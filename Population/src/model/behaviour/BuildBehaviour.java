@@ -4,7 +4,7 @@ import kernel.managers.DecisionManager;
 import model.Villager;
 import model.technology.Building;
 
-public class BuildBehaviour extends Behaviour {
+public final class BuildBehaviour extends Behaviour {
 
 	protected Building building = null;
 

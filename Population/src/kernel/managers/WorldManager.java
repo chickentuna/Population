@@ -74,13 +74,10 @@ public class WorldManager {
 		int debutX = (int) (centre.getX() - offset);
 		int debutY = (int) (centre.getY() - offset);
 
-		for (int x = debutX; x <= centre.getX() + offset; x += world
-				.getLandSize()) {
-			for (int y = debutY; y <= centre.getY() + offset; y += world
-					.getLandSize()) {
+		for (int x = debutX; x <= centre.getX() + offset; x += world.getLandSize()) {
+			for (int y = debutY; y <= centre.getY() + offset; y += world.getLandSize()) {
 				Point p = new Point(x, y);
-				if (Point.manhattanDistance(p, centre) <= visibilityRange
-						* world.getLandSize()) {
+				if (Point.manhattanDistance(p, centre) <= visibilityRange * world.getLandSize()) {
 					Land land = getLandAt(p);
 					if (land != null) {
 						lands.add(land);
@@ -160,8 +157,13 @@ public class WorldManager {
 	}
 
 	public boolean onSameTile(Locatable l1, Locatable l2) {
-		//TODO: onSameTile()
-		return false;
+		int s = world.getLandSize();
+		int x1 = (int) l1.getX() / s;
+		int y1 = (int) l1.getY() / s;
+		int x2 = (int) l2.getX() / s;
+		int y2 = (int) l2.getY() / s;
+		
+		return (x1==x2) && (y1==y2);
 	}
 
 }

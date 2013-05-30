@@ -14,7 +14,7 @@ import model.nature.Produce;
 import model.technology.BType;
 import model.technology.Building;
 
-public class LabourBehaviour extends Behaviour {
+public final class LabourBehaviour extends Behaviour {
 
 	// TODO: labour duration should be different for each type of
 	// poduce.
@@ -37,33 +37,45 @@ public class LabourBehaviour extends Behaviour {
 			}
 
 			collecting = producer.getProduce();
-			owner.abandonBehaviour(this);
 			Behaviour intention = new CollectBehaviour(collecting);
 			owner.adoptBehaviour(intention);
+			waitingFor = intention;
+			deactivate();
+			owner.abandonBehaviour(this);
 		}
 	}
 
 	@Override
 	public void onAdopt(Villager owner) {
-		this.owner= owner; 
+		this.owner = owner;
 		Point better = getBetterSolution();
 		deactivate();
 		waitingFor = new GoingBehaviour(better);
-		owner.adoptBehaviour(waitingFor); //legacy CoModification exception soucre. (For info)
+		owner.adoptBehaviour(waitingFor);
 	}
-	
+
 	@Override
 	public void activate() {
 		super.activate();
-		progress = new Progress(DURATION);
-		owner.setState(VState.LABOURING);
-		owner = null;
+		if (owner==null) {
+			deactivate();
+		} else {
+			progress = new Progress(DURATION);
+			owner.setState(VState.LABOURING);
+			owner = null;
+		}
 	}
 
 	private Point getBetterSolution() {
 		// Get a list of points plus their score.
-		List<Decision> places = WorldManager.get().getProductionDecisionsAround(owner, 2);
+		List<Decision> places = WorldManager.get()
+				.getProductionDecisionsAround(owner, 2);
 		return (Point) Chance.pickFrom(places).getParam();
+	}
+	
+	public String toString() {
+		String p = super.toString();
+		return p+">"+waitingFor;
 	}
 
 }

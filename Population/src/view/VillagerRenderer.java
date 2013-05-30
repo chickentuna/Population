@@ -51,12 +51,13 @@ public class VillagerRenderer implements Renderer {
 		g.setColor(c);
 		g.drawRect(villager.getX(), villager.getY(), 1, 1);
 		float off = 0;
-		Iterator<Behaviour> it = villager.getBehaviours().iterator();
-		while (it.hasNext()) {
-			g.drawString(""+it.next(), villager.getX(), villager.getY()
+		//Iterator<Behaviour> it = villager.getBehaviours().iterator();
+		//while (it.hasNext()) {
+			if (villager.getBehaviours().size()>0)
+			g.drawString(""+villager.getBehaviours().get(0), villager.getX(), villager.getY()
 					+ off);
 			off += 11;
-		}
+		//}
 
 	}
 
