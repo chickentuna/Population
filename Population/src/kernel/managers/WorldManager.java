@@ -115,12 +115,17 @@ public class WorldManager {
 		int offset = dist * world.getLandSize();
 		int debutX = (int) (centre.getX() - offset);
 		int debutY = (int) (centre.getY() - offset);
+		System.out.println();
 
 		for (int x = debutX; x <= centre.getX() + offset; x += world.getLandSize()) {
 			for (int y = debutY; y <= centre.getY() + offset; y += world.getLandSize()) {
 				Point p = new Point(x, y);
-				if (Point.manhattanDistance(p, centre) <= dist	* world.getLandSize()) {
+
+				if ((p.getX() >= 0 && p.getY() >= 0) && Point.manhattanDistance(p, centre) <= dist	* world.getLandSize()) {
 					points.add(p);
+					System.out.println(" O");
+				} else {
+					System.out.println(" X");
 				}
 			}
 		}

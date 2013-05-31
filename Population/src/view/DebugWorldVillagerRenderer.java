@@ -48,8 +48,10 @@ public class DebugWorldVillagerRenderer implements Renderer {
 		List<Point> points = WorldManager.get().getLocationsAround(villager, 1);
 		for (Point p : points) {
 			g.setColor(Color.black);
-			g.drawLine(p.getX(), p.getX(), villager.getX(), villager.getY());
+			g.drawLine(p.getX(), p.getY(), villager.getX(), villager.getY());
+			g.drawOval(p.getX() - 2, p.getY() - 2, 4, 4);
 		}
+		g.drawString("" + points.size(), villager.getX(), villager.getY());
 	}
 
 
