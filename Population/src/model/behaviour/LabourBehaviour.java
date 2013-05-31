@@ -53,6 +53,7 @@ public final class LabourBehaviour extends Behaviour {
 			deactivate();
 		} else if (state == GATHER) {
 			deactivate();
+			owner.abandonBehaviour(this);
 		}
 		
 		
