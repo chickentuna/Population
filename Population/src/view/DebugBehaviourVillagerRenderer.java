@@ -1,14 +1,13 @@
 package view;
 
 import kernel.Point;
-import kernel.events.VillagerEvent;
 import model.Villager;
 import model.behaviour.GoingBehaviour;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
-public class VillagerRenderer implements Renderer {
+public class DebugBehaviourVillagerRenderer implements Renderer {
 
 	public final static int IDLE = 0;
 	public final static int WALKING = 1;
@@ -19,7 +18,7 @@ public class VillagerRenderer implements Renderer {
 
 	// private int spriteIndex;
 
-	public VillagerRenderer(Villager v) {
+	public DebugBehaviourVillagerRenderer(Villager v) {
 		villager = v;
 	}
 
@@ -63,11 +62,5 @@ public class VillagerRenderer implements Renderer {
 
 	}
 
-	public void on(VillagerEvent e) {
-		switch (e.getType()) {
-		default:
-			break;
-		}
-	}
 
 }

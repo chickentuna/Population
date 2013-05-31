@@ -68,18 +68,6 @@ public final class LabourBehaviour extends Behaviour {
 		state = GOTO_BETTER;
 	}
 
-	/*@Override
-	public void activate() {
-		super.activate();
-		if (owner==null) {
-			deactivate();
-		} else {
-			progress = new Progress(DURATION);
-			owner.setState(VState.LABOURING);
-			owner = null;
-		}
-	}*/
-
 	private Point getBetterSolution(Villager owner) { 
 		//TODO: Some villagers have a higher chance to make a wrong decision.
 		List<Decision> places = WorldManager.get().getProductionDecisionsAround(owner, 2);

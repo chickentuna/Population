@@ -1,7 +1,6 @@
 package view;
 
 import java.util.HashMap;
-import java.util.Iterator;
 
 import kernel.events.VillagerEvent;
 import kernel.managers.RessourceManager;
@@ -16,7 +15,7 @@ import com.google.common.eventbus.Subscribe;
 public class DebugView implements View {
 
 	Renderer worldRenderer;
-	HashMap<Villager, VillagerRenderer> villagers;
+	HashMap<Villager, Renderer> villagers;
 
 	public DebugView() {
 		worldRenderer = new WorldRenderer(WorldManager.get().getWorld());
@@ -30,10 +29,9 @@ public class DebugView implements View {
 	}
 
 	private void renderVillagers(Graphics g) {
-		Iterator<VillagerRenderer> it = villagers.values().iterator();
-		while (it.hasNext()) {
-			it.next().render(g);
-		}		
+		for (Renderer r : villagers.values()) {
+			r.render(g);
+		}
 	}
 
 	private void renderGUI(Graphics g) {
@@ -50,13 +48,12 @@ public class DebugView implements View {
 		Villager v = e.getVillager();
 		switch (e.getType()) {
 		case VillagerEvent.BIRTH:
-			villagers.put(v, new VillagerRenderer(v));
+			villagers.put(v, new DebugWorldVillagerRenderer(v));
 			break;
 		case VillagerEvent.DEATH:
 			villagers.remove(v);
 			break;
 		default:
-			villagers.get(v).on(e);
 			break;
 		}
 	}
