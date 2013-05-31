@@ -15,7 +15,7 @@ public class SpriteLoader {
 			int w = 24;
 			int h = 24;
 
-			Sprite Apple = i.getSubSprite(12 * w, 78 * h, w, h);
+			Sprite Apple = i.getSubSprite(6 * w, 91 * h, w, h);
 			
 			cache.put(Sprite.Apple, Apple);
 		} catch (SlickException e) {
