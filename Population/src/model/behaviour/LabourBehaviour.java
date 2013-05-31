@@ -66,10 +66,9 @@ public final class LabourBehaviour extends Behaviour {
 		}
 	}
 
-	private Point getBetterSolution() {
-		// Get a list of points plus their score.
-		List<Decision> places = WorldManager.get()
-				.getProductionDecisionsAround(owner, 2);
+	private Point getBetterSolution() { 
+		//TODO: Some villagers have a higher chance to make a wrong decision.
+		List<Decision> places = WorldManager.get().getProductionDecisionsAround(owner, 2);
 		return (Point) Chance.pickFrom(places).getParam();
 	}
 	

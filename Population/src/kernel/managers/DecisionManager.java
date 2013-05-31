@@ -11,6 +11,7 @@ import model.nature.Land;
 import model.technology.Building;
 
 //TODO: Any part of this class that can be modified by the villager, should belong to Villager class.
+
 public class DecisionManager {
 
 	private static DecisionManager self = null;
