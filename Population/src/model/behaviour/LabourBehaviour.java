@@ -19,14 +19,23 @@ public final class LabourBehaviour extends Behaviour {
 	// TODO: labour duration should be different for each type of
 	// poduce.
 	public static final int DURATION = 4;
+	private static final int GOTO_BETTER = 0;
+	private static final int WORK = 1;
+	private static final int GATHER = 2;
 
 	protected Produce collecting = null;
 	protected Progress progress = null;
-	private Villager owner;
+	private int state;
 
 	@Override
 	protected void execution(Villager owner) {
-		if (progress.getPercentage() == 100) {
+		if (state==GOTO_BETTER) {
+			progress = new Progress(DURATION);
+			owner.setState(VState.LABOURING);
+			state = WORK;
+		}
+		
+		if (state == WORK && progress.getPercentage() == 100) {
 			progress = null;
 			Producer producer;
 			Building in = WorldManager.get().getBuildingUnder(owner);
@@ -38,23 +47,27 @@ public final class LabourBehaviour extends Behaviour {
 
 			collecting = producer.getOneProduce();
 			Behaviour intention = new CollectBehaviour(collecting);
+			state = GATHER;
 			owner.adoptBehaviour(intention);
 			waitingFor = intention;
 			deactivate();
-			owner.abandonBehaviour(this);
+		} else if (state == GATHER) {
+			deactivate();
 		}
+		
+		
 	}
 
 	@Override
 	public void onAdopt(Villager owner) {
-		this.owner = owner;
-		Point better = getBetterSolution();
+		Point better = getBetterSolution(owner);
 		deactivate();
 		waitingFor = new GoingBehaviour(better);
 		owner.adoptBehaviour(waitingFor);
+		state = GOTO_BETTER;
 	}
 
-	@Override
+	/*@Override
 	public void activate() {
 		super.activate();
 		if (owner==null) {
@@ -64,17 +77,12 @@ public final class LabourBehaviour extends Behaviour {
 			owner.setState(VState.LABOURING);
 			owner = null;
 		}
-	}
+	}*/
 
-	private Point getBetterSolution() { 
+	private Point getBetterSolution(Villager owner) { 
 		//TODO: Some villagers have a higher chance to make a wrong decision.
 		List<Decision> places = WorldManager.get().getProductionDecisionsAround(owner, 2);
 		return (Point) Chance.pickFrom(places).getParam();
 	}
 	
-	public String toString() {
-		String p = super.toString();
-		return p+">"+waitingFor;
-	}
-
 }
