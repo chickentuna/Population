@@ -1,6 +1,10 @@
 package kernel;
 
-import static model.nature.Land.Type.*;
+import static model.nature.Land.Type.BEACH;
+import static model.nature.Land.Type.HILL;
+import static model.nature.Land.Type.PLAIN;
+import static model.nature.Land.Type.SEA;
+import static model.nature.Land.Type.WOOD;
 import io.OS;
 
 import java.io.BufferedReader;
@@ -38,8 +42,7 @@ public class WorldParser {
 	}
 
 	public static World parseWorld(File file) throws IOException {
-		BufferedReader f = new BufferedReader(new FileReader("ressource"
-				+ OS.getSlash() + file));
+		BufferedReader f = new BufferedReader(new FileReader("ressource" + OS.getSlash() + file));
 		return parseWorld(f);
 	}
 
@@ -55,8 +58,7 @@ public class WorldParser {
 		for (int y = 0; y < (height) / ratio; y++) {
 			buf = nextLine(br);
 			for (int x = 0; x < (width) / ratio; x++) {
-				int id = Integer.parseInt(buf.substring(x * ratio, x * ratio
-						+ ratio));
+				int id = Integer.parseInt(buf.substring(x * ratio, x * ratio + ratio));
 				world.set(x, y, getLandFromId(id));
 			}
 		}

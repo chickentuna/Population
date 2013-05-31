@@ -31,7 +31,6 @@ public class PointTest {
 		Point b = new Point(-5, -5);
 		Point c = new Point(5, 0);
 
-		float delta = 0.0001f;
 		assertEquals("O to 5;5", 10, Point.manhattanDistance(o, a));
 		assertEquals("O to -5;-5", 10, Point.manhattanDistance(o, b));
 		assertEquals("O to 5;0", 5, Point.manhattanDistance(o, c));

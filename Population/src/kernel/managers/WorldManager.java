@@ -107,25 +107,37 @@ public class WorldManager {
 		return getBuildingAt(e.getX(), e.getY());
 	}
 
+	/*
+	 * public List<Point> getLocationsAround(Entity entity, int dist) {
+	 * LinkedList<Point> points = new LinkedList<>();
+	 * 
+	 * Point centre = entity.getLocation();
+	 * 
+	 * int offset = dist * world.getLandSize(); int debutX = (int)
+	 * (centre.getX() - offset); int debutY = (int) (centre.getY() - offset);
+	 * 
+	 * for (int x = debutX; x <= centre.getX() + offset; x +=
+	 * world.getLandSize()) { for (int y = debutY; y <= centre.getY() + offset;
+	 * y += world.getLandSize()) { Point p = new Point(x, y);
+	 * 
+	 * if ((p.getX() >= 0 && p.getY() >= 0) && Point.manhattanDistance(p,
+	 * centre) <= dist * world.getLandSize()) { points.add(p); } } }
+	 * 
+	 * return points; }
+	 */
+
 	public List<Point> getLocationsAround(Entity entity, int dist) {
 		LinkedList<Point> points = new LinkedList<>();
 
-		Point centre = entity.getLocation();
+		Point centre = new Point(0,0);
 
-		int offset = dist * world.getLandSize();
-		int debutX = (int) (centre.getX() - offset);
-		int debutY = (int) (centre.getY() - offset);
-		System.out.println();
-
-		for (int x = debutX; x <= centre.getX() + offset; x += world.getLandSize()) {
-			for (int y = debutY; y <= centre.getY() + offset; y += world.getLandSize()) {
-				Point p = new Point(x, y);
-
-				if ((p.getX() >= 0 && p.getY() >= 0) && Point.manhattanDistance(p, centre) <= dist	* world.getLandSize()) {
-					points.add(p);
-					System.out.println(" O");
-				} else {
-					System.out.println(" X");
+		for (int x = -dist; x <= dist; x++) {
+			for (int y = -dist; y <= dist; y++) {
+				if (Point.manhattanDistance(centre, new Point(x, y)) <= dist) {
+					Point p = new Point(entity.getX() + x * world.getLandSize(), entity.getY() + y * world.getLandSize());
+					if (p.getX() >= 0 && p.getY() >= 0) {
+						points.add(p);
+					}
 				}
 			}
 		}
@@ -139,25 +151,28 @@ public class WorldManager {
 
 	public List<Decision> getProductionDecisionsAround(Entity entity, int dist) {
 		LinkedList<Decision> decisions = new LinkedList<>();
-		List<Point> locations = getLocationsAround(entity,dist);
-		
+		List<Point> locations = getLocationsAround(entity, dist);
+
 		Iterator<Point> it = locations.iterator();
 		while (it.hasNext()) {
 			Point point = it.next();
 			Producer param = null;
 			final Building b = getBuildingAt(point);
-			if (b!= null && b.getType() == BType.PRODUCTION) {
+			if (b != null && b.getType() == BType.PRODUCTION) {
 				param = (Producer) b;
 			} else {
-				final Land l = getLandAt(point); //TODO: Somewhere in the decision manager, check if land can indeed produce.
-				if (l!= null) {
-					param = l; 
+				final Land l = getLandAt(point); // TODO: Somewhere in the
+													// decision manager, check
+													// if land can indeed
+													// produce.
+				if (l != null) {
+					param = l;
 				}
 			}
 			if (param != null)
 				decisions.add(new DecisionAdapter(param.getWeight(), point));
 		}
-		
+
 		return decisions;
 	}
 
@@ -167,8 +182,8 @@ public class WorldManager {
 		int y1 = (int) l1.getY() / s;
 		int x2 = (int) l2.getX() / s;
 		int y2 = (int) l2.getY() / s;
-		
-		return (x1==x2) && (y1==y2);
+
+		return (x1 == x2) && (y1 == y2);
 	}
 
 }
