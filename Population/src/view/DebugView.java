@@ -2,6 +2,7 @@ package view;
 
 import java.util.HashMap;
 
+import kernel.Entity;
 import kernel.events.VillagerEvent;
 import kernel.managers.RessourceManager;
 import kernel.managers.WorldManager;
@@ -15,11 +16,11 @@ import com.google.common.eventbus.Subscribe;
 public class DebugView implements View {
 
 	Renderer worldRenderer;
-	HashMap<Villager, Renderer> villagers;
+	HashMap<Entity, Renderer> entities;
 
 	public DebugView() {
 		worldRenderer = new WorldRenderer(WorldManager.get().getWorld());
-		villagers = new HashMap<>();
+		entities = new HashMap<>();
 	}
 
 	public void render(Graphics g) {
@@ -29,7 +30,7 @@ public class DebugView implements View {
 	}
 
 	private void renderVillagers(Graphics g) {
-		for (Renderer r : villagers.values()) {
+		for (Renderer r : entities.values()) {
 			r.render(g);
 		}
 	}
@@ -39,19 +40,22 @@ public class DebugView implements View {
 		int res = RessourceManager.get().getRessource();
 		int pop = RessourceManager.get().getPopulation();
 		g.setColor(Color.green);
-		g.drawString("food: " + food + " res: " + res+ " pop: "+pop, 0, 400);
+		g.drawString("food: " + food + " res: " + res + " pop: " + pop, 0, 400);
 	}
+
+	// TODO: make table that maps each entity to a renderer. using
+	// EntityRenderer by default
 
 	@Subscribe
 	public void on(VillagerEvent e) {
-
+		// TODO: Listen to Entity.spawn() instead
 		Villager v = e.getVillager();
 		switch (e.getType()) {
 		case VillagerEvent.BIRTH:
-			villagers.put(v, new VillagerRenderer(v));
+			entities.put(v, new VillagerRenderer(v));
 			break;
 		case VillagerEvent.DEATH:
-			villagers.remove(v);
+			entities.remove(v);
 			break;
 		default:
 			break;

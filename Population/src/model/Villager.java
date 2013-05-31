@@ -13,8 +13,6 @@ import model.behaviour.Behaviour;
 import model.nature.Land;
 import model.nature.Produce;
 
-import org.newdawn.slick.Graphics;
-
 import com.google.common.collect.Lists;
 
 public class Villager extends Entity {
@@ -100,14 +98,6 @@ public class Villager extends Entity {
             action.run();
         }
 
-	}
-
-	public void render(Graphics g) {
-		/*
-		 * g.setColor(Color.red); g.drawRect(x, y, 1, 1); float off = 0;
-		 * Iterator<Behaviour> it = behaviours.iterator(); while (it.hasNext())
-		 * { g.drawString(it.next().name(), x, y + off); off += 11; }
-		 */
 	}
 
 	public VState getState() {

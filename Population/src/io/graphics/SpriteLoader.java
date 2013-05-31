@@ -15,9 +15,9 @@ public class SpriteLoader {
 			int w = 24;
 			int h = 24;
 
-			Sprite Apple = i.getSubSprite(6 * w, 91 * h, w, h);
+			cache.put(Sprite.Clefairy, i.getSubSprite(6 * w, 91 * h, w, h));
+			cache.put(Sprite.Missing, i.getSubSprite(8 * w, 134 * h, w, h));
 			
-			cache.put(Sprite.Apple, Apple);
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
@@ -25,8 +25,10 @@ public class SpriteLoader {
 	}
 
 	public static Sprite get(int spriteIndex) {
-		return cache.get(spriteIndex);
-
+		Sprite res = cache.get(spriteIndex);
+		if (res == null)
+			res = cache.get(Sprite.Missing);
+		return res;
 	}
 
 }

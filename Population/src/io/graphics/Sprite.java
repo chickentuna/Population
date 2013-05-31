@@ -6,8 +6,10 @@ import org.newdawn.slick.SlickException;
 public class Sprite extends Image {
 
 	// TODO: enum ?
-	public final static int None = 0;
-	public final static int Apple = 1;
+	public static final int Missing = -1;
+	public static final int None = 0;
+	public static final int Clefairy = 1;
+
 
 	private boolean autotile = false;
 	private int tileSize = 32;
