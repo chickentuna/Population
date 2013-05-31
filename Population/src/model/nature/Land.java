@@ -25,9 +25,6 @@ public class Land extends Producer implements Discoverable {
 			this.produce = produce;
 		}
 
-		public String getIdentifier() {
-			return this.name();
-		}
 	}
 	
 	private Type type;
@@ -39,7 +36,7 @@ public class Land extends Producer implements Discoverable {
 
 	@Override
 	public String getIdentifier() {
-		return type.getIdentifier();
+		return type.name();
 	}
 
 	public Type getType() {
