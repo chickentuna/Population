@@ -1,10 +1,12 @@
 package kernel.managers;
 
+import io.GameBus;
+
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedList;
 
 import kernel.Entity;
+import kernel.events.EntityEvent;
 
 public class EntityManager {
 
@@ -33,6 +35,7 @@ public class EntityManager {
 
 	public Entity spawn(Entity o) {
 		toSpawn.add(o);
+		GameBus.post(new EntityEvent(EntityEvent.SPAWN, o));
 		return o;
 	}
 
@@ -40,6 +43,7 @@ public class EntityManager {
 	// refresh system
 	public void unspawn(Entity o) {
 		toUnspawn.add(o);
+		GameBus.post(new EntityEvent(EntityEvent.UNSPAWN, o));
 	}
 
 	public Entity get(int k) {

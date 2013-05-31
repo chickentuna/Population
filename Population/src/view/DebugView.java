@@ -2,8 +2,9 @@ package view;
 
 import java.util.HashMap;
 
+import kernel.Class2ClassMap;
 import kernel.Entity;
-import kernel.events.VillagerEvent;
+import kernel.events.EntityEvent;
 import kernel.managers.RessourceManager;
 import kernel.managers.WorldManager;
 import model.Villager;
@@ -17,10 +18,18 @@ public class DebugView implements View {
 
 	Renderer worldRenderer;
 	HashMap<Entity, Renderer> entities;
+	Class2ClassMap<Entity, Renderer> renderMap;
 
 	public DebugView() {
 		worldRenderer = new WorldRenderer(WorldManager.get().getWorld());
 		entities = new HashMap<>();
+		renderMap = createRenderMap();
+	}
+
+	private Class2ClassMap<Entity, Renderer> createRenderMap() {
+		Class2ClassMap<Entity, Renderer> map = new Class2ClassMap<>();
+		map.put(Villager.class, VillagerRenderer.class);
+		return map;
 	}
 
 	public void render(Graphics g) {
@@ -43,19 +52,17 @@ public class DebugView implements View {
 		g.drawString("food: " + food + " res: " + res + " pop: " + pop, 0, 400);
 	}
 
-	// TODO: make table that maps each entity to a renderer. using
-	// EntityRenderer by default
-
 	@Subscribe
-	public void on(VillagerEvent e) {
-		// TODO: Listen to Entity.spawn() instead
-		Villager v = e.getVillager();
-		switch (e.getType()) {
-		case VillagerEvent.BIRTH:
-			entities.put(v, new VillagerRenderer(v));
+	public void on(EntityEvent event) {
+		Entity e = event.getEntity();
+		switch (event.getType()) {
+		case EntityEvent.SPAWN:
+			// /TODO: instantiate the renderer
+			// renderMap.get(e.getClass()).getConstr;
+			entities.put(e, new EntityRenderer(e));
 			break;
-		case VillagerEvent.DEATH:
-			entities.remove(v);
+		case EntityEvent.UNSPAWN:
+			entities.remove(e);
 			break;
 		default:
 			break;

@@ -1,8 +1,5 @@
 package kernel.managers;
 
-import test.DebugBehaviour;
-import io.GameBus;
-import kernel.events.VillagerEvent;
 import model.Villager;
 import model.behaviour.StandardBehaviour;
 import model.nature.PType;
@@ -53,16 +50,12 @@ public class RessourceManager {
 		population++;
 		Villager v = new Villager(x, y);
 		v.adoptBehaviour(new StandardBehaviour());
-		//v.adoptBehaviour(new DebugBehaviour());
-		
 		EntityManager.get().spawn(v);
-		GameBus.post(new VillagerEvent(VillagerEvent.BIRTH, v));
 	}
 
 	public void villagerDeath(Villager v) {
 		population--;
 		EntityManager.get().unspawn(v);
-		GameBus.post(new VillagerEvent(VillagerEvent.DEATH, v));
 	}
 
 	public void add(Produce produce) {
