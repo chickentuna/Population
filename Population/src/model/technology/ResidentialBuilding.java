@@ -1,6 +1,6 @@
 package model.technology;
 
-import static model.nature.Land.PLAIN;
+import static model.nature.Land.Type.*;
 import model.Discoverable;
 import model.nature.Land;
 
@@ -15,21 +15,21 @@ public enum ResidentialBuilding implements Building, Discoverable {
 	STRAW_HUT(PLAIN), 
 	STRAW_HOUSE(PLAIN),
 	
-	WOODEN_HUT(Land.WOOD), 
-	WOODEN_HOUSE(Land.WOOD),
+	WOODEN_HUT(WOOD), 
+	WOODEN_HOUSE(WOOD),
 	
-	STONE_HUT(Land.HILL), 
-	STONE_HOUSE(Land.HILL),
+	STONE_HUT(HILL), 
+	STONE_HOUSE(HILL),
 	
-	SAND_HUT(Land.BEACH), 
-	SAND_HOUSE(Land.BEACH),
+	SAND_HUT(BEACH), 
+	SAND_HOUSE(BEACH),
 	
 	BRICK_HOUSE(null),
 	MANSION(null);
 
-	private Land land;
+	private Land.Type land;
 
-	ResidentialBuilding(Land land) {
+	ResidentialBuilding(Land.Type land) {
 		this.land = land;
 	}
 
@@ -39,7 +39,7 @@ public enum ResidentialBuilding implements Building, Discoverable {
 	}
 
 	@Override
-	public Land getLand() {
+	public Land.Type getLand() {
 		return land;
 	}
 

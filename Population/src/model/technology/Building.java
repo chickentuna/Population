@@ -1,9 +1,10 @@
 package model.technology;
 
 import model.nature.Land;
+import model.nature.Land.Type;
 
 public interface Building {
-	public Land getLand();
+	public Type getLand();
 
 	public BType getType();
 }

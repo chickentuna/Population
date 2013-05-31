@@ -36,7 +36,7 @@ public final class LabourBehaviour extends Behaviour {
 				producer = WorldManager.get().getLandUnder(owner);
 			}
 
-			collecting = producer.getProduce();
+			collecting = producer.getOneProduce();
 			Behaviour intention = new CollectBehaviour(collecting);
 			owner.adoptBehaviour(intention);
 			waitingFor = intention;

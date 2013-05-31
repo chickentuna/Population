@@ -34,7 +34,7 @@ public class WorldRenderer implements Renderer {
 		for (int x = 0; x < world.getWidth(); x++) {
 			for (int y = 0; y < world.getHeight(); y++) {
 				Color c;
-				switch (world.getLand(x, y)) {
+				switch (world.getLand(x, y).getType()) {
 				case BEACH:
 					c = Color.yellow;
 					break;

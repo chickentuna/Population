@@ -52,7 +52,7 @@ public class DiscoveryManagerTest {
 	
 	@Test
 	public void addDicoveryLandTest() {
-		Land l = Land.PLAIN;
+		Land l = new Land(Land.Type.PLAIN);
 		DiscoveryManager.get().addDiscovery(l);
 		
 	}

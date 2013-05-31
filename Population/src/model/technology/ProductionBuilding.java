@@ -1,9 +1,9 @@
 package model.technology;
 
-import static model.nature.Land.BEACH;
-import static model.nature.Land.HILL;
-import static model.nature.Land.PLAIN;
-import static model.nature.Land.WOOD;
+import static model.nature.Land.Type.BEACH;
+import static model.nature.Land.Type.HILL;
+import static model.nature.Land.Type.PLAIN;
+import static model.nature.Land.Type.WOOD;
 import static model.nature.Produce.FISH;
 import static model.nature.Produce.ORE;
 import static model.nature.Produce.PLANKS;
@@ -14,50 +14,45 @@ import model.nature.Land;
 import model.nature.Produce;
 
 //@formatter:off
-public enum ProductionBuilding implements Building, Discoverable, Producer {
+public class ProductionBuilding extends Producer implements Building, Discoverable {
 
-	WHEATFARM(PLAIN, WHEAT),
-	MINE(HILL, ORE),
-	FISHERY(BEACH, FISH),
-	LUMBERMILL(WOOD, PLANKS);
+	public enum Type {
+		WHEATFARM(PLAIN, WHEAT),
+		MINE(HILL, ORE),
+		FISHERY(BEACH, FISH),
+		LUMBERMILL(WOOD, PLANKS);
 
-	private Land land;
-	private Produce[] produce;
+		private Land.Type land;
+		private Produce[] produce;
 
-	private ProductionBuilding(Land land, Produce... produce) {
-		this.land = land;
-		this.produce = produce;
+		private Type(Land.Type land, Produce... produce) {
+			this.land = land;
+			this.produce = produce;
+		}
+
 	}
-
-	@Override
-	public Land getLand() {
-		return land;
+	
+	private Type type;
+	
+	public ProductionBuilding(Type type) {
+		this.type = type;
+		produce = type.produce.clone();
 	}
-
-	@Override
-	public String getIdentifier() {
-		return this.name();
-	}
-
+	
 	@Override
 	public BType getType() {
 		return BType.PRODUCTION;
 	}
 
 	@Override
-	public Produce getProduce() {
-		//TODO: change to get random Produce
-		if (produce.length==0)
-			return null;
-		return produce[0];
+	public String getIdentifier() {
+		return type.name();
 	}
 
 	@Override
-	public int getWeight() {
-		int weight = 0;
-		for (int k = 0; k<produce.length; k++) {
-			weight += produce[k].getValue(); //TODO: have this ponderated by produce probability?
-		}
-		return weight;
+	public model.nature.Land.Type getLand() {
+		return type.land;
 	}
+
+	
 }

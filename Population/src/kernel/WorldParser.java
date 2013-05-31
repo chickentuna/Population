@@ -1,10 +1,6 @@
 package kernel;
 
-import static model.nature.Land.BEACH;
-import static model.nature.Land.HILL;
-import static model.nature.Land.PLAIN;
-import static model.nature.Land.SEA;
-import static model.nature.Land.WOOD;
+import static model.nature.Land.Type.*;
 import io.OS;
 
 import java.io.BufferedReader;
@@ -15,11 +11,12 @@ import java.io.StringReader;
 
 import model.World;
 import model.nature.Land;
+import model.nature.Land.Type;
 
 public class WorldParser {
 
 	private static Land getLandFromId(int i) {
-		Land l = null;
+		Type l = null;
 		switch (i) {
 		case 0:
 			l = PLAIN;
@@ -37,7 +34,7 @@ public class WorldParser {
 			l = HILL;
 			break;
 		}
-		return l;
+		return new Land(l);
 	}
 
 	public static World parseWorld(File file) throws IOException {
