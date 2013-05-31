@@ -1,4 +1,4 @@
-package view;
+package view.debug;
 
 import kernel.Point;
 import model.Villager;
@@ -6,6 +6,8 @@ import model.behaviour.GoingBehaviour;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+
+import view.Renderer;
 
 public class DebugBehaviourVillagerRenderer implements Renderer {
 

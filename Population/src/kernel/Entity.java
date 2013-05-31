@@ -6,7 +6,7 @@ public abstract class Entity implements Locatable {
 	protected float x,y;
 	protected int width;
 	protected int height;
-
+	
 	public Entity(float x, float y, int w, int h) {
 		this.x=x;
 		this.y=y;
@@ -26,7 +26,7 @@ public abstract class Entity implements Locatable {
 	
 	public Rectangle getBounds() {
 		return new Rectangle((int)x,(int)y,width,height);
-		//Width & height will be regulated by the sprite
+		// Width & height will (not?)be regulated by the sprite
 	}
 	
 	public Point getLocation() {

@@ -2,21 +2,20 @@ package model;
 
 import static model.VState.IDLE;
 
-import java.util.LinkedList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
-
-import com.google.common.collect.Lists;
 
 import kernel.Entity;
 import kernel.Point;
 import kernel.managers.WorldManager;
 import model.behaviour.Behaviour;
-import model.behaviour.GoingBehaviour;
 import model.nature.Land;
 import model.nature.Produce;
 
 import org.newdawn.slick.Graphics;
+
+import com.google.common.collect.Lists;
 
 public class Villager extends Entity {
 

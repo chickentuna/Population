@@ -1,4 +1,4 @@
-package view;
+package view.debug;
 
 import java.util.List;
 
@@ -8,6 +8,8 @@ import model.Villager;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+
+import view.Renderer;
 
 public class DebugWorldVillagerRenderer implements Renderer {
 

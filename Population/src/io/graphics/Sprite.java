@@ -4,9 +4,14 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 public class Sprite extends Image {
+
+	// TODO: enum ?
+	public final static int None = 0;
+	public final static int Apple = 1;
+
 	private boolean autotile = false;
-	private boolean animated = true;
 	private int tileSize = 32;
+	private int imageCount = 1;
 
 	public Sprite(String path) throws SlickException {
 		super(path);
@@ -39,12 +44,7 @@ public class Sprite extends Image {
 	}
 
 	public boolean isAnimated() {
-		return animated;
-	}
-
-	public Sprite setAnimated(boolean animated) {
-		this.animated = animated;
-		return this;
+		return imageCount == 1;
 	}
 
 }

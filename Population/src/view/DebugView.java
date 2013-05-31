@@ -48,7 +48,7 @@ public class DebugView implements View {
 		Villager v = e.getVillager();
 		switch (e.getType()) {
 		case VillagerEvent.BIRTH:
-			villagers.put(v, new DebugWorldVillagerRenderer(v));
+			villagers.put(v, new VillagerRenderer(v));
 			break;
 		case VillagerEvent.DEATH:
 			villagers.remove(v);
