@@ -11,13 +11,11 @@ public class SpriteLoader {
 
 	public static void init() { // First tries
 		try {
-			Sprite i = new Sprite("ressource" + OS.getSlash() + "Iconset2.png");
+			Sprite i = new Sprite("ressource" + OS.getSlash() + "Iconset.png");
 			int w = 24;
 			int h = 24;
-			int x = 7;
-			int y = 15;
-			Sprite Apple = i.getSubSprite(x * w, y * h, w, h);
 
+			Sprite Apple = i.getSubSprite(12 * w, 78 * h, w, h);
 			
 			cache.put(Sprite.Apple, Apple);
 		} catch (SlickException e) {
