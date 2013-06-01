@@ -1,5 +1,6 @@
 package view;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
 import kernel.Class2ClassMap;
@@ -57,9 +58,19 @@ public class DebugView implements View {
 		Entity e = event.getEntity();
 		switch (event.getType()) {
 		case EntityEvent.SPAWN:
-			// /TODO: instantiate the renderer
-			// renderMap.get(e.getClass()).getConstr;
-			entities.put(e, new EntityRenderer(e));
+			try {
+				Class<? extends Renderer> clazz = renderMap.get(e.getClass());
+				Renderer r;
+				if (clazz != null) {
+					r = clazz.getConstructor(Entity.class).newInstance(e);
+				} else {
+					r = new EntityRenderer(e);
+				}
+				entities.put(e, r);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+
 			break;
 		case EntityEvent.UNSPAWN:
 			entities.remove(e);
