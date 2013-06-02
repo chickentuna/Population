@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 import kernel.Entity;
-import kernel.events.EntityEvent;
+import kernel.events.EntityRenameEvent;
 
 public class EntityManager {
 
@@ -35,7 +35,7 @@ public class EntityManager {
 
 	public Entity spawn(Entity o) {
 		toSpawn.add(o);
-		GameBus.post(new EntityEvent(EntityEvent.SPAWN, o));
+		GameBus.post(new EntityRenameEvent(EntityRenameEvent.SPAWN, o));
 		return o;
 	}
 
@@ -43,7 +43,7 @@ public class EntityManager {
 	// refresh system
 	public void unspawn(Entity o) {
 		toUnspawn.add(o);
-		GameBus.post(new EntityEvent(EntityEvent.UNSPAWN, o));
+		GameBus.post(new EntityRenameEvent(EntityRenameEvent.UNSPAWN, o));
 	}
 
 	public Entity get(int k) {

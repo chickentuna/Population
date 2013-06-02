@@ -46,6 +46,9 @@ public final class LabourBehaviour extends Behaviour {
 			}
 
 			collecting = producer.getOneProduce();
+			if (collecting == null) {
+				throw new RuntimeException("No produce found");				
+			}
 			Behaviour intention = new CollectBehaviour(collecting);
 			state = GATHER;
 			owner.adoptBehaviour(intention);

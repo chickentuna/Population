@@ -2,7 +2,7 @@ package kernel.events;
 
 import kernel.Entity;
 
-public class EntityEvent {
+public class EntityRenameEvent {
 
 	public static final int SPAWN = 0;
 	public static final int UNSPAWN = 1;
@@ -10,7 +10,7 @@ public class EntityEvent {
 	int type;
 	Entity entity;
 
-	public EntityEvent(int type, Entity entity) {
+	public EntityRenameEvent(int type, Entity entity) {
 		this.type = type;
 		this.entity = entity;
 	}

@@ -4,6 +4,7 @@ import kernel.Progress;
 import kernel.managers.RessourceManager;
 import model.VState;
 import model.Villager;
+import model.Villager.ObtainProduceEvent;
 import model.nature.Produce;
 
 public final class CollectBehaviour extends Behaviour {
@@ -13,7 +14,6 @@ public final class CollectBehaviour extends Behaviour {
 	protected Progress progress = null;
 	
 	public CollectBehaviour(Produce collecting) {
-		super();
 		this.collecting = collecting;
 	}
 
@@ -34,5 +34,6 @@ public final class CollectBehaviour extends Behaviour {
 		progress = new Progress(DURATION);
 		owner.setState(VState.COLLECTING);
 		owner.setCollecting(collecting);
+		
 	}
 }

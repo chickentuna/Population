@@ -7,7 +7,7 @@ public abstract class Behaviour {
 	protected Behaviour waitingFor = null;
 	
 	protected abstract void execution(Villager owner);
-	
+	//TODO: interrupt/replace/terminate automatism needed.
 	public void execute(Villager owner) {
 		if (isActive()) {
 			execution(owner);

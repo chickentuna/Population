@@ -9,6 +9,14 @@ public class Sprite extends Image {
 	public static final int Missing = -1;
 	public static final int None = 0;
 	public static final int Clefairy = 1;
+	public static final int Apple = 2;
+	public static final int Crab = 3;
+	public static final int Fish = 4;
+	public static final int Log = 5;
+	public static final int Ore = 6;
+	public static final int Plank = 7;
+	public static final int Stone = 8;
+	public static final int Wheat = 9;
 
 
 	private boolean autotile = false;

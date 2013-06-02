@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 import kernel.Class2ClassMap;
 import kernel.Entity;
-import kernel.events.EntityEvent;
+import kernel.events.EntityRenameEvent;
 import kernel.managers.RessourceManager;
 import kernel.managers.WorldManager;
 import model.Villager;
@@ -54,10 +54,10 @@ public class DebugView implements View {
 	}
 
 	@Subscribe
-	public void on(EntityEvent event) {
+	public void on(EntityRenameEvent event) {
 		Entity e = event.getEntity();
 		switch (event.getType()) {
-		case EntityEvent.SPAWN:
+		case EntityRenameEvent.SPAWN:
 			try {
 				Class<? extends Renderer> clazz = renderMap.get(e.getClass());
 				Renderer r;
@@ -72,7 +72,7 @@ public class DebugView implements View {
 			}
 
 			break;
-		case EntityEvent.UNSPAWN:
+		case EntityRenameEvent.UNSPAWN:
 			entities.remove(e);
 			break;
 		default:
