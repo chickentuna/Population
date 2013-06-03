@@ -42,7 +42,7 @@ public class VillagerRenderer extends SpriteRenderer {
 			defaultSpriteMap = new HashMap<>();
 			int idle = Sprite.Clefairy;
 			int walking = Sprite.Clefairy;
-			int working = Sprite.Crab;
+			int working = Sprite.Clefairy;
 			int collecting = Sprite.Clefairy;
 
 			defaultSpriteMap.put(VState.IDLE, idle);
@@ -57,10 +57,15 @@ public class VillagerRenderer extends SpriteRenderer {
 
 	@Override
 	public void render(Graphics g) {
+		VState vstate = villager.getState();
 
-		Integer s = spriteMap.get(villager.getState());
+		Integer s = spriteMap.get(vstate);
 		if (s != null) {
 			sprite = SpriteLoader.get(s);
+		}
+		if (vstate == VState.LABOURING) {
+			xScale = -1;
+			yScale = -1;
 		}
 		super.render(g);
 		for (Renderer r : subRenderers) {
