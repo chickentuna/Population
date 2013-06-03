@@ -1,27 +1,26 @@
 package view;
 
+import io.graphics.Sprite;
+import io.graphics.SpriteLoader;
+
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+
+import kernel.Entity;
+import kernel.Point;
+import model.VState;
+import model.Villager;
+import model.nature.Produce;
 
 import org.newdawn.slick.Graphics;
 
 import com.google.common.eventbus.Subscribe;
 
-import kernel.Entity;
-import kernel.Point;
-import io.graphics.Sprite;
-import io.graphics.SpriteLoader;
-import model.VState;
-import model.Villager;
-import model.nature.Produce;
+public class VillagerRenderer extends SpriteRenderer {
 
-public class VillagerRenderer extends EntityRenderer {
+	private class ProduceRenderer extends SpriteRenderer {
 
-	private class ProduceRenderer extends EntityRenderer {
-
-		Point location; //TODO: EntityRender has no Entity but has Locatable?
-		
 		public ProduceRenderer(Point location, Produce produce) {
 			super(null);
 			
@@ -70,7 +69,7 @@ public class VillagerRenderer extends EntityRenderer {
 		super(v);
 		sprite = SpriteLoader.get(Sprite.Clefairy);
 		try {
-			villager = (Villager) entity;
+			villager = (Villager) v;
 		} catch (Exception e) {
 			throw new RuntimeException(
 					"Passing incorrect entity to renderer.\nEntity : "

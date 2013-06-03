@@ -64,7 +64,7 @@ public class DebugView implements View {
 				if (clazz != null) {
 					r = clazz.getConstructor(Entity.class).newInstance(e);
 				} else {
-					r = new EntityRenderer(e);
+					r = new SpriteRenderer(e);
 				}
 				entities.put(e, r);
 			} catch (Exception ex) {
