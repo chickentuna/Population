@@ -3,17 +3,16 @@ package view;
 import io.graphics.Sprite;
 import io.graphics.SpriteLoader;
 import kernel.Locatable;
-import kernel.Point;
 
 import org.newdawn.slick.Graphics;
 
 public class SpriteRenderer implements Renderer {
 
-	protected Point location;
+	protected Locatable location;
 	protected Sprite sprite = SpriteLoader.get(Sprite.Missing);
 
-	public SpriteRenderer(Locatable e) {
-		location = new Point(e.getX(), e.getY());
+	public SpriteRenderer(Locatable locatable) {
+		location = locatable;
 	}
 
 

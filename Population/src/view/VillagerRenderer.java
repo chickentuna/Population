@@ -22,9 +22,7 @@ public class VillagerRenderer extends SpriteRenderer {
 	private class ProduceRenderer extends SpriteRenderer {
 
 		public ProduceRenderer(Point location, Produce produce) {
-			super(null);
-			
-			this.location = location;
+			super(location);
 			
 			int spriteIndex;
 			switch (produce) {//TODO: Make HashMap
