@@ -17,35 +17,32 @@ public class SpriteRenderer implements Renderer {
 		location = locatable;
 	}
 
-
 	@Override
 	public void render(Graphics g) {
 		int x = (int) (location.getX() - sprite.getWidth() / 2);
 		int y = (int) (location.getY() - sprite.getHeight() / 2);
 
-		if (xScale==1 && yScale==1) {
+		if (xScale == 1 && yScale == 1) {
 			g.drawImage(sprite, x, y);
 		} else {
+			float w = sprite.getWidth() * xScale;
 			float xd1 = x;
-			float xd2 = x + sprite.getWidth() * xScale;
-			if (xd2 < 0) {
-				float t = xd2;
-				xd2 = xd1;
-				xd1 = -t;
+			float xd2 = x + w;
+			if (xd2 < xd1) {
+				xd2 += Math.abs(w);
+				xd1 += Math.abs(w);
 			}
+			float h = sprite.getHeight() * yScale;
 			float yd1 = y;
-			float yd2 = y + sprite.getHeight() * yScale;
-			if (yd2 < 0) {
-				float t = yd2;
-				yd2 = yd1;
-				yd1 = -t;
+			float yd2 = y + h;
+			if (yd2 < yd1) {
+				yd2 += Math.abs(h);
+				yd1 += Math.abs(h);
 			}
 
 			g.drawImage(sprite, xd1, yd1, xd2, yd2, 0, 0, sprite.getWidth(), sprite.getHeight());
-			// TODO: recenter scaled sprite properly
 		}
 
 	}
-
 
 }
