@@ -17,9 +17,10 @@ import com.google.common.eventbus.Subscribe;
 
 public class VillagerRenderer extends SpriteRenderer {
 
+	private static HashMap<VState, Integer> defaultSpriteMap = null;
+
 	private Villager villager;
 	private HashMap<VState, Integer> spriteMap;
-	// TODO: This HashMap should be a static ressource.
 	private List<Renderer> subRenderers;
 
 	public VillagerRenderer(Entity v) {
@@ -28,29 +29,30 @@ public class VillagerRenderer extends SpriteRenderer {
 		try {
 			villager = (Villager) v;
 		} catch (Exception e) {
-			throw new RuntimeException(
-					"Passing incorrect entity to renderer.\nEntity : "
-							+ v.getClass().getSimpleName() + "\nRenderer : "
-							+ getClass().getSimpleName());
+			throw new RuntimeException("Passing incorrect entity to renderer.\nEntity : " + v.getClass().getSimpleName() + "\nRenderer : " + getClass().getSimpleName());
 		}
-		spriteMap = createSpriteMap();
+		spriteMap = getSpriteMap();
 		subRenderers = new LinkedList<>();
 		villager.getBus().register(this);
 	}
 
-	private HashMap<model.VState, Integer> createSpriteMap() {
-		HashMap<VState, Integer> res = new HashMap<>();
-		int idle = Sprite.Clefairy;
-		int walking = Sprite.Clefairy;
-		int working = Sprite.Crab;
-		int collecting = Sprite.Clefairy;
+	private static HashMap<model.VState, Integer> getSpriteMap() {
 
-		res.put(VState.IDLE, idle);
-		res.put(VState.COLLECTING, collecting);
-		res.put(VState.GOING, walking);
-		res.put(VState.WANDERING, walking);
-		res.put(VState.LABOURING, working);
-		return res;
+		if (defaultSpriteMap == null) {
+			defaultSpriteMap = new HashMap<>();
+			int idle = Sprite.Clefairy;
+			int walking = Sprite.Clefairy;
+			int working = Sprite.Crab;
+			int collecting = Sprite.Clefairy;
+
+			defaultSpriteMap.put(VState.IDLE, idle);
+			defaultSpriteMap.put(VState.COLLECTING, collecting);
+			defaultSpriteMap.put(VState.GOING, walking);
+			defaultSpriteMap.put(VState.WANDERING, walking);
+			defaultSpriteMap.put(VState.LABOURING, working);
+		}
+
+		return defaultSpriteMap;
 	}
 
 	@Override
@@ -68,7 +70,7 @@ public class VillagerRenderer extends SpriteRenderer {
 
 	@Subscribe
 	public void on(Villager.ObtainProduceEvent e) {
-		subRenderers.add(new ProduceRenderer(villager.getLocation(), villager.getCollecting()));
+		subRenderers.add(new ProduceRenderer(villager.getLocation().withOffset(0, -24), villager.getCollecting()));
 	}
 
 }
