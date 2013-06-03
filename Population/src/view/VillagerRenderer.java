@@ -8,10 +8,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import kernel.Entity;
-import kernel.Point;
 import model.VState;
 import model.Villager;
-import model.nature.Produce;
 
 import org.newdawn.slick.Graphics;
 
@@ -19,48 +17,9 @@ import com.google.common.eventbus.Subscribe;
 
 public class VillagerRenderer extends SpriteRenderer {
 
-	private class ProduceRenderer extends SpriteRenderer {
-
-		public ProduceRenderer(Point location, Produce produce) {
-			super(location);
-			
-			int spriteIndex;
-			switch (produce) {//TODO: Make HashMap
-			case APPLE:
-				spriteIndex = Sprite.Apple;
-				break;
-			case CRAB:
-				spriteIndex = Sprite.Crab;
-				break;
-			case FISH:
-				spriteIndex = Sprite.Fish;
-				break;
-			case LOG:
-				spriteIndex = Sprite.Log;
-				break;
-			case ORE:
-				spriteIndex = Sprite.Ore;
-				break;
-			case PLANKS:
-				spriteIndex = Sprite.Plank;
-				break;
-			case STONE:
-				spriteIndex = Sprite.Stone;
-				break;
-			case WHEAT:
-				spriteIndex = Sprite.Wheat;
-				break;
-			default:
-				spriteIndex = Sprite.Missing;
-				break;
-			}
-			sprite = SpriteLoader.get(spriteIndex);
-		}
-
-	}
-
 	private Villager villager;
 	private HashMap<VState, Integer> spriteMap;
+	// TODO: This HashMap should not be in every Renderer.
 	private List<Renderer> subRenderers;
 
 	public VillagerRenderer(Entity v) {

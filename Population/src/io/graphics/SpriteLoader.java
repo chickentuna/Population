@@ -25,7 +25,9 @@ public class SpriteLoader {
 			cache.put(Sprite.Fish, fromSheet(8, 89));
 			cache.put(Sprite.Log, fromSheet(1,11));
 			cache.put(Sprite.Plank, fromSheet(2,11));
-			cache.put(Sprite.Ore, fromSheet(0, 16));
+			cache.put(Sprite.Stone, fromSheet(0, 16));
+			cache.put(Sprite.Ore, fromSheet(1, 16));
+			cache.put(Sprite.Wheat, fromSheet(13, 4));
 
 		} catch (SlickException e) {
 			e.printStackTrace();
