@@ -4,9 +4,12 @@ import io.GameBus;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 import kernel.Entity;
 import kernel.events.EntityRenameEvent;
+
+import com.google.common.collect.Lists;
 
 public class EntityManager {
 
@@ -66,13 +69,23 @@ public class EntityManager {
 	}
 
 	private void refreshEntities() {
-		
-		for (Entity e : toUnspawn) {
+
+		List<Runnable> todos = Lists.newArrayList();
+
+		for (final Entity e : toUnspawn) {
 			entities.remove(e);
-			e.destroy();//TODO:This may modify entity list, so put it in differed execution
+			todos.add(new Runnable() {
+				public void run() {
+					e.destroy();
+				}
+			});
 		}
+		for (Runnable r : todos) {
+			r.run();
+		}
+
 		toUnspawn.clear();
-		
+
 		for (Entity e : toSpawn) {
 			entities.add(e);
 		}
