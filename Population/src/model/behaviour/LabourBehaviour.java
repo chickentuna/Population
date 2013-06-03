@@ -22,6 +22,7 @@ public final class LabourBehaviour extends Behaviour {
 	private static final int GOTO_BETTER = 0;
 	private static final int WORK = 1;
 	private static final int GATHER = 2;
+	private static final int GIVE_UP = 2;
 
 	protected Produce collecting = null;
 	protected Progress progress = null;
@@ -65,6 +66,10 @@ public final class LabourBehaviour extends Behaviour {
 	@Override
 	public void onAdopt(Villager owner) {
 		Point better = getBetterSolution(owner);
+		if (better == null) {
+			state = GIVE_UP;
+			return;
+		}
 		deactivate();
 		waitingFor = new GoingBehaviour(better);
 		owner.adoptBehaviour(waitingFor);
@@ -74,6 +79,9 @@ public final class LabourBehaviour extends Behaviour {
 	private Point getBetterSolution(Villager owner) { 
 		//TODO: Some villagers have a higher chance to make a wrong decision.
 		List<Decision> places = WorldManager.get().getProductionDecisionsAround(owner, 2);
+		if (places.size()==0) {
+			return null;
+		}
 		return (Point) Chance.pickFrom(places).getParam();
 	}
 	

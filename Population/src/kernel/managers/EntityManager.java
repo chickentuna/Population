@@ -39,8 +39,6 @@ public class EntityManager {
 		return o;
 	}
 
-	// TODO: spawn & unspawn : no concurrent modification of list. Must use
-	// refresh system
 	public void unspawn(Entity o) {
 		toUnspawn.add(o);
 		GameBus.post(new EntityRenameEvent(EntityRenameEvent.UNSPAWN, o));

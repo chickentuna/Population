@@ -20,5 +20,7 @@ public class DecisionAdapter implements Decision {
 		return param;
 	}
 
-	
+	public String toString() {
+		return "{" + weight + "}" + param.toString();
+	}
 }

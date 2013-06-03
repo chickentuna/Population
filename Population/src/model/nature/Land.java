@@ -7,9 +7,6 @@ import static model.nature.Produce.STONE;
 import model.Discoverable;
 import model.Producer;
 
-//TODO: Lands as classes
-
-//@formatter:off
 public class Land extends Producer implements Discoverable {
 	public enum Type {
 		BEACH(CRAB),
@@ -18,7 +15,7 @@ public class Land extends Producer implements Discoverable {
 		LAKE(),
 		WOOD(LOG),
 		HILL(STONE);
-	
+
 		Produce[] produce;
 
 		Type(Produce... produce) {

@@ -2,6 +2,7 @@ package kernel.managers;
 
 import java.util.LinkedList;
 import java.util.List;
+
 import kernel.Chance;
 import kernel.Decision;
 import model.Villager;
@@ -43,23 +44,9 @@ public class DecisionManager {
 		LinkedList<Decision> decisions = new LinkedList<>();
 		Building in = WorldManager.get().getBuildingUnder(v);
 
-		/*if (in == null) {
+
 			// TODO: incorporate what to build here (if anything can be built,
-			// of course)
-			decisions.add(new Decision() {
 
-				@Override
-				public int getWeight() {
-					return 1;
-				}
-
-				@Override
-				public Object getParam() {
-					return BehaviourTypes.BUILD.create();
-				}
-
-			});
-		}*/
 
 		decisions.add(new Decision() {
 

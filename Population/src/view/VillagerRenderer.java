@@ -19,7 +19,7 @@ public class VillagerRenderer extends SpriteRenderer {
 
 	private Villager villager;
 	private HashMap<VState, Integer> spriteMap;
-	// TODO: This HashMap should not be in every Renderer.
+	// TODO: This HashMap should be a static ressource.
 	private List<Renderer> subRenderers;
 
 	public VillagerRenderer(Entity v) {

@@ -161,16 +161,17 @@ public class WorldManager {
 			if (b != null && b.getType() == BType.PRODUCTION) {
 				param = (Producer) b;
 			} else {
-				final Land l = getLandAt(point); // TODO: Somewhere in the
-													// decision manager, check
-													// if land can indeed
-													// produce.
+				final Land l = getLandAt(point);
+
+				// TODO: Somewhere in the decision manager, check if land can
+				// indeed produce.
 				if (l != null) {
 					param = l;
 				}
 			}
-			if (param != null)
+			if (param != null && param.getWeight() > 0) {
 				decisions.add(new DecisionAdapter(param.getWeight(), point));
+			}
 		}
 
 		return decisions;
