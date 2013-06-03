@@ -92,7 +92,6 @@ public class ChanceTest {
 			}
 
 			public Object getParam() {
-				// TODO Auto-generated method stub
 				return null;
 			}
 		};

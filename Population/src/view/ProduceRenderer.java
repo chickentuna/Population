@@ -11,7 +11,7 @@ public class ProduceRenderer extends SpriteRenderer {
 		super(location);
 
 		int spriteIndex;
-		switch (produce) {// TODO: Make HashMap
+		switch (produce) {// TODO: Make (static) HashMaps for sprites
 		case APPLE:
 			spriteIndex = Sprite.Apple;
 			break;

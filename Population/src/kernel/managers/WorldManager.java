@@ -62,10 +62,6 @@ public class WorldManager {
 		return world.getBuilding((int) x / s, (int) y / s);
 	}
 
-	// TODO: If not all forest tiles are the sameat, the used tile should me
-	// save somwhere instead of recalculated. -> Make a large graphic upon
-	// parse, then render that
-
 	public Collection<Land> getLandsAround(Entity entity, int visibilityRange) {
 		LinkedList<Land> lands = new LinkedList<Land>();
 		Point centre = entity.getLocation();
@@ -107,25 +103,6 @@ public class WorldManager {
 		return getBuildingAt(e.getX(), e.getY());
 	}
 
-	/*
-	 * public List<Point> getLocationsAround(Entity entity, int dist) {
-	 * LinkedList<Point> points = new LinkedList<>();
-	 * 
-	 * Point centre = entity.getLocation();
-	 * 
-	 * int offset = dist * world.getLandSize(); int debutX = (int)
-	 * (centre.getX() - offset); int debutY = (int) (centre.getY() - offset);
-	 * 
-	 * for (int x = debutX; x <= centre.getX() + offset; x +=
-	 * world.getLandSize()) { for (int y = debutY; y <= centre.getY() + offset;
-	 * y += world.getLandSize()) { Point p = new Point(x, y);
-	 * 
-	 * if ((p.getX() >= 0 && p.getY() >= 0) && Point.manhattanDistance(p,
-	 * centre) <= dist * world.getLandSize()) { points.add(p); } } }
-	 * 
-	 * return points; }
-	 */
-
 	public List<Point> getLocationsAround(Entity entity, int dist) {
 		LinkedList<Point> points = new LinkedList<>();
 
@@ -163,8 +140,6 @@ public class WorldManager {
 			} else {
 				final Land l = getLandAt(point);
 
-				// TODO: Somewhere in the decision manager, check if land can
-				// indeed produce.
 				if (l != null) {
 					param = l;
 				}
