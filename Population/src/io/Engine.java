@@ -38,7 +38,7 @@ public class Engine extends BasicGame {
 		RessourceManager.get().villagerBirth(100, 100);
 		RessourceManager.get().villagerBirth(250, 125);
 		RessourceManager.get().villagerBirth(125, 250);
-		RessourceManager.get().villagerBirth(0, 0);
+		RessourceManager.get().villagerBirth(300, 200);
 
 	}
 

@@ -25,13 +25,14 @@ public class Villager extends Entity {
 	private List<Behaviour> toAbandon;
 
 	private EventBus bus;
-	
+
 	private VState state = IDLE;
 	private float direction = 0;
 	private Produce collecting;
 
-	public class StateChangeEvent {}
-	
+	public class StateChangeEvent {
+	}
+
 	public Villager(int x, int y) {
 		super((float) x, (float) y);
 		behaviours = new LinkedList<Behaviour>();
@@ -39,7 +40,7 @@ public class Villager extends Entity {
 		toAdopt = new LinkedList<Behaviour>();
 		bus = new EventBus();
 	}
-	
+
 	public void adoptBehaviour(Behaviour b) {
 		toAdopt.add(b);
 	}
@@ -48,7 +49,7 @@ public class Villager extends Entity {
 		toAbandon.add(behaviour);
 	}
 
-	//TODO: Place in Behaviours
+	// TODO: Place in Behaviours
 	public void step_foward() {
 		float new_x = (float) (x + WALK_SPEED * Math.cos(direction));
 		float new_y = (float) (y - WALK_SPEED * Math.sin(direction));
@@ -61,48 +62,48 @@ public class Villager extends Entity {
 
 	public void update() {
 		refreshBehaviours();
-		
+
 		for (Behaviour b : behaviours) {
 			b.execute(this);
 		}
 	}
 
 	private void refreshBehaviours() {
-        List<Runnable> todos = Lists.newArrayList();
+		List<Runnable> todos = Lists.newArrayList();
 
-        final Villager self = this;
+		final Villager self = this;
 
-        Iterator<Behaviour> it = toAdopt.iterator();
+		Iterator<Behaviour> it = toAdopt.iterator();
 		while (it.hasNext()) {
-            final Behaviour b = it.next();
-            todos.add(new Runnable() {
-                @Override
-                public void run() {
-                    behaviours.add(b);
-                    b.onAdopt(self);
-                    
-                }
-            });
-		}
-        toAdopt.clear();
+			final Behaviour b = it.next();
+			todos.add(new Runnable() {
+				@Override
+				public void run() {
+					behaviours.add(b);
+					b.onAdopt(self);
 
-        it = toAbandon.iterator();
+				}
+			});
+		}
+		toAdopt.clear();
+
+		it = toAbandon.iterator();
 		while (it.hasNext()) {
-            final Behaviour b = it.next();
-            todos.add(new Runnable() {
-                @Override
-                public void run() {
-                    behaviours.remove(b);
-                    b.onAbandon(self);
-                }
-            });
+			final Behaviour b = it.next();
+			todos.add(new Runnable() {
+				@Override
+				public void run() {
+					behaviours.remove(b);
+					b.onAbandon(self);
+				}
+			});
 		}
 
-        toAbandon.clear();
+		toAbandon.clear();
 
-        for (Runnable action : todos) {
-            action.run();
-        }
+		for (Runnable action : todos) {
+			action.run();
+		}
 
 	}
 
@@ -117,11 +118,13 @@ public class Villager extends Entity {
 	public void step_towards(Point point) {
 		direction = new Point(x, y).directionTo(point);
 		step_foward();
-	}//TODO: this is where path finding will be implemented
+	}// TODO: this is where path finding will be implemented
 
 	public void setState(VState state) {
-		this.state = state;
-		bus.post(new StateChangeEvent());
+		if (this.state != state) {
+			this.state = state;
+			bus.post(new StateChangeEvent());
+		}
 	}
 
 	public void setDirection(float f) {
@@ -141,6 +144,6 @@ public class Villager extends Entity {
 	}
 
 	public EventBus getBus() {
-		return bus;		
+		return bus;
 	}
 }

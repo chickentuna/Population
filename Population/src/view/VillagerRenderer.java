@@ -14,6 +14,7 @@ import model.Villager;
 import org.newdawn.slick.Graphics;
 
 import view.animation.PanicSpriteAnimation;
+import view.animation.SpriteAnimation;
 
 import com.google.common.collect.Lists;
 import com.google.common.eventbus.Subscribe;
@@ -26,6 +27,10 @@ public class VillagerRenderer extends SpriteRenderer {
 	private HashMap<VState, Integer> spriteMap;
 	private List<Renderer> subRenderers;
 	private List<Runnable> differedInstructions;
+
+	SpriteAnimation stateAnim;
+	
+	private VState previousState = null;
 	
 	public VillagerRenderer(Entity v) {
 		super(v);
@@ -85,12 +90,16 @@ public class VillagerRenderer extends SpriteRenderer {
 
 	@Subscribe
 	public void on(Villager.StateChangeEvent e) {
+		
+		stateAnim.end();
+		
 		switch (villager.getState()) {
 		case COLLECTING:
 			differedInstructions.add(new Runnable() {
 				@Override
 				public void run() {
-					subRenderers.add(new ProduceRenderer(villager.getLocation().withOffset(0, -sprite.getHeight()), villager.getCollecting()));					
+					subRenderers.add(new ProduceRenderer(villager.getLocation().withOffset(0, -sprite.getHeight()), villager.getCollecting()));
+					//TODO: How To Remove this ?
 				}
 			});
 
@@ -100,13 +109,13 @@ public class VillagerRenderer extends SpriteRenderer {
 		case IDLE:
 			break;
 		case LABOURING:
-			System.err.println("!");
-			spriteAnimations.add(new PanicSpriteAnimation(this, 4));
+			stateAnim = new PanicSpriteAnimation(this, 4);
+			spriteAnimations.add(stateAnim);
 			break;
 		default:
 			break;
 		}
-
+		previousState  = villager.getState();
 	}
 
 }
