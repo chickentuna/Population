@@ -12,6 +12,8 @@ import org.newdawn.slick.Graphics;
 
 import view.animation.SpriteAnimation;
 
+import com.google.common.collect.Lists;
+
 public class SpriteRenderer implements Renderer {
 
 	protected Locatable location;
@@ -27,9 +29,7 @@ public class SpriteRenderer implements Renderer {
 
 	@Override
 	public void render(Graphics g) {
-		for (SpriteAnimation sa : spriteAnimations) {
-			sa.run();
-		}
+		performAnimations();
 
 		int x = (int) (location.getX() - sprite.getWidth() / 2);
 		int y = (int) (location.getY() - sprite.getHeight() / 2);
@@ -57,6 +57,18 @@ public class SpriteRenderer implements Renderer {
 
 	}
 
+	private void performAnimations() {
+		LinkedList<Runnable> todo = Lists.newLinkedList();
+
+		for (SpriteAnimation sa : spriteAnimations) {
+			todo.add(sa);
+		}
+		for (Runnable r : todo) {
+			r.run();
+		}
+
+	}
+
 	public float getXScale() {
 		return xScale;
 	}
@@ -75,6 +87,10 @@ public class SpriteRenderer implements Renderer {
 		if (startScale <= 1 && startScale >= -1) {
 			yScale = startScale;
 		}
+	}
+
+	public void removeAnimation(SpriteAnimation spriteAnimation) {
+		spriteAnimations.remove(spriteAnimation);
 	}
 
 }
