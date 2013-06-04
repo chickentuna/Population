@@ -2,23 +2,35 @@ package view;
 
 import io.graphics.Sprite;
 import io.graphics.SpriteLoader;
+
+import java.util.LinkedList;
+import java.util.List;
+
 import kernel.Locatable;
 
 import org.newdawn.slick.Graphics;
+
+import view.animation.SpriteAnimation;
 
 public class SpriteRenderer implements Renderer {
 
 	protected Locatable location;
 	protected Sprite sprite = SpriteLoader.get(Sprite.Missing);
-	protected int xScale = 1;
-	protected int yScale = 1;
+	protected float xScale = 1;
+	protected float yScale = 1;
+	protected List<SpriteAnimation> spriteAnimations;
 
 	public SpriteRenderer(Locatable locatable) {
 		location = locatable;
+		spriteAnimations = new LinkedList<>();
 	}
 
 	@Override
 	public void render(Graphics g) {
+		for (SpriteAnimation sa : spriteAnimations) {
+			sa.run();
+		}
+
 		int x = (int) (location.getX() - sprite.getWidth() / 2);
 		int y = (int) (location.getY() - sprite.getHeight() / 2);
 
@@ -43,6 +55,26 @@ public class SpriteRenderer implements Renderer {
 			g.drawImage(sprite, xd1, yd1, xd2, yd2, 0, 0, sprite.getWidth(), sprite.getHeight());
 		}
 
+	}
+
+	public float getXScale() {
+		return xScale;
+	}
+
+	public void setXScale(float startScale) {
+		if (startScale <= 1 && startScale >= -1) {
+			xScale = startScale;
+		}
+	}
+
+	public float getYScale() {
+		return yScale;
+	}
+
+	public void setYScale(float startScale) {
+		if (startScale <= 1 && startScale >= -1) {
+			yScale = startScale;
+		}
 	}
 
 }
