@@ -13,6 +13,9 @@ import model.Villager;
 
 import org.newdawn.slick.Graphics;
 
+import view.animation.PanicSpriteAnimation;
+
+import com.google.common.collect.Lists;
 import com.google.common.eventbus.Subscribe;
 
 public class VillagerRenderer extends SpriteRenderer {
@@ -22,7 +25,8 @@ public class VillagerRenderer extends SpriteRenderer {
 	private Villager villager;
 	private HashMap<VState, Integer> spriteMap;
 	private List<Renderer> subRenderers;
-
+	private List<Runnable> differedInstructions;
+	
 	public VillagerRenderer(Entity v) {
 		super(v);
 		sprite = SpriteLoader.get(Sprite.Clefairy);
@@ -34,6 +38,7 @@ public class VillagerRenderer extends SpriteRenderer {
 		spriteMap = getSpriteMap();
 		subRenderers = new LinkedList<>();
 		villager.getBus().register(this);
+		differedInstructions = Lists.newLinkedList();
 	}
 
 	private static HashMap<model.VState, Integer> getSpriteMap() {
@@ -57,6 +62,11 @@ public class VillagerRenderer extends SpriteRenderer {
 
 	@Override
 	public void render(Graphics g) {
+		for (Runnable r : differedInstructions) {
+			r.run();
+		}
+		differedInstructions.clear();
+		
 		VState vstate = villager.getState();
 
 		Integer s = spriteMap.get(vstate);
@@ -74,8 +84,28 @@ public class VillagerRenderer extends SpriteRenderer {
 	}
 
 	@Subscribe
-	public void on(Villager.ObtainProduceEvent e) {
-		subRenderers.add(new ProduceRenderer(villager.getLocation().withOffset(0, -24), villager.getCollecting()));
+	public void on(Villager.StateChangeEvent e) {
+		switch (villager.getState()) {
+		case COLLECTING:
+			differedInstructions.add(new Runnable() {
+				@Override
+				public void run() {
+					subRenderers.add(new ProduceRenderer(villager.getLocation().withOffset(0, -sprite.getHeight()), villager.getCollecting()));					
+				}
+			});
+
+			break;
+		case GOING:
+			break;
+		case IDLE:
+			break;
+		case LABOURING:
+			spriteAnimations.add(new PanicSpriteAnimation(this, 4));
+			break;
+		default:
+			break;
+		}
+
 	}
 
 }

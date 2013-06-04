@@ -4,7 +4,6 @@ import kernel.Progress;
 import kernel.managers.RessourceManager;
 import model.VState;
 import model.Villager;
-import model.Villager.ObtainProduceEvent;
 import model.nature.Produce;
 
 public final class CollectBehaviour extends Behaviour {

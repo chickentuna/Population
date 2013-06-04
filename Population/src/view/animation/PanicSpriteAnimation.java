@@ -10,7 +10,7 @@ public class PanicSpriteAnimation extends SpriteAnimation {
 	private int targetTicks;
 	private int tickFreq;
 
-	public PanicSpriteAnimation(SpriteRenderer parent, int duration, int freq) {
+	public PanicSpriteAnimation(SpriteRenderer parent, int freq, int duration) {
 		super(parent);
 
 		tickFreq = Engine.TARGET_FPS / freq;
@@ -19,13 +19,17 @@ public class PanicSpriteAnimation extends SpriteAnimation {
 
 	}
 
+	public PanicSpriteAnimation(SpriteRenderer renderer, int freq) {
+		this (renderer, freq, -1);
+	}
+
 	@Override
 	public void run() {
 		tick++;
 		if (tick % tickFreq == 0) {
 			parent.setXScale(-parent.getXScale());
 		}
-		if (tick >= targetTicks) {
+		if (targetTicks >= 0 && tick >= targetTicks) {
 			end();
 		}
 

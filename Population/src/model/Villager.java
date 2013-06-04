@@ -30,9 +30,7 @@ public class Villager extends Entity {
 	private float direction = 0;
 	private Produce collecting;
 
-	public class ObtainProduceEvent {}
-	
-	
+	public class StateChangeEvent {}
 	
 	public Villager(int x, int y) {
 		super((float) x, (float) y);
@@ -123,6 +121,7 @@ public class Villager extends Entity {
 
 	public void setState(VState state) {
 		this.state = state;
+		bus.post(new StateChangeEvent());
 	}
 
 	public void setDirection(float f) {
@@ -131,9 +130,6 @@ public class Villager extends Entity {
 
 	public void setCollecting(Produce collecting) {
 		this.collecting = collecting;
-		if (collecting != null) {
-			bus.post(new ObtainProduceEvent());
-		}
 	}
 
 	public Produce getCollecting() {
