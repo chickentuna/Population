@@ -67,20 +67,20 @@ public class VillagerRenderer extends SpriteRenderer {
 		}
 		differedInstructions.clear();
 		
-		VState vstate = villager.getState();
+		updateSprite();
 
-		Integer s = spriteMap.get(vstate);
-		if (s != null) {
-			sprite = SpriteLoader.get(s);
-		}
-		if (vstate == VState.LABOURING) {
-			xScale = -1;
-			yScale = -1;
-		}
 		super.render(g);
 		for (Renderer r : subRenderers) {
 			r.render(g);
 		}
+	}
+
+	private void updateSprite() {
+		VState vstate = villager.getState();
+		Integer s = spriteMap.get(vstate);
+		if (s != null) {
+			sprite = SpriteLoader.get(s);
+		}		
 	}
 
 	@Subscribe
@@ -100,6 +100,7 @@ public class VillagerRenderer extends SpriteRenderer {
 		case IDLE:
 			break;
 		case LABOURING:
+			System.err.println("!");
 			spriteAnimations.add(new PanicSpriteAnimation(this, 4));
 			break;
 		default:

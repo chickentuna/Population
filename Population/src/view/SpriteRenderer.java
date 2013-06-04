@@ -73,20 +73,16 @@ public class SpriteRenderer implements Renderer {
 		return xScale;
 	}
 
-	public void setXScale(float startScale) {
-		if (startScale <= 1 && startScale >= -1) {
-			xScale = startScale;
-		}
+	public void setXScale(float scale) {
+		xScale = scale;
 	}
 
 	public float getYScale() {
 		return yScale;
 	}
 
-	public void setYScale(float startScale) {
-		if (startScale <= 1 && startScale >= -1) {
-			yScale = startScale;
-		}
+	public void setYScale(float scale) {
+		yScale = scale;
 	}
 
 	public void removeAnimation(SpriteAnimation spriteAnimation) {

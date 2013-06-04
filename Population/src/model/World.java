@@ -3,6 +3,8 @@ package model;
 import model.nature.Land;
 import model.technology.Building;
 
+//TODO: /!\ Important:  remove building layer, have Lands point to Buildings.
+
 public class World {
 	private Land[][] terrain;
 	private Building[][] buildings;
