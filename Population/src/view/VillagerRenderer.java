@@ -8,8 +8,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 import kernel.Entity;
+import kernel.Point;
 import model.VState;
 import model.Villager;
+import model.nature.Produce;
 
 import org.newdawn.slick.Graphics;
 
@@ -28,9 +30,8 @@ public class VillagerRenderer extends SpriteRenderer {
 	private List<Renderer> subRenderers;
 	private List<Runnable> differedInstructions;
 
-	SpriteAnimation stateAnim;
-	private VState previousState = VState.IDLE;
-	
+	SpriteAnimation stateAnim = null;
+
 	public VillagerRenderer(Entity v) {
 		super(v);
 		sprite = SpriteLoader.get(Sprite.Clefairy);
@@ -65,17 +66,24 @@ public class VillagerRenderer extends SpriteRenderer {
 	}
 
 	@Override
-	public void render(Graphics g) {
+	public void render(final Graphics g) {
 		for (Runnable r : differedInstructions) {
 			r.run();
 		}
 		differedInstructions.clear();
-		
+
 		updateSprite();
 
 		super.render(g);
-		for (Renderer r : subRenderers) {
-			r.render(g);
+		
+		for (final Renderer r : subRenderers) {
+			differedInstructions.add(new Runnable() {
+				@Override
+				public void run() {
+					r.render(g);					
+				}
+			});
+			
 		}
 	}
 
@@ -84,21 +92,25 @@ public class VillagerRenderer extends SpriteRenderer {
 		Integer s = spriteMap.get(vstate);
 		if (s != null) {
 			sprite = SpriteLoader.get(s);
-		}		
+		}
 	}
 
 	@Subscribe
 	public void on(Villager.StateChangeEvent e) {
-		
-		stateAnim.end();
-		
+
+		if (stateAnim!=null) {
+			stateAnim.end();
+			stateAnim = null;
+		}
+
 		switch (villager.getState()) {
 		case COLLECTING:
 			differedInstructions.add(new Runnable() {
 				@Override
 				public void run() {
-					subRenderers.add(new ProduceRenderer(villager.getLocation().withOffset(0, -sprite.getHeight()), villager.getCollecting()));
-					//TODO: How To Remove this ?
+					Point loc = villager.getLocation().withOffset(0, -sprite.getHeight());
+					Produce prod = villager.getCollecting();
+					subRenderers.add(new ProduceRenderer(loc, prod, subRenderers));
 				}
 			});
 
@@ -114,7 +126,6 @@ public class VillagerRenderer extends SpriteRenderer {
 		default:
 			break;
 		}
-		previousState  = villager.getState();
 	}
 
 }
