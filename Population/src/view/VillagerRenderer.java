@@ -29,8 +29,7 @@ public class VillagerRenderer extends SpriteRenderer {
 	private List<Runnable> differedInstructions;
 
 	SpriteAnimation stateAnim;
-	
-	private VState previousState = null;
+	private VState previousState = VState.IDLE;
 	
 	public VillagerRenderer(Entity v) {
 		super(v);
