@@ -1,6 +1,7 @@
 package kernel.managers;
 
-import java.io.File;
+import io.WorldParser;
+
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -11,7 +12,6 @@ import kernel.DecisionAdapter;
 import kernel.Entity;
 import kernel.Locatable;
 import kernel.Point;
-import kernel.WorldParser;
 import model.Producer;
 import model.World;
 import model.nature.Land;
@@ -36,7 +36,7 @@ public class WorldManager {
 
 	private WorldManager() {
 		try {
-			world = WorldParser.parseWorld(new File(world_file));
+			world = WorldParser.parseWorldFromFile(world_file);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

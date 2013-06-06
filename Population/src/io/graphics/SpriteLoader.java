@@ -14,7 +14,7 @@ public class SpriteLoader {
 
 	public static void init() { // First tries
 		try {
-			sheet = new Sprite("ressource" + OS.getSlash() + "Iconset.png");
+			sheet = new Sprite("resource" + OS.getSlash() + "IconSet.png");
 			spriteWidth = 24;
 			spriteHeight = 24;
 

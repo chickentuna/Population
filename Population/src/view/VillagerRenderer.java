@@ -110,7 +110,11 @@ public class VillagerRenderer extends SpriteRenderer {
 				public void run() {
 					Point loc = villager.getLocation().withOffset(0, -sprite.getHeight());
 					Produce prod = villager.getCollecting();
-					subRenderers.add(new ProduceRenderer(loc, prod, subRenderers));
+					if (prod != null) {
+						subRenderers.add(new ProduceRenderer(loc, prod, subRenderers));
+						//else : too late
+					}
+					
 				}
 			});
 
