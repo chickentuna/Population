@@ -7,6 +7,7 @@ import static model.nature.Land.Type.SEA;
 import static model.nature.Land.Type.WOOD;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringReader;
@@ -40,7 +41,7 @@ public class WorldParser {
 	}
 
 	public static World parseWorldFromFile(String world_file) throws IOException {
-		BufferedReader f = new BufferedReader(new FileReader("resource" + OS.getSlash() + world_file));
+		BufferedReader f = new BufferedReader(new FileReader("resource" + File.separatorChar + world_file));
 		return parseWorld(f);
 	}
 
