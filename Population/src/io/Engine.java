@@ -14,7 +14,7 @@ import view.DebugView;
 import view.View;
 
 public class Engine extends BasicGame {
-	public static final int TARGET_FPS = 30;
+	public static final int TARGET_FPS = 60;
 
 	public String cheat;
 	public View view;

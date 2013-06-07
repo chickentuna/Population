@@ -18,8 +18,9 @@ import model.nature.Land.Type;
 
 public class WorldParser {
 
-	private static Land getLandFromId(int i) {
+	private static Land createLandFromId(int i) {
 		Type l = null;
+		
 		switch (i) {
 		case 0:
 			l = PLAIN;
@@ -58,7 +59,7 @@ public class WorldParser {
 			buf = nextLine(br);
 			for (int x = 0; x < (width) / ratio; x++) {
 				int id = Integer.parseInt(buf.substring(x * ratio, x * ratio + ratio));
-				world.set(x, y, getLandFromId(id));
+				world.set(x, y, createLandFromId(id));
 			}
 		}
 

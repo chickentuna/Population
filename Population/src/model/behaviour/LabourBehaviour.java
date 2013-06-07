@@ -11,8 +11,6 @@ import model.Producer;
 import model.VState;
 import model.Villager;
 import model.nature.Produce;
-import model.technology.BType;
-import model.technology.Building;
 
 public final class LabourBehaviour extends Behaviour {
 
@@ -39,13 +37,8 @@ public final class LabourBehaviour extends Behaviour {
 		if (state == WORK && progress.getPercentage() == 100) {
 			progress = null;
 			Producer producer;
-			Building in = WorldManager.get().getBuildingUnder(owner);
-			if (in != null && in.getType() == BType.PRODUCTION) {
-				producer = (Producer) in;
-			} else {
-				producer = WorldManager.get().getLandUnder(owner);
-			}
-
+			producer = WorldManager.get().getLandUnder(owner);
+			
 			collecting = producer.getOneProduce();
 			if (collecting == null) {
 				throw new RuntimeException("No produce found");				

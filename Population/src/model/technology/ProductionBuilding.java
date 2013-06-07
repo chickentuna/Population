@@ -53,6 +53,4 @@ public class ProductionBuilding extends Producer implements Building, Discoverab
 	public model.nature.Land.Type getLand() {
 		return type.land;
 	}
-
-	
 }

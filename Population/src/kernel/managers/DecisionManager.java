@@ -38,14 +38,8 @@ public class DecisionManager {
 	}
 
 	private List<Decision> UsefulPossibilitiesFor(Villager v) {
-		// TODO : "Parse" possibilities out of a vilagers situation and
-		// available technologies + ressources.
-
 		LinkedList<Decision> decisions = new LinkedList<>();
-		Building in = WorldManager.get().getBuildingUnder(v);
-
-
-			// TODO: incorporate what to build here (if anything can be built,
+		// TODO: incorporate what to build here (if anything can be built,
 
 
 		decisions.add(new Decision() {
