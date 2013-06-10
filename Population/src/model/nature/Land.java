@@ -50,6 +50,8 @@ public class Land extends Producer implements Discoverable {
 
 	public void setBuilding(Building building) {
 		this.building = building;
+		if (building==null)
+			return;
 		if (building.getType() == BType.PRODUCTION) {
 			produce = ((ProductionBuilding)building).getProduce();
 		} else {
