@@ -14,6 +14,7 @@ import kernel.Point;
 import model.Producer;
 import model.World;
 import model.nature.Land;
+import model.technology.Building;
 
 public class WorldManager {
 	private final String world_file = "test.world";
@@ -53,11 +54,6 @@ public class WorldManager {
 
 		return world.getLand((int) (x / (float) s), (int) (y / (float) s));
 	}
-
-	/*public Building getBuildingAt(float x, float y) {
-		int s = world.getLandSize();
-		return world.getBuilding((int) x / s, (int) y / s);
-	}*/
 
 	public Collection<Land> getLandsAround(Entity entity, int visibilityRange) {
 		LinkedList<Land> lands = new LinkedList<Land>();
@@ -119,9 +115,14 @@ public class WorldManager {
 		return points;
 	}
 
-	/*public Building getBuildingAt(Point p) {
+	public Building getBuildingAt(float x, float y) {
+		int s = world.getLandSize();
+		return world.getBuilding((int) x / s, (int) y / s);
+	}
+
+	public Building getBuildingAt(Point p) {
 		return getBuildingAt(p.getX(), p.getY());
-	}*/
+	}
 
 	public List<Decision> getProductionDecisionsAround(Entity entity, int dist) {
 		LinkedList<Decision> decisions = new LinkedList<>();
@@ -147,5 +148,6 @@ public class WorldManager {
 
 		return (x1 == x2) && (y1 == y2);
 	}
-
+	
+	
 }

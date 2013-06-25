@@ -63,12 +63,6 @@ public class WorldParser {
 			}
 		}
 
-		for (int y = 0; y < (height) / ratio; y++) {
-			for (int x = 0; x < (width) / ratio; x++) {
-				world.setBuilding(x, y, null);
-			}
-		}
-
 		return world;
 	}
 
@@ -90,5 +84,22 @@ public class WorldParser {
 		}
 		return buf;
 	}
+//	
+//	public static World parseWorldFromImage(String world_file) throws IOException {
+//		BufferedInputStream f = new BufferedInputStream(new FileInputStream("resource"+File.separator+world_file));
+//		byte[] col = new byte[3];
+//		boolean eof = false;
+//		
+//		while (!eof) {
+//			f.read(col, 0, 3);
+//			System.out.println((int)col[1]);
+//			Color c = new Color((int)col[0],(int)col[1],(int)col[2]);
+//			System.out.println(c.getGreen());
+//			System.out.println(c.getGreenByte());
+//			
+//		}
+//		return null;
+//		
+//	}
 
 }
