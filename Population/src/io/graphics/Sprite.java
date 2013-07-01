@@ -116,7 +116,7 @@ public class Sprite extends Image {
 		addCode(0b0001, 9, 12, 13, 16);
 		addCode(0b0010, 9, 10, 21, 22);
 		addCode(0b0011, 9, 10, 13, 14);
-		addCode(0b0100, 11, 12, 15, 16);
+		addCode(0b0100, 11, 12, 23, 24);
 		addCode(0b0101, 11, 12, 15, 16);
 		addCode(0b0110, 10, 11, 22, 23);
 		addCode(0b0111, 10, 11, 14, 15);
