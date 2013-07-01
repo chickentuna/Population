@@ -1,8 +1,6 @@
 package view;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
-
 import kernel.Class2ClassMap;
 import kernel.Entity;
 import kernel.events.EntityRenameEvent;
