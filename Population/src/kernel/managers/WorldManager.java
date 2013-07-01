@@ -29,7 +29,15 @@ public class WorldManager {
 	}
 
 	public WorldManager(String debug) {
-		this();
+		try {
+			world = WorldParser.parseWorldFromString("1\n" +
+					"1\n" +
+					"1\n" +
+					"0\n" +
+					"\n");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	private WorldManager() {

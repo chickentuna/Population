@@ -1,6 +1,7 @@
 package view;
 
 import java.util.HashMap;
+
 import kernel.Class2ClassMap;
 import kernel.Entity;
 import kernel.events.EntityRenameEvent;
@@ -33,7 +34,7 @@ public class DebugView implements View {
 
 	public void render(Graphics g) {
 		worldRenderer.render(g);
-		renderVillagers(g);
+		renderVillagers(g); //TODO: give render depth to entities ?
 		renderGUI(g);
 	}
 

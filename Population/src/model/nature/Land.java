@@ -17,7 +17,7 @@ public class Land extends Producer implements Discoverable {
 		SEA(),
 		LAKE(),
 		WOOD(LOG),
-		HILL(STONE);
+		HILL(STONE), NULL;
 
 		Produce[] produce;
 

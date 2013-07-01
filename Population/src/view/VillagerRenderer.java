@@ -95,8 +95,12 @@ public class VillagerRenderer extends SpriteRenderer {
 		if (s != null) {
 			sprite = SpriteLoader.get(s);
 		}
-
-		Land.Type on = WorldManager.get().getLandUnder(villager).getType();
+		
+		Land land = WorldManager.get().getLandUnder(villager);
+		if (land == null) {
+			return;
+		}
+		Land.Type on = land.getType();
 
 		if (on == Land.Type.SEA) {//TODO: Add properties to Land, which should all be classes
 			sprite = sprite.getSubSprite(0,0,sprite.getWidth(), sprite.getHeight()/2);
