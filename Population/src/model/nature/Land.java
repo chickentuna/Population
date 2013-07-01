@@ -6,6 +6,9 @@ import static model.nature.Produce.LOG;
 import static model.nature.Produce.STONE;
 import model.Discoverable;
 import model.Producer;
+import model.technology.BType;
+import model.technology.Building;
+import model.technology.ProductionBuilding;
 
 public class Land extends Producer implements Discoverable {
 	public enum Type {
@@ -25,7 +28,8 @@ public class Land extends Producer implements Discoverable {
 	}
 	
 	private Type type;
-
+	private Building building = null;
+	
 	public Land(Type type) {
 		this.type = type;
 		this.produce = type.produce.clone();
@@ -38,6 +42,21 @@ public class Land extends Producer implements Discoverable {
 
 	public Type getType() {
 		return type;
+	}
+	
+	public Building getBuilding() {
+		return building;
+	}
+
+	public void setBuilding(Building building) {
+		this.building = building;
+		if (building==null)
+			return;
+		if (building.getType() == BType.PRODUCTION) {
+			produce = ((ProductionBuilding)building).getProduce();
+		} else {
+			produce = null;
+		}
 	}
 
 }

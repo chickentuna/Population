@@ -3,7 +3,6 @@ package kernel.managers;
 import io.WorldParser;
 
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,7 +14,6 @@ import kernel.Point;
 import model.Producer;
 import model.World;
 import model.nature.Land;
-import model.technology.BType;
 import model.technology.Building;
 
 public class WorldManager {
@@ -57,11 +55,6 @@ public class WorldManager {
 		return world.getLand((int) (x / (float) s), (int) (y / (float) s));
 	}
 
-	public Building getBuildingAt(float x, float y) {
-		int s = world.getLandSize();
-		return world.getBuilding((int) x / s, (int) y / s);
-	}
-
 	public Collection<Land> getLandsAround(Entity entity, int visibilityRange) {
 		LinkedList<Land> lands = new LinkedList<Land>();
 		Point centre = entity.getLocation();
@@ -99,9 +92,9 @@ public class WorldManager {
 
 	}
 
-	public Building getBuildingUnder(Entity e) {
+	/*public Building getBuildingUnder(Entity e) {
 		return getBuildingAt(e.getX(), e.getY());
-	}
+	}*/
 
 	public List<Point> getLocationsAround(Entity entity, int dist) {
 		LinkedList<Point> points = new LinkedList<>();
@@ -122,6 +115,11 @@ public class WorldManager {
 		return points;
 	}
 
+	public Building getBuildingAt(float x, float y) {
+		int s = world.getLandSize();
+		return world.getBuilding((int) x / s, (int) y / s);
+	}
+
 	public Building getBuildingAt(Point p) {
 		return getBuildingAt(p.getX(), p.getY());
 	}
@@ -130,20 +128,9 @@ public class WorldManager {
 		LinkedList<Decision> decisions = new LinkedList<>();
 		List<Point> locations = getLocationsAround(entity, dist);
 
-		Iterator<Point> it = locations.iterator();
-		while (it.hasNext()) {
-			Point point = it.next();
-			Producer param = null;
-			final Building b = getBuildingAt(point);
-			if (b != null && b.getType() == BType.PRODUCTION) {
-				param = (Producer) b;
-			} else {
-				final Land l = getLandAt(point);
-
-				if (l != null) {
-					param = l;
-				}
-			}
+		for (Point point : locations) {
+			Producer param;
+			param = getLandAt(point);
 			if (param != null && param.getWeight() > 0) {
 				decisions.add(new DecisionAdapter(param.getWeight(), point));
 			}
@@ -161,5 +148,6 @@ public class WorldManager {
 
 		return (x1 == x2) && (y1 == y2);
 	}
-
+	
+	
 }

@@ -9,8 +9,10 @@ import java.util.List;
 
 import kernel.Entity;
 import kernel.Point;
+import kernel.managers.WorldManager;
 import model.VState;
 import model.Villager;
+import model.nature.Land;
 import model.nature.Produce;
 
 import org.newdawn.slick.Graphics;
@@ -92,6 +94,12 @@ public class VillagerRenderer extends SpriteRenderer {
 		Integer s = spriteMap.get(vstate);
 		if (s != null) {
 			sprite = SpriteLoader.get(s);
+		}
+
+		Land.Type on = WorldManager.get().getLandUnder(villager).getType();
+
+		if (on == Land.Type.SEA) {//TODO: Add properties to Land, which should all be classes
+			sprite = sprite.getSubSprite(0,0,sprite.getWidth(), sprite.getHeight()/2);
 		}
 	}
 

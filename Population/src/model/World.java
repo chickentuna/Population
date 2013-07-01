@@ -3,11 +3,8 @@ package model;
 import model.nature.Land;
 import model.technology.Building;
 
-//TODO: /!\ Important:  remove building layer, have Lands point to Buildings.
-
 public class World {
 	private Land[][] terrain;
-	private Building[][] buildings;
 	private int land_size = 100;
 
 	public World(int size) {
@@ -16,7 +13,6 @@ public class World {
 
 	public World(int width, int height) {
 		terrain = new Land[width][height];
-		buildings = new Building[width][height];
 
 	}
 
@@ -27,9 +23,11 @@ public class World {
 	}
 
 	public Building getBuilding(int x, int y) {
-		if (x >= getWidth() || y >= getHeight() || x < 0 || y < 0)
-			return null;
-		return buildings[x][y];
+		Land l = getLand(x, y);
+		if (l != null)
+			return l.getBuilding();
+		return null;
+		
 	}
 
 	public void set(int x, int y, Land type) {
@@ -53,7 +51,9 @@ public class World {
 	}
 
 	public void setBuilding(int x, int y, Building building) {
-		buildings[x][y] = building;
-
+		Land l = getLand(x, y);
+		if (l != null) {
+			l.setBuilding(building);
+		}
 	}
 }

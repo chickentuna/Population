@@ -1,7 +1,6 @@
 package io.graphics;
 
-import io.OS;
-
+import java.io.File;
 import java.util.HashMap;
 
 import org.newdawn.slick.SlickException;
@@ -14,20 +13,20 @@ public class SpriteLoader {
 
 	public static void init() { // First tries
 		try {
-			sheet = new Sprite("resource" + OS.getSlash() + "IconSet.png");
+			sheet = new Sprite("resource" + File.separatorChar + "IconSet.png");
 			spriteWidth = 24;
 			spriteHeight = 24;
 
-			cache.put(Sprite.Clefairy, fromSheet(6, 91));
-			cache.put(Sprite.Missing, fromSheet(8, 134));
-			cache.put(Sprite.Apple, fromSheet(12, 109));
-			cache.put(Sprite.Crab, fromSheet(5, 89));
-			cache.put(Sprite.Fish, fromSheet(8, 89));
-			cache.put(Sprite.Log, fromSheet(1,11));
-			cache.put(Sprite.Plank, fromSheet(2,11));
-			cache.put(Sprite.Stone, fromSheet(0, 16));
-			cache.put(Sprite.Ore, fromSheet(1, 16));
-			cache.put(Sprite.Wheat, fromSheet(13, 4));
+			cache.put(Sprite.Clefairy, 	fromSheet(6, 91));
+			cache.put(Sprite.Missing, 	fromSheet(8, 134));
+			cache.put(Sprite.Apple, 	fromSheet(12, 109));
+			cache.put(Sprite.Crab, 		fromSheet(5, 89));
+			cache.put(Sprite.Fish, 		fromSheet(8, 89));
+			cache.put(Sprite.Log, 		fromSheet(1,11));
+			cache.put(Sprite.Plank, 	fromSheet(2,11));
+			cache.put(Sprite.Stone, 	fromSheet(0, 16));
+			cache.put(Sprite.Ore, 		fromSheet(1, 16));
+			cache.put(Sprite.Wheat, 	fromSheet(13, 4));
 
 		} catch (SlickException e) {
 			e.printStackTrace();

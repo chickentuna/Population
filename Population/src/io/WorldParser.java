@@ -7,6 +7,7 @@ import static model.nature.Land.Type.SEA;
 import static model.nature.Land.Type.WOOD;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringReader;
@@ -17,8 +18,9 @@ import model.nature.Land.Type;
 
 public class WorldParser {
 
-	private static Land getLandFromId(int i) {
+	private static Land createLandFromId(int i) {
 		Type l = null;
+		
 		switch (i) {
 		case 0:
 			l = PLAIN;
@@ -40,7 +42,7 @@ public class WorldParser {
 	}
 
 	public static World parseWorldFromFile(String world_file) throws IOException {
-		BufferedReader f = new BufferedReader(new FileReader("resource" + OS.getSlash() + world_file));
+		BufferedReader f = new BufferedReader(new FileReader("resource" + File.separatorChar + world_file));
 		return parseWorld(f);
 	}
 
@@ -57,13 +59,7 @@ public class WorldParser {
 			buf = nextLine(br);
 			for (int x = 0; x < (width) / ratio; x++) {
 				int id = Integer.parseInt(buf.substring(x * ratio, x * ratio + ratio));
-				world.set(x, y, getLandFromId(id));
-			}
-		}
-
-		for (int y = 0; y < (height) / ratio; y++) {
-			for (int x = 0; x < (width) / ratio; x++) {
-				world.setBuilding(x, y, null);
+				world.set(x, y, createLandFromId(id));
 			}
 		}
 
@@ -88,5 +84,22 @@ public class WorldParser {
 		}
 		return buf;
 	}
+//	
+//	public static World parseWorldFromImage(String world_file) throws IOException {
+//		BufferedInputStream f = new BufferedInputStream(new FileInputStream("resource"+File.separator+world_file));
+//		byte[] col = new byte[3];
+//		boolean eof = false;
+//		
+//		while (!eof) {
+//			f.read(col, 0, 3);
+//			System.out.println((int)col[1]);
+//			Color c = new Color((int)col[0],(int)col[1],(int)col[2]);
+//			System.out.println(c.getGreen());
+//			System.out.println(c.getGreenByte());
+//			
+//		}
+//		return null;
+//		
+//	}
 
 }

@@ -7,8 +7,9 @@ public abstract class Producer {
 	protected Produce[] produce;
 	
 	public Produce getOneProduce() {
-		if (produce.length == 0)
+		if (produce == null || produce.length == 0) {
 			return null;
+		}
 		if (produce.length == 1) {
 			return produce[0];
 		}
@@ -20,9 +21,15 @@ public abstract class Producer {
 
 	public int getWeight() {
 		int weight = 0;
-		for (int k = 0; k<produce.length; k++) {
-			weight += produce[k].getValue(); //TODO: ponderate with probability, when probablity is impl.
+		if (produce!=null) {
+			for (int k = 0; k<produce.length; k++) {
+				weight += produce[k].getValue(); //TODO: ponderate with probability, when probablity is implemntd.
+			}	
 		}
 		return weight;
+	}
+	
+	public Produce[] getProduce() {
+		return produce;
 	}
 }
