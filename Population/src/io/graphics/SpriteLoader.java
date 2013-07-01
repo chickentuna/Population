@@ -31,12 +31,14 @@ public class SpriteLoader {
 			sheet = new Sprite("resource" + File.separatorChar + "terrain.png");
 			spriteWidth = 64;
 			spriteHeight = 96;
-			cache.put(Sprite.Hills, 	fromSheet(2, 1).setAutotile(true));
-			cache.put(Sprite.Woods, 	fromSheet(1, 0).setAutotile(true));
-			cache.put(Sprite.Sand, 	fromSheet(3, 2).setAutotile(true));
-			cache.put(Sprite.Waters, 	fromSheet(4, 0).setAutotile(true));
-			cache.put(Sprite.Plains, 	fromSheet(3, 0).setAutotile(true));
+			cache.put(Sprite.Hills, 	fromSheet(7, 1).setAutotile(true));
+			cache.put(Sprite.Woods, 	fromSheet(4, 0).setAutotile(true));
+			cache.put(Sprite.Sand, 		fromSheet(1, 2).setAutotile(true));
 			
+			cache.put(Sprite.Plains, 	fromSheet(2, 0).setAutotile(true));
+			
+			sheet = new Sprite("resource" + File.separatorChar + "water.png");
+			cache.put(Sprite.Waters, 	fromSheet(0, 1).setAutotile(true));
 
 		} catch (SlickException e) {
 			e.printStackTrace();

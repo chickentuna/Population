@@ -84,6 +84,8 @@ public class WorldRenderer implements Renderer {
 					break;
 				case LAKE:
 				case SEA:
+					//byte autoCode = decodeLand(currentLandType, x, y);
+					//SpriteLoader.get(Sprite.Sand).autoDraw(g, autoCode, x * s, y * s, s, s);
 					spriteIndex = Sprite.Waters;
 					break;
 				case WOOD:
@@ -94,6 +96,7 @@ public class WorldRenderer implements Renderer {
 				}
 				Sprite tileset = SpriteLoader.get(spriteIndex);
 				byte autoCode = decodeLand(currentLandType, x, y);
+				
 				tileset.autoDraw(g, autoCode, x * s, y * s, s, s);
 
 			}
