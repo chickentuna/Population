@@ -28,7 +28,7 @@ public class SpriteLoader {
 			cache.put(Sprite.Ore, 		fromSheet(1, 16));
 			cache.put(Sprite.Wheat, 	fromSheet(13, 4));
 			
-			sheet = new Sprite("resource" + File.separatorChar + "Terrain.png");
+			sheet = new Sprite("resource" + File.separatorChar + "terrain.png");
 			spriteWidth = 64;
 			spriteHeight = 96;
 			cache.put(Sprite.Hills, 	fromSheet(2, 1).setAutotile(true));

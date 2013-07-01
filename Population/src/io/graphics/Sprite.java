@@ -78,13 +78,23 @@ public class Sprite extends Image {
 			Point[] corners = getCorners(autoCode);
 			int offset_x = 0;
 			int offset_y = 0;
+			
+			/*Sprite ss = getSubSprite((int) corners[3].getX() * subW, (int) corners[2].getY() * subH, subW, subH);
+			g.drawImage(ss,(float)0, (float)0);
+			g.drawImage(ss,(float)50,(float) 0);
+			*/
+			
 			for (int i = 0; i < 4; i++) {
 				Sprite s = getSubSprite((int) corners[i].getX() * subW, (int) corners[i].getY() * subH, subW, subH);
-				g.drawImage(s, x + offset_x, y + offset_y, w/2, h/2, 0, 0, subW, subH);
-				offset_x += w;
-				if (offset_x > w) {
+				//g.drawImage(s, x + offset_x, y + offset_y);
+				
+				g.drawImage(s, x + offset_x, y + offset_y, x + offset_x + w/2, y + offset_y + h/2, 0, 0, subW, subH);
+				
+				
+				offset_x += w/2;
+				if (offset_x > w/2) {
 					offset_x = 0;
-					offset_y += h;
+					offset_y += h/2;
 				}
 			}
 
