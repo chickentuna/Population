@@ -61,6 +61,7 @@ public class WorldRenderer implements Renderer {
 				case SEA:
 					under = Sprite.Sand;
 					spriteIndex = Sprite.Waters;
+					
 					break;
 				case WOOD:
 					under = Sprite.Plains;
@@ -85,23 +86,23 @@ public class WorldRenderer implements Renderer {
 		}
 	}
 
-	private byte decodeLand(Type currentLandType, int x, int y) {
+	private byte decodeLand(Type currentLandType, int x, int y) { //TODO: Refactor + find a better way to deal with sand problem
 		byte landCode = 0;
 		Land neighbour;
 		neighbour = world.getLand(x, y - 1);
-		if (neighbour != null && neighbour.getType() == currentLandType) {
+		if (neighbour == null || neighbour != null && ((neighbour.getType() == currentLandType)||(currentLandType == Land.Type.BEACH && neighbour.getType() == Type.SEA))) {
 			landCode |= 0b1000;
 		}
 		neighbour = world.getLand(x - 1, y);
-		if (neighbour != null && neighbour.getType() == currentLandType) {
+		if (neighbour == null || neighbour != null && ((neighbour.getType() == currentLandType)||(currentLandType == Land.Type.BEACH && neighbour.getType() == Type.SEA))) {
 			landCode |= 0b0100;
 		}
 		neighbour = world.getLand(x + 1, y);
-		if (neighbour != null && neighbour.getType() == currentLandType) {
+		if (neighbour == null || neighbour != null && ((neighbour.getType() == currentLandType)||(currentLandType == Land.Type.BEACH && neighbour.getType() == Type.SEA))) {
 			landCode |= 0b0010;
 		}
 		neighbour = world.getLand(x, y + 1);
-		if (neighbour != null && neighbour.getType() == currentLandType) {
+		if (neighbour == null || neighbour != null && ((neighbour.getType() == currentLandType)||(currentLandType == Land.Type.BEACH && neighbour.getType() == Type.SEA))) {
 			landCode |= 0b0001;
 		}
 		return landCode;
