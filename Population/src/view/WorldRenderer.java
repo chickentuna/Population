@@ -6,7 +6,6 @@ import model.World;
 import model.nature.Land;
 import model.nature.Land.Type;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -31,73 +30,55 @@ public class WorldRenderer implements Renderer {
 		g.drawImage(worldImage, 0, 0);
 	}
 
-	@Deprecated
-	private void generateCrappyWorldImage() throws SlickException {
-		Graphics g = worldImage.getGraphics();
-		int s = world.getLandSize();
-		for (int x = 0; x < world.getWidth(); x++) {
-			for (int y = 0; y < world.getHeight(); y++) {
-				Color c;
-				switch (world.getLand(x, y).getType()) {
-				case BEACH:
-					c = Color.yellow;
-					break;
-				case HILL:
-					c = Color.white;
-					break;
-				case PLAIN:
-					c = Color.green;
-					break;
-				case LAKE:
-				case SEA:
-					c = Color.blue;
-					break;
-				case WOOD:
-					c = Color.darkGray;
-					break;
-				default:
-					c = Color.black;
-				}
-				g.setColor(c);
-				g.fillRect(x * s, y * s, s, s);
-				g.flush();
-			}
-		}
-	}
 
 	private void generateWorldImage() throws SlickException {
 		Graphics g = worldImage.getGraphics();
 		int s = world.getLandSize();
 		for (int x = 0; x < world.getWidth(); x++) {
 			for (int y = 0; y < world.getHeight(); y++) {
-				int spriteIndex = -1;
+				int spriteIndex = Sprite.Missing;
+				int under = Sprite.Missing;
 				Type currentLandType = world.getLand(x, y).getType();
+			
+				byte autoCode = decodeLand(currentLandType, x, y);
 				switch (currentLandType) {
 				case BEACH:
+					under = Sprite.Plains;
 					spriteIndex = Sprite.Sand;
 					break;
 				case HILL:
+					under = Sprite.Plains;
 					spriteIndex = Sprite.Hills;
 					break;
 				case PLAIN:
+					autoCode = 0b1111;
 					spriteIndex = Sprite.Plains;
 					break;
 				case LAKE:
+					under = Sprite.Plains;
+					spriteIndex = Sprite.Waters;
+					break;
 				case SEA:
-					//byte autoCode = decodeLand(currentLandType, x, y);
-					//SpriteLoader.get(Sprite.Sand).autoDraw(g, autoCode, x * s, y * s, s, s);
+					under = Sprite.Sand;
 					spriteIndex = Sprite.Waters;
 					break;
 				case WOOD:
+					under = Sprite.Plains;
 					spriteIndex = Sprite.Woods;
 					break;
 				default:
 
 				}
-				Sprite tileset = SpriteLoader.get(spriteIndex);
-				byte autoCode = decodeLand(currentLandType, x, y);
 				
-				tileset.autoDraw(g, autoCode, x * s, y * s, s, s);
+				if (under != Sprite.Missing) {
+					SpriteLoader.get(under).autoDraw(g, (byte)0b1111, x * s, y * s, s, s);
+				}
+				
+				//TODO: Add an autotile sprite called "missing autotile" and draw it anyways
+				
+				if (spriteIndex != Sprite.Missing) {
+					SpriteLoader.get(spriteIndex).autoDraw(g, autoCode, x * s, y * s, s, s);
+				}
 
 			}
 			g.flush();
