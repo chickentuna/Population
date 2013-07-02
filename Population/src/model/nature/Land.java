@@ -10,6 +10,7 @@ import model.technology.BType;
 import model.technology.Building;
 import model.technology.ProductionBuilding;
 
+//TODO: Add properties to Land
 public class Land extends Producer implements Discoverable {
 	public enum Type {
 		BEACH(CRAB),

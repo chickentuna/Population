@@ -102,7 +102,7 @@ public class VillagerRenderer extends SpriteRenderer {
 		}
 		Land.Type on = land.getType();
 
-		if (on == Land.Type.SEA) {//TODO: Add properties to Land, which should all be classes
+		if (on == Land.Type.SEA) {//TODO: make this a property
 			sprite = sprite.getSubSprite(0,0,sprite.getWidth(), sprite.getHeight()/2);
 		}
 	}
