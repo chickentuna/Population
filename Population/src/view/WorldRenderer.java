@@ -30,7 +30,6 @@ public class WorldRenderer implements Renderer {
 		g.drawImage(worldImage, 0, 0);
 	}
 
-
 	private void generateWorldImage() throws SlickException {
 		Graphics g = worldImage.getGraphics();
 		int s = world.getLandSize();
@@ -39,11 +38,14 @@ public class WorldRenderer implements Renderer {
 				int spriteIndex = Sprite.Missing;
 				int under = Sprite.Missing;
 				Type currentLandType = world.getLand(x, y).getType();
-			
-				byte autoCode = decodeLand(currentLandType, x, y);
+
+				int autoCode = decodeLand(currentLandType, x, y);
 				
-				System.out.println(currentLandType.name() + " : "+Integer.toBinaryString(autoCode));
-				
+				if ((autoCode)<0) {
+					System.out.println(currentLandType.name() + " : " +Integer.toBinaryString(autoCode));			
+					System.out.println("x:" + x + " y:" + y);
+				}
+
 				switch (currentLandType) {
 				case BEACH:
 					under = Sprite.Plains;
@@ -72,13 +74,14 @@ public class WorldRenderer implements Renderer {
 				default:
 
 				}
-				
+
 				if (under != Sprite.Missing) {
 					SpriteLoader.get(under).autoDraw(g, 0b1111, x * s, y * s, s, s);
 				}
-				
-				//TODO: Add an autotile sprite called "missing autotile" and draw it anyways
-				
+
+				// TODO: Add an autotile sprite called "missing autotile" and
+				// draw it anyways
+
 				if (spriteIndex != Sprite.Missing) {
 					SpriteLoader.get(spriteIndex).autoDraw(g, autoCode, x * s, y * s, s, s);
 				}
@@ -90,59 +93,79 @@ public class WorldRenderer implements Renderer {
 
 	/**
 	 * 
-	 * The bit field code is :
-	 * NW NE SW SE N W E S
+	 * The bit field code is : NW NE SW SE N W E S
 	 * 
 	 */
-	private byte decodeLand(Type currentLandType, int x, int y) { //TODO: Refactor + find a better way to deal with sand problem
-		byte landCode = 0;
+	private int decodeLand(Type currentLandType, int x, int y) { 
+		int landCode = 0;
 		Land neighbour;
-		
+
 		neighbour = world.getLand(x, y - 1);
-		landCode |= neighbourCodeCheck(neighbour, currentLandType, 0b1000); 
-		
+		landCode |= neighbourCodeCheck(neighbour, currentLandType, 0b1000);
+
 		neighbour = world.getLand(x - 1, y);
 		landCode |= neighbourCodeCheck(neighbour, currentLandType, 0b0100);
-		
+
 		neighbour = world.getLand(x + 1, y);
 		landCode |= neighbourCodeCheck(neighbour, currentLandType, 0b0010);
-		
+
 		neighbour = world.getLand(x, y + 1);
 		landCode |= neighbourCodeCheck(neighbour, currentLandType, 0b0001);
+
+		int l = landCode;
 		
-		//North-West
+		// North-West
 		if ((landCode & 0b1100) == 0b1100) {
 			neighbour = world.getLand(x - 1, y - 1);
-			landCode |= cornerCodeCheck(neighbour, currentLandType, 0b1000_0000); 
-		}
-		//North-East
-		if ((landCode & 0b1010) == 0b1010) {
-			neighbour = world.getLand(x + 1, y - 1);
-			landCode |= cornerCodeCheck(neighbour, currentLandType, 0b0100_0000); 
-		}
-		//South-West
-		if ((landCode & 0b0101) == 0b0101) {
-			neighbour = world.getLand(x - 1, y + 1);
-			landCode |= cornerCodeCheck(neighbour, currentLandType, 0b0010_0000); 
-		}
-		//South-East
-		if ((landCode & 0b0011) == 0b0011) {
-			neighbour = world.getLand(x + 1, y + 1);
-			landCode |= cornerCodeCheck(neighbour, currentLandType, 0b0001_0000); 
+			landCode |= cornerCodeCheck(neighbour, currentLandType, 0b1000_0000);
 		}
 		
+		int a = landCode;
+		
+		// North-East
+		if ((landCode & 0b1010) == 0b1010) {
+			neighbour = world.getLand(x + 1, y - 1);
+			landCode |= cornerCodeCheck(neighbour, currentLandType, 0b0100_0000);
+		}
+		
+		int b = landCode;
+		
+		// South-West
+		if ((landCode & 0b0101) == 0b0101) {
+			neighbour = world.getLand(x - 1, y + 1);
+			landCode |= cornerCodeCheck(neighbour, currentLandType, 0b0010_0000);
+		}
+		
+		int c = landCode;
+				
+		// South-East
+		if ((landCode & 0b0011) == 0b0011) {
+			neighbour = world.getLand(x + 1, y + 1);
+			landCode |= cornerCodeCheck(neighbour, currentLandType, 0b0001_0000);
+		}
+		
+		int d = landCode;
+		
+		if (landCode < 0) {
+			System.out.println(Integer.toBinaryString(l));
+			neighbour = world.getLand(x - 1, y - 1);
+			System.out.println("or with : "+cornerCodeCheck(neighbour, currentLandType, 0b1000_0000));
+			
+			System.out.println(Integer.toBinaryString(a));
+		}
+
 		return landCode;
 	}
 
 	private int cornerCodeCheck(Land neighbour, Type currentLandType, int bit) {
-		if (neighbour == null || neighbour != null && ((neighbour.getType() == currentLandType)||(currentLandType == Land.Type.BEACH && neighbour.getType() == Type.SEA))) {
+		if (neighbour == null || neighbour != null && ((neighbour.getType() == currentLandType) || (currentLandType == Land.Type.BEACH && neighbour.getType() == Type.SEA))) {
 			return 0;
 		}
 		return bit;
 	}
 
 	private int neighbourCodeCheck(Land neighbour, Type currentLandType, int bit) {
-		if (neighbour == null || neighbour != null && ((neighbour.getType() == currentLandType)||(currentLandType == Land.Type.BEACH && neighbour.getType() == Type.SEA))) {
+		if (neighbour == null || neighbour != null && ((neighbour.getType() == currentLandType) || (currentLandType == Land.Type.BEACH && neighbour.getType() == Type.SEA))) {
 			return bit;
 		}
 		return 0;

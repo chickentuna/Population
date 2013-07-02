@@ -112,11 +112,8 @@ public class Sprite extends Image {
 			Point [] corners = autoCodeMap.get(new Integer(0b1_0000));
 			int bitField = 0b1000;
 			
-			System.out.println(cornerCode);
 			for (int i = 0; i < 4; i++) {
-				System.out.println(Integer.toBinaryString(bitField));
 				if ((cornerCode & bitField) == bitField) {
-					System.out.println(i);
 					res[i] = corners[i];
 				}
 				bitField >>= 1;

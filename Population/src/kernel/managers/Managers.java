@@ -10,11 +10,11 @@ public class Managers {
 		SpriteLoader.init();
 		
 		WorldManager.get("1\n5\n5\n"
-				+ "22222\n"
-				+ "21112\n"
-				+ "21111\n"
-				+ "21112\n"
-				+ "22222\n");
+				+ "22220\n"
+				+ "22220\n"
+				+ "22200\n"
+				+ "22220\n"
+				+ "22220\n");
 		DecisionManager.get();
 		RessourceManager.get();
 		DiscoveryManager.get();
