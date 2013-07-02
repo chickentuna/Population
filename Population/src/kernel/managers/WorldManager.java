@@ -28,13 +28,14 @@ public class WorldManager {
 		return self;
 	}
 
+	public static void get(String string) {
+		self = new WorldManager(string);
+
+	}
+
 	public WorldManager(String debug) {
 		try {
-			world = WorldParser.parseWorldFromString("1\n" +
-					"1\n" +
-					"1\n" +
-					"0\n" +
-					"\n");
+			world = WorldParser.parseWorldFromString(debug);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -65,25 +66,16 @@ public class WorldManager {
 
 	public Collection<Land> getLandsAround(Entity entity, int visibilityRange) {
 		LinkedList<Land> lands = new LinkedList<Land>();
-		Point centre = entity.getLocation();
+		List<Point> locs = getLocationsAround(entity, visibilityRange);
 
-		int offset = visibilityRange * world.getLandSize();
-		int debutX = (int) (centre.getX() - offset);
-		int debutY = (int) (centre.getY() - offset);
-
-		for (int x = debutX; x <= centre.getX() + offset; x += world.getLandSize()) {
-			for (int y = debutY; y <= centre.getY() + offset; y += world.getLandSize()) {
-				Point p = new Point(x, y);
-				if (Point.manhattanDistance(p, centre) <= visibilityRange * world.getLandSize()) {
-					Land land = getLandAt(p);
-					if (land != null) {
-						lands.add(land);
-					}
-				}
+		for (Point p : locs) {
+			Land l = getLandAt(p);
+			if (l != null) {
+				lands.add(l);
 			}
 		}
-
 		return lands;
+
 	}
 
 	public Land getLandUnder(Entity entity) {
@@ -95,19 +87,10 @@ public class WorldManager {
 
 	}
 
-	public static void get(String string) {
-		self = new WorldManager("debug");
-
-	}
-
-	/*public Building getBuildingUnder(Entity e) {
-		return getBuildingAt(e.getX(), e.getY());
-	}*/
-
 	public List<Point> getLocationsAround(Entity entity, int dist) {
 		LinkedList<Point> points = new LinkedList<>();
 
-		Point centre = new Point(0,0);
+		Point centre = new Point(0, 0);
 
 		for (int x = -dist; x <= dist; x++) {
 			for (int y = -dist; y <= dist; y++) {
@@ -156,6 +139,5 @@ public class WorldManager {
 
 		return (x1 == x2) && (y1 == y2);
 	}
-	
-	
+
 }

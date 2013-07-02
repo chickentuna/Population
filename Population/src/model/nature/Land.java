@@ -59,5 +59,9 @@ public class Land extends Producer implements Discoverable {
 			produce = null;
 		}
 	}
+	
+	public String toString() {
+		return type.name();
+	}
 
 }

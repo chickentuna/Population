@@ -70,7 +70,7 @@ public class Sprite extends Image {
 		return imageCount == 1;
 	}
 
-	public void autoDraw(Graphics g, byte autoCode, int x, int y, int w, int h) {
+	public void autoDraw(Graphics g, int autoCode, int x, int y, int w, int h) {
 		if (autotile) {
 			int subW = getWidth() / 4;
 			int subH = getHeight() / 6;		
@@ -78,11 +78,6 @@ public class Sprite extends Image {
 			Point[] corners = getCorners(autoCode);
 			int offset_x = 0;
 			int offset_y = 0;
-			
-			/*Sprite ss = getSubSprite((int) corners[3].getX() * subW, (int) corners[2].getY() * subH, subW, subH);
-			g.drawImage(ss,(float)0, (float)0);
-			g.drawImage(ss,(float)50,(float) 0);
-			*/
 			
 			for (int i = 0; i < 4; i++) {
 				Sprite s = getSubSprite((int) corners[i].getX() * subW, (int) corners[i].getY() * subH, subW, subH);
@@ -105,8 +100,30 @@ public class Sprite extends Image {
 
 	}
 
-	private Point[] getCorners(byte autoCode) {
-		return autoCodeMap.get(new Integer(autoCode));
+	private Point[] getCorners(int autoCode) {
+		
+		int tileCode = (autoCode & 0b1111);
+		int cornerCode = (autoCode >> 4);
+		
+		
+		Point[] res = autoCodeMap.get(new Integer(tileCode));
+
+		if (cornerCode != 0) {
+			Point [] corners = autoCodeMap.get(new Integer(0b1_0000));
+			int bitField = 0b1000;
+			
+			System.out.println(cornerCode);
+			for (int i = 0; i < 4; i++) {
+				System.out.println(Integer.toBinaryString(bitField));
+				if ((cornerCode & bitField) == bitField) {
+					System.out.println(i);
+					res[i] = corners[i];
+				}
+				bitField >>= 1;
+			}			
+			
+		}
+		return res;
 	}
 
 	private static HashMap<Integer, Point[]> autoCodeMap = new HashMap<>();
@@ -128,6 +145,9 @@ public class Sprite extends Image {
 		addCode(0b1101, 15, 16, 19, 20);
 		addCode(0b1110, 18, 19, 22, 23);
 		addCode(0b1111, 14, 15, 18, 19);
+		
+		//Corners
+		addCode(0b1_0000, 3, 4, 7, 8);
 	}
 
 	private static void addCode(int code, int a, int b, int c, int d) {

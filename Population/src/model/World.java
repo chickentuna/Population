@@ -5,7 +5,7 @@ import model.technology.Building;
 
 public class World {
 	private Land[][] terrain;
-	private int land_size = 60;
+	private int land_size = 50;
 
 	public World(int size) {
 		this(size, size);

@@ -3,6 +3,7 @@ package view;
 import io.graphics.Sprite;
 import io.graphics.SpriteLoader;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -96,15 +97,27 @@ public class VillagerRenderer extends SpriteRenderer {
 			sprite = SpriteLoader.get(s);
 		}
 		
-		Land land = WorldManager.get().getLandUnder(villager);
-		if (land == null) {
-			return;
-		}
-		Land.Type on = land.getType();
-
-		if (on == Land.Type.SEA) {//TODO: make this a property
+		if (villagerIsDrowning()) {
 			sprite = sprite.getSubSprite(0,0,sprite.getWidth(), sprite.getHeight()/2);
 		}
+	}
+
+	private boolean villagerIsDrowning() {
+		Land land = WorldManager.get().getLandUnder(villager);
+		if (land == null) {
+			return false;
+		}
+		Land.Type on = land.getType();
+		if (on == Land.Type.SEA) {//TODO: make this a property
+			Collection<Land> shores = WorldManager.get().getLandsAround(villager, 1);
+			for (Land l : shores) {
+				if (l.getType() != Land.Type.SEA){
+					return false;
+				}
+			}
+			return true;
+		}
+		return false;
 	}
 
 	@Subscribe
