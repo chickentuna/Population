@@ -41,10 +41,10 @@ public class WorldRenderer implements Renderer {
 
 				int autoCode = decodeLand(currentLandType, x, y);
 				
-				if ((autoCode)<0) {
+				//if ((autoCode)<0) {
 					System.out.println(currentLandType.name() + " : " +Integer.toBinaryString(autoCode));			
-					System.out.println("x:" + x + " y:" + y);
-				}
+					//System.out.println("x:" + x + " y:" + y);
+				//}
 
 				switch (currentLandType) {
 				case BEACH:

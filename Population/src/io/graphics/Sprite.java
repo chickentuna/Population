@@ -145,6 +145,7 @@ public class Sprite extends Image {
 		
 		//Corners
 		addCode(0b1_0000, 3, 4, 7, 8);
+		//addCode(0b1_0000, 1, 1, 1, 1);
 	}
 
 	private static void addCode(int code, int a, int b, int c, int d) {
