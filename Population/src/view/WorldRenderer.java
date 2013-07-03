@@ -13,6 +13,8 @@ import org.newdawn.slick.SlickException;
 public class WorldRenderer implements Renderer {
 	World world;
 	Image worldImage;
+	int scale = 1;
+	final static int tileSize = 32;
 
 	public WorldRenderer(World world) {
 		int s = world.getLandSize();
@@ -27,12 +29,17 @@ public class WorldRenderer implements Renderer {
 	}
 
 	public void render(Graphics g) {
-		g.drawImage(worldImage, 0, 0);
+		
+		float w = worldImage.getWidth();
+		float h = worldImage.getHeight();
+		
+		g.drawImage(worldImage, 0, 0, w*scale, h*scale, 0, 0, w, h);
 	}
 
 	private void generateWorldImage() throws SlickException {
 		Graphics g = worldImage.getGraphics();
-		int s = world.getLandSize();
+		int s = tileSize;
+		scale = world.getLandSize() / s;
 		for (int x = 0; x < world.getWidth(); x++) {
 			for (int y = 0; y < world.getHeight(); y++) {
 				int spriteIndex = Sprite.Missing;
