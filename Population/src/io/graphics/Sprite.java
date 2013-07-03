@@ -135,14 +135,14 @@ public class Sprite extends Image {
 		addCode(0b0100, 11, 12, 23, 24);
 		addCode(0b0101, 11, 12, 15, 16);
 		addCode(0b0110, 10, 11, 22, 23);
-		addCode(0b0111, 10, 11, 14, 15);
+		addCode(0b0111, 11, 10, 15, 14);
 		addCode(0b1000, 17, 20, 21, 24);
 		addCode(0b1001, 13, 16, 17, 20);
 		addCode(0b1010, 17, 18, 21, 22);
-		addCode(0b1011, 13, 14, 17, 18);
+		addCode(0b1011, 17, 18, 13, 14);
 		addCode(0b1100, 19, 20, 23, 24);
-		addCode(0b1101, 15, 16, 19, 20);
-		addCode(0b1110, 18, 19, 22, 23);
+		addCode(0b1101, 19, 20, 15, 16);
+		addCode(0b1110, 19, 18, 23, 22);
 		addCode(0b1111, 14, 15, 18, 19);
 
 		// Corners

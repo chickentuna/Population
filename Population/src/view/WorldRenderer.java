@@ -78,7 +78,8 @@ public class WorldRenderer implements Renderer {
 				}
 
 				if (under != Sprite.Missing) {
-					SpriteLoader.get(under).autoDraw(g, 0b1111, x * s, y * s, s, s);
+					int subCode = 0b1111;
+					SpriteLoader.get(under).autoDraw(g, subCode, x * s, y * s, s, s);
 				}
 
 				// TODO: Add an autotile sprite called "missing autotile" and

@@ -27,7 +27,8 @@ public final class DebugBehaviour extends Behaviour {
 		float mouseY = userInput.getMouseY();
 		
 		Point to = new Point(mouseX, mouseY);
-		owner.step_towards(to);
+		if (Point.manhattanDistance(to, owner.getLocation()) > 10)
+			owner.step_towards(to);
 		
 	}
 
