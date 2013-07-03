@@ -73,6 +73,7 @@ public class VillagerRenderer extends SpriteRenderer {
 		}
 		differedInstructions.clear();
 
+		//WorldManager.get().getLocationsAround(villager, .5f);
 		updateSprite();
 
 		super.render(g);
@@ -107,7 +108,7 @@ public class VillagerRenderer extends SpriteRenderer {
 		}
 		Land.Type on = land.getType();
 		if (on == Land.Type.SEA) {// TODO: make this a property
-			Collection<Land> shores = WorldManager.get().getLandsAround(villager, .65f);
+			Collection<Land> shores = WorldManager.get().getLandsAround(villager, .5f);
 			for (Land l : shores) {
 				if (l.getType() != Land.Type.SEA) {
 					return false;

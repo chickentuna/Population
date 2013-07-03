@@ -46,13 +46,14 @@ public class RessourceManager {
 		return population;
 	}
 
-	public void villagerBirth(int x, int y) {
+	public Villager villagerBirth(int x, int y) {
 		population++;
 		Villager v = new Villager(x, y);
 		v.adoptBehaviour(new StandardBehaviour());
 		EntityManager.get().spawn(v);
+		return v;
 	}
-
+	
 	public void villagerDeath(Villager v) {
 		population--;
 		EntityManager.get().unspawn(v);

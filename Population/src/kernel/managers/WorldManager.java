@@ -167,4 +167,12 @@ public class WorldManager {
 		return (x1 == x2) && (y1 == y2);
 	}
 
+	public int getHeight() {
+		return world.getHeight() * world.getLandSize();
+	}
+
+	public int getWidth() {
+		return world.getWidth() * world.getLandSize();
+	}
+
 }

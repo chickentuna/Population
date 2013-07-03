@@ -1,6 +1,7 @@
 package kernel;
 
 
+
 public class Point implements Locatable {
 	private final float x;
 	private final float y;
@@ -10,8 +11,8 @@ public class Point implements Locatable {
 		this.y = y;
 	}
 
-	public Point(Point point) {
-		this(point.x, point.y);
+	public Point(Locatable point) {
+		this(point.getX(), point.getY());
 	}
 
 	public float getX() {

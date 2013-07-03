@@ -146,4 +146,10 @@ public class Villager extends Entity {
 	public EventBus getBus() {
 		return bus;
 	}
+
+	public void reset() {
+		behaviours = new LinkedList<Behaviour>();
+		toAbandon = new LinkedList<Behaviour>();
+		toAdopt = new LinkedList<Behaviour>();		
+	}
 }

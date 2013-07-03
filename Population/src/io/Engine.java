@@ -3,6 +3,8 @@ package io;
 import kernel.managers.EntityManager;
 import kernel.managers.Managers;
 import kernel.managers.RessourceManager;
+import model.Villager;
+import model.behaviour.DebugBehaviour;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
@@ -12,6 +14,7 @@ import org.newdawn.slick.SlickException;
 
 import view.DebugView;
 import view.View;
+
 
 public class Engine extends BasicGame {
 	public static final int TARGET_FPS = 60;
@@ -30,7 +33,7 @@ public class Engine extends BasicGame {
 		Managers.cleanInit();
 
 		// Start View
-		view = new DebugView();
+		view = new DebugView(container);
 		GameBus.register(view);
 
 		// Start Game
@@ -38,7 +41,10 @@ public class Engine extends BasicGame {
 		RessourceManager.get().villagerBirth(100, 100);
 		RessourceManager.get().villagerBirth(250, 125);
 		RessourceManager.get().villagerBirth(125, 250);
-		RessourceManager.get().villagerBirth(300, 200);
+		Villager debugVillager = RessourceManager.get().villagerBirth(30, 20);
+		debugVillager.reset();
+		debugVillager.adoptBehaviour(new DebugBehaviour(container.getInput()));
+		
 
 	}
 
@@ -68,9 +74,11 @@ public class Engine extends BasicGame {
 		try {
 			AppGameContainer app = new AppGameContainer(new Engine());
 			app.setTargetFrameRate(TARGET_FPS);
+			app.setShowFPS(false);
 			app.setDisplayMode(640, 480, false);
 			app.setResizable(true);
 			app.start();
+			
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
