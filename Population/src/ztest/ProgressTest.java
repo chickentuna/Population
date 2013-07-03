@@ -1,4 +1,4 @@
-package test;
+package ztest;
 
 import static org.junit.Assert.assertEquals;
 import kernel.Progress;

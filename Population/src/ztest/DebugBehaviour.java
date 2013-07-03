@@ -1,4 +1,4 @@
-package test;
+package ztest;
 
 import model.Villager;
 import model.behaviour.Behaviour;

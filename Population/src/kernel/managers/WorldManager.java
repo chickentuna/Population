@@ -64,7 +64,7 @@ public class WorldManager {
 		return world.getLand((int) (x / (float) s), (int) (y / (float) s));
 	}
 
-	public Collection<Land> getLandsAround(Entity entity, int visibilityRange) {
+	public Collection<Land> getLandsAround(Entity entity, float visibilityRange) {
 		LinkedList<Land> lands = new LinkedList<Land>();
 		List<Point> locs = getLocationsAround(entity, visibilityRange);
 
@@ -87,13 +87,16 @@ public class WorldManager {
 
 	}
 
-	public List<Point> getLocationsAround(Entity entity, int dist) {
+	public List<Point> getLocationsAround(Entity entity, float dist) {
 		LinkedList<Point> points = new LinkedList<>();
 
 		Point centre = new Point(0, 0);
 
-		for (int x = -dist; x <= dist; x++) {
-			for (int y = -dist; y <= dist; y++) {
+		if (dist < 0)
+			dist = -dist;
+
+		for (float x = -dist; x <= dist; x = getNextValue(x, dist)) {
+			for (float y = -dist; y <= dist; y = getNextValue(y, dist)) {
 				if (Point.manhattanDistance(centre, new Point(x, y)) <= dist) {
 					Point p = new Point(entity.getX() + x * world.getLandSize(), entity.getY() + y * world.getLandSize());
 					if (p.getX() >= 0 && p.getY() >= 0) {
@@ -104,6 +107,25 @@ public class WorldManager {
 		}
 
 		return points;
+	}
+
+	public float getNextValue(float x, float dist) {
+		float n = x;
+		if ( n < 0 ) {
+			if (n == (int)n) {
+				n+=1;
+			} else {
+				n = (int) n;
+			}
+		} else {
+			n += 1;
+		}
+		
+		if (n <= dist)
+			n = (int) n;
+		else
+			n = dist;
+		return n;
 	}
 
 	public Building getBuildingAt(float x, float y) {
