@@ -111,6 +111,11 @@ public class WorldManager {
 
 	public float getNextValue(float x, float dist) {
 		float n = x;
+		
+		if (n == dist)
+			return n+1;
+		
+		
 		if ( n < 0 ) {
 			if (n == (int)n) {
 				n+=1;

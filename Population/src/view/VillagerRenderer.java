@@ -95,12 +95,12 @@ public class VillagerRenderer extends SpriteRenderer {
 			sprite = SpriteLoader.get(s);
 		}
 
-		if (villagerIsDrowning()) {
+		if (villagerIsInDeepWater()) {
 			sprite = sprite.getSubSprite(0, 0, sprite.getWidth(), sprite.getHeight() / 2);
 		}
 	}
 
-	private boolean villagerIsDrowning() {
+	private boolean villagerIsInDeepWater() {
 		Land land = WorldManager.get().getLandUnder(villager);
 		if (land == null) {
 			return false;
