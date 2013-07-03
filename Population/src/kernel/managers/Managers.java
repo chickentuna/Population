@@ -9,11 +9,7 @@ public class Managers {
 		GameBus.get();
 		SpriteLoader.init();
 		
-		WorldManager.get("1\n3\n2\n"
-				
-				+ "220\n"
-				+ "200\n"
-				/*+ "220\n"*/);
+		WorldManager.get();
 		DecisionManager.get();
 		RessourceManager.get();
 		DiscoveryManager.get();

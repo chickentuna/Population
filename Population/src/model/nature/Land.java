@@ -12,7 +12,7 @@ import model.technology.ProductionBuilding;
 
 //TODO: Add properties to Land
 public class Land extends Producer implements Discoverable {
-	public enum Type {
+	public static enum Type {
 		BEACH(CRAB),
 		PLAIN(APPLE),
 		SEA(),

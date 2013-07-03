@@ -40,11 +40,6 @@ public class WorldRenderer implements Renderer {
 				Type currentLandType = world.getLand(x, y).getType();
 
 				int autoCode = decodeLand(currentLandType, x, y);
-				
-				//if ((autoCode)<0) {
-					System.out.println(currentLandType.name() + " : " +Integer.toBinaryString(autoCode));			
-					//System.out.println("x:" + x + " y:" + y);
-				//}
 
 				switch (currentLandType) {
 				case BEACH:
@@ -147,25 +142,25 @@ public class WorldRenderer implements Renderer {
 		int d = landCode;
 		
 		if (landCode < 0) {
-			System.out.println(Integer.toBinaryString(l));
+			//System.out.println(Integer.toBinaryString(l));
 			neighbour = world.getLand(x - 1, y - 1);
-			System.out.println("or with : "+cornerCodeCheck(neighbour, currentLandType, 0b1000_0000));
+			//System.out.println("or with : "+cornerCodeCheck(neighbour, currentLandType, 0b1000_0000));
 			
-			System.out.println(Integer.toBinaryString(a));
+			//System.out.println(Integer.toBinaryString(a));
 		}
 
 		return landCode;
 	}
 
 	private int cornerCodeCheck(Land neighbour, Type currentLandType, int bit) {
-		if (neighbour == null || neighbour != null && ((neighbour.getType() == currentLandType) || (currentLandType == Land.Type.BEACH && neighbour.getType() == Type.SEA))) {
+		if (neighbour == null || ((neighbour.getType() == currentLandType) || (currentLandType == Land.Type.BEACH && neighbour.getType() == Type.SEA))) {
 			return 0;
 		}
 		return bit;
 	}
 
 	private int neighbourCodeCheck(Land neighbour, Type currentLandType, int bit) {
-		if (neighbour == null || neighbour != null && ((neighbour.getType() == currentLandType) || (currentLandType == Land.Type.BEACH && neighbour.getType() == Type.SEA))) {
+		if (neighbour == null || ((neighbour.getType() == currentLandType) || (currentLandType == Land.Type.BEACH && neighbour.getType() == Type.SEA))) {
 			return bit;
 		}
 		return 0;

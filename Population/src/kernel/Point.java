@@ -10,6 +10,10 @@ public class Point implements Locatable {
 		this.y = y;
 	}
 
+	public Point(Point point) {
+		this(point.x, point.y);
+	}
+
 	public float getX() {
 		return x;
 	}

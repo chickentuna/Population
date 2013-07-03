@@ -19,7 +19,7 @@ import model.nature.Land.Type;
 public class WorldParser {
 
 	private static Land createLandFromId(int i) {
-		Type l = null;
+		Type l = Type.NULL;
 		
 		switch (i) {
 		case 0:

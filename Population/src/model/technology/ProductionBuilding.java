@@ -16,7 +16,7 @@ import model.nature.Produce;
 //@formatter:off
 public class ProductionBuilding extends Producer implements Building, Discoverable {
 
-	public enum Type {
+	public static enum Type {
 		WHEATFARM(PLAIN, WHEAT),
 		MINE(HILL, ORE),
 		FISHERY(BEACH, FISH),

@@ -73,52 +73,54 @@ public class Sprite extends Image {
 	public void autoDraw(Graphics g, int autoCode, int x, int y, int w, int h) {
 		if (autotile) {
 			int subW = getWidth() / 4;
-			int subH = getHeight() / 6;		
+			int subH = getHeight() / 6;
 
 			Point[] corners = getCorners(autoCode);
 			int offset_x = 0;
 			int offset_y = 0;
-			
+
 			for (int i = 0; i < 4; i++) {
 				Sprite s = getSubSprite((int) corners[i].getX() * subW, (int) corners[i].getY() * subH, subW, subH);
-				//g.drawImage(s, x + offset_x, y + offset_y);
-				
-				g.drawImage(s, x + offset_x, y + offset_y, x + offset_x + w/2, y + offset_y + h/2, 0, 0, subW, subH);
-				
-				
-				offset_x += w/2;
-				if (offset_x > w/2) {
+
+				g.drawImage(s, x + offset_x, y + offset_y, x + offset_x + w / 2, y + offset_y + h / 2, 0, 0, subW, subH);
+
+				offset_x += w / 2;
+				if (offset_x > w / 2) {
 					offset_x = 0;
-					offset_y += h/2;
+					offset_y += h / 2;
 				}
 			}
 
 		} else {
-			//g.drawImage(SpriteLoader.get(Sprite.Missing), (float) x, (float) y, (float) w, (float) h, 0, 0, getWidth(), getHeight());
+			// g.drawImage(SpriteLoader.get(Sprite.Missing), (float) x, (float)
+			// y, (float) w, (float) h, 0, 0, getWidth(), getHeight());
 			throw new RuntimeException("Auto-drawing a Sprite that is not an autoTile or Autotile not found !");
 		}
 
 	}
 
 	private Point[] getCorners(int autoCode) {
-		
+
 		int tileCode = (autoCode & 0b1111);
 		int cornerCode = (autoCode >> 4);
-		
-		
-		Point[] res = autoCodeMap.get(new Integer(tileCode));
+
+		Point[] get = autoCodeMap.get(new Integer(tileCode));
+		Point[] res = new Point[4];
+		for (int i = 0; i < 4; i++) {
+			res[i] = new Point(get[i]);
+		}
 
 		if (cornerCode != 0) {
-			Point [] corners = autoCodeMap.get(new Integer(0b1_0000));
+			Point[] corners = autoCodeMap.get(new Integer(0b1_0000));
 			int bitField = 0b1000;
-			
+
 			for (int i = 0; i < 4; i++) {
 				if ((cornerCode & bitField) == bitField) {
 					res[i] = corners[i];
 				}
 				bitField >>= 1;
-			}			
-			
+			}
+
 		}
 		return res;
 	}
@@ -142,10 +144,10 @@ public class Sprite extends Image {
 		addCode(0b1101, 15, 16, 19, 20);
 		addCode(0b1110, 18, 19, 22, 23);
 		addCode(0b1111, 14, 15, 18, 19);
-		
-		//Corners
+
+		// Corners
 		addCode(0b1_0000, 3, 4, 7, 8);
-		//addCode(0b1_0000, 1, 1, 1, 1);
+		// addCode(0b1_0000, 1, 1, 1, 1);
 	}
 
 	private static void addCode(int code, int a, int b, int c, int d) {

@@ -43,27 +43,25 @@ public class VillagerRenderer extends SpriteRenderer {
 		} catch (Exception e) {
 			throw new RuntimeException("Passing incorrect entity to renderer.\nEntity : " + v.getClass().getSimpleName() + "\nRenderer : " + getClass().getSimpleName());
 		}
-		spriteMap = getSpriteMap();
+		spriteMap = initSpriteMap();
 		subRenderers = new LinkedList<>();
 		villager.getBus().register(this);
 		differedInstructions = Lists.newLinkedList();
 	}
 
-	private static HashMap<model.VState, Integer> getSpriteMap() {
+	private static HashMap<model.VState, Integer> initSpriteMap() {
 
-		if (defaultSpriteMap == null) {
-			defaultSpriteMap = new HashMap<>();
-			int idle = Sprite.Clefairy;
-			int walking = Sprite.Clefairy;
-			int working = Sprite.Clefairy;
-			int collecting = Sprite.Clefairy;
+		defaultSpriteMap = new HashMap<>();
+		int idle = Sprite.Clefairy;
+		int walking = Sprite.Clefairy;
+		int working = Sprite.Clefairy;
+		int collecting = Sprite.Clefairy;
 
-			defaultSpriteMap.put(VState.IDLE, idle);
-			defaultSpriteMap.put(VState.COLLECTING, collecting);
-			defaultSpriteMap.put(VState.GOING, walking);
-			defaultSpriteMap.put(VState.WANDERING, walking);
-			defaultSpriteMap.put(VState.LABOURING, working);
-		}
+		defaultSpriteMap.put(VState.IDLE, idle);
+		defaultSpriteMap.put(VState.COLLECTING, collecting);
+		defaultSpriteMap.put(VState.GOING, walking);
+		defaultSpriteMap.put(VState.WANDERING, walking);
+		defaultSpriteMap.put(VState.LABOURING, working);
 
 		return defaultSpriteMap;
 	}
@@ -78,15 +76,15 @@ public class VillagerRenderer extends SpriteRenderer {
 		updateSprite();
 
 		super.render(g);
-		
+
 		for (final Renderer r : subRenderers) {
 			differedInstructions.add(new Runnable() {
 				@Override
 				public void run() {
-					r.render(g);					
+					r.render(g);
 				}
 			});
-			
+
 		}
 	}
 
@@ -96,9 +94,9 @@ public class VillagerRenderer extends SpriteRenderer {
 		if (s != null) {
 			sprite = SpriteLoader.get(s);
 		}
-		
+
 		if (villagerIsDrowning()) {
-			sprite = sprite.getSubSprite(0,0,sprite.getWidth(), sprite.getHeight()/2);
+			sprite = sprite.getSubSprite(0, 0, sprite.getWidth(), sprite.getHeight() / 2);
 		}
 	}
 
@@ -108,10 +106,10 @@ public class VillagerRenderer extends SpriteRenderer {
 			return false;
 		}
 		Land.Type on = land.getType();
-		if (on == Land.Type.SEA) {//TODO: make this a property
+		if (on == Land.Type.SEA) {// TODO: make this a property
 			Collection<Land> shores = WorldManager.get().getLandsAround(villager, 1);
 			for (Land l : shores) {
-				if (l.getType() != Land.Type.SEA){
+				if (l.getType() != Land.Type.SEA) {
 					return false;
 				}
 			}
@@ -123,7 +121,7 @@ public class VillagerRenderer extends SpriteRenderer {
 	@Subscribe
 	public void on(Villager.StateChangeEvent e) {
 
-		if (stateAnim!=null) {
+		if (stateAnim != null) {
 			stateAnim.end();
 			stateAnim = null;
 		}
@@ -137,9 +135,9 @@ public class VillagerRenderer extends SpriteRenderer {
 					Produce prod = villager.getCollecting();
 					if (prod != null) {
 						subRenderers.add(new ProduceRenderer(loc, prod, subRenderers));
-						//else : too late
+						// else : too late
 					}
-					
+
 				}
 			});
 
