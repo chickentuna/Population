@@ -3,6 +3,7 @@ package kernel.managers;
 import io.WorldParser;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -65,7 +66,7 @@ public class WorldManager {
 	}
 
 	public Collection<Land> getLandsAround(Entity entity, float visibilityRange) {
-		LinkedList<Land> lands = new LinkedList<Land>();
+		HashSet<Land> lands = new HashSet<Land>();
 		List<Point> locs = getLocationsAround(entity, visibilityRange);
 
 		for (Point p : locs) {
