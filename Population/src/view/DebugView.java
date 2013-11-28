@@ -63,7 +63,7 @@ public final class DebugView implements View {
 		
 		g.translate(xTranslation, yTranslation);
 		worldRenderer.render(g);
-		renderVillagers(g); // TODO: give render depth to entities ?
+		renderEntities(g); // TODO: give render depth to entities ?
 		g.translate(-xTranslation, -yTranslation);
 		
 		renderGUI(g);
@@ -71,7 +71,7 @@ public final class DebugView implements View {
 		
 	}
 
-	private void renderVillagers(Graphics g) {
+	private void renderEntities(Graphics g) {
 		for (Renderer r : entities.values()) {
 			r.render(g);
 		}

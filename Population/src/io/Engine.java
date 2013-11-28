@@ -3,8 +3,6 @@ package io;
 import kernel.managers.EntityManager;
 import kernel.managers.Managers;
 import kernel.managers.RessourceManager;
-import model.Villager;
-import model.behaviour.DebugBehaviour;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
@@ -41,11 +39,6 @@ public class Engine extends BasicGame {
 		RessourceManager.get().villagerBirth(100, 100);
 		RessourceManager.get().villagerBirth(250, 125);
 		RessourceManager.get().villagerBirth(125, 250);
-		Villager debugVillager = RessourceManager.get().villagerBirth(30, 20);
-		debugVillager.reset();
-		debugVillager.adoptBehaviour(new DebugBehaviour(container.getInput()));
-		
-
 	}
 
 	@Override
