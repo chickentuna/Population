@@ -3,6 +3,7 @@ package view;
 import io.graphics.Sprite;
 import io.graphics.SpriteLoader;
 
+import java.awt.Rectangle;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -19,7 +20,6 @@ import model.nature.Produce;
 
 import org.newdawn.slick.Graphics;
 
-import view.animation.PanicSpriteAnimation;
 import view.animation.SpriteAnimation;
 
 import com.google.common.collect.Lists;
@@ -41,6 +41,7 @@ public class VillagerRenderer extends SpriteRenderer {
 	public VillagerRenderer(Entity v) {
 		super(v);
 		sprite = SpriteLoader.get(Sprite.Villager);
+
 		try {
 			villager = (Villager) v;
 		} catch (Exception e) {
@@ -107,10 +108,13 @@ public class VillagerRenderer extends SpriteRenderer {
 			sprite = SpriteLoader.get(s);
 		}
 
-		/*
-		 * if (villagerIsInDeepWater()) { sprite = sprite.getSubSprite(0, 0,
-		 * sprite.getWidth(), sprite.getHeight() / 2); }
-		 */
+		if (villagerIsInDeepWater()) {
+			if (bounds == null)
+				bounds = new Rectangle(0,0,sprite.getWidth()/Sprite.CHAR_SPRITE_COLS, sprite.getHeight()/Sprite.CHAR_SPRITE_ROWS/2);
+		} else if (bounds != null) {
+			bounds = null;
+		}
+
 	}
 
 	private boolean villagerIsInDeepWater() {
@@ -159,8 +163,8 @@ public class VillagerRenderer extends SpriteRenderer {
 		case IDLE:
 			break;
 		case LABOURING:
-			stateAnim = new PanicSpriteAnimation(this, 4);
-			spriteAnimations.add(stateAnim);
+			// stateAnim = new PanicSpriteAnimation(this, 4);
+			// spriteAnimations.add(stateAnim);
 			break;
 		default:
 			break;

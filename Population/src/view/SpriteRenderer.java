@@ -3,6 +3,7 @@ package view;
 import io.graphics.Sprite;
 import io.graphics.SpriteLoader;
 
+import java.awt.Rectangle;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -23,10 +24,12 @@ public class SpriteRenderer implements Renderer {
 	protected List<SpriteAnimation> spriteAnimations;
 	protected float imageNumber = 0;
 	protected float imageSpeed = 1;
+	protected Rectangle bounds;
 
 	public SpriteRenderer(Locatable locatable) {
 		location = locatable;
 		spriteAnimations = new LinkedList<>();
+		
 	}
 
 	@Override
@@ -61,6 +64,9 @@ public class SpriteRenderer implements Renderer {
 		int y = (int) (location.getY() - toDraw.getHeight() / 2);
 
 		if (xScale == 1 && yScale == 1) {
+			if (bounds!=null) {
+				toDraw = toDraw.getSubSprite(bounds.x, bounds.y, bounds.width, bounds.height);
+			}
 			g.drawImage(toDraw, x, y);
 		} else {
 			float w = toDraw.getWidth() * xScale;
@@ -77,7 +83,7 @@ public class SpriteRenderer implements Renderer {
 				yd2 += Math.abs(h);
 				yd1 += Math.abs(h);
 			}
-
+			
 			g.drawImage(toDraw, xd1, yd1, xd2, yd2, 0, 0, toDraw.getWidth(), toDraw.getHeight());
 		}
 		imageNumber += imageSpeed;
