@@ -1,2 +1,4 @@
 Population/.classpath
 .classpath
+*.class
+*.db
