@@ -20,7 +20,8 @@ public final class StandardBehaviour extends Behaviour {
 			double percent = Math.random() * 100;
 			if (percent < 4) {
 				owner.setState(VState.WANDERING);
-				owner.setDirection((float) Math.random() * 360);
+				owner.setDirection((float) (Math.random() * 2 * Math.PI));
+
 			}
 		} else if (owner.getState() == VState.WANDERING) {
 			double percent = Math.random() * 100;
@@ -33,7 +34,7 @@ public final class StandardBehaviour extends Behaviour {
 		// Activity
 		if (Chance.onceEveryXSeconds(20)) {
 			Behaviour todo = DecisionManager.get().somethingUseful(owner);
-			if (todo !=null) {
+			if (todo != null) {
 				deactivate();
 				waitingFor = todo;
 				owner.adoptBehaviour(todo);

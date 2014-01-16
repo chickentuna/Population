@@ -40,8 +40,11 @@ public class Point implements Locatable {
 	public float directionTo(Point other) {
 		float dy = other.y - y;
 		float dx = other.x - x;
+		double res = Math.atan2(-dy,dx);
 		
-		return (float) Math.atan2(-dy,dx);
+		if (res<0)
+			res += 2*Math.PI;
+		return (float) res;
 	}
 	
 }

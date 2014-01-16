@@ -21,6 +21,8 @@ public class SpriteRenderer implements Renderer {
 	protected float xScale = 1;
 	protected float yScale = 1;
 	protected List<SpriteAnimation> spriteAnimations;
+	protected float imageNumber = 0;
+	protected float imageSpeed = 1;
 
 	public SpriteRenderer(Locatable locatable) {
 		location = locatable;
@@ -29,22 +31,36 @@ public class SpriteRenderer implements Renderer {
 
 	@Override
 	public void render(Graphics g) {
+		render(g,0);
+	}
+	
+	public void render(Graphics g, int direction) {
 		performAnimations();
 
-		int x = (int) (location.getX() - sprite.getWidth() / 2);
-		int y = (int) (location.getY() - sprite.getHeight() / 2);
+		int sw = sprite.getWidth() / sprite.getImageCount();
+		int sh = sprite.getHeight();
+		int col = ((int) imageNumber) * sw;
+		int sy = 0;
+		if (sprite.isCharacter()) {
+			sh/=4;
+			sy = sh * direction;
+		}
+		Sprite toDraw = sprite.getSubSprite(col, sy, sw, sh);
 
+		int x = (int) (location.getX() - toDraw.getWidth() / 2);
+		int y = (int) (location.getY() - toDraw.getHeight() / 2);
+		
 		if (xScale == 1 && yScale == 1) {
-			g.drawImage(sprite, x, y);
+			g.drawImage(toDraw, x, y);
 		} else {
-			float w = sprite.getWidth() * xScale;
+			float w = toDraw.getWidth() * xScale;
 			float xd1 = x;
 			float xd2 = x + w;
 			if (xd2 < xd1) {
 				xd2 += Math.abs(w);
 				xd1 += Math.abs(w);
 			}
-			float h = sprite.getHeight() * yScale;
+			float h = toDraw.getHeight() * yScale;
 			float yd1 = y;
 			float yd2 = y + h;
 			if (yd2 < yd1) {
@@ -52,9 +68,13 @@ public class SpriteRenderer implements Renderer {
 				yd1 += Math.abs(h);
 			}
 
-			g.drawImage(sprite, xd1, yd1, xd2, yd2, 0, 0, sprite.getWidth(), sprite.getHeight());
+			g.drawImage(toDraw, xd1, yd1, xd2, yd2, 0, 0, toDraw.getWidth(),
+					toDraw.getHeight());
 		}
-
+		imageNumber += imageSpeed;
+		if (imageNumber >= sprite.getImageCount()) {
+			imageNumber = 0;
+		}
 	}
 
 	private void performAnimations() {

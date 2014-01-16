@@ -10,7 +10,7 @@ import org.newdawn.slick.SlickException;
 
 public class Sprite extends Image {
 
-	// TODO: enum ?
+	// General
 	public static final int Missing = -1;
 	public static final int None = 0;
 	public static final int Clefairy = 1;
@@ -24,13 +24,17 @@ public class Sprite extends Image {
 	public static final int Wheat = 9;
 
 	// Terrain
-	public static final int Hills = 10;
-	public static final int Plains = 11;
-	public static final int Woods = 12;
-	public static final int Waters = 13;
-	public static final int Sand = 14;
-
+	public static final int Hills = 100;
+	public static final int Plains = 101;
+	public static final int Woods = 102;
+	public static final int Waters = 103;
+	public static final int Sand = 104;
+	
+	// Character
+	public static final int Villager = 200;
+	
 	private boolean autotile = false;
+	private boolean character = false;
 	private int tileSize = 32;
 	private int imageCount = 1;
 
@@ -59,6 +63,9 @@ public class Sprite extends Image {
 
 	public boolean isAutotile() {
 		return autotile;
+	}
+	public boolean isCharacter() {
+		return character;
 	}
 
 	public Sprite setAutotile(boolean autotile) {
@@ -153,6 +160,16 @@ public class Sprite extends Image {
 	private static void addCode(int code, int a, int b, int c, int d) {
 		Point[] abcd = { new Point((a - 1) % 4, (a - 1) / 4), new Point((b - 1) % 4, (b - 1) / 4), new Point((c - 1) % 4, (c - 1) / 4), new Point((d - 1) % 4, (d - 1) / 4) };
 		autoCodeMap.put(code, abcd);
+	}
+
+	public Sprite setCharacter(boolean b) {
+		character = b;
+		imageCount = 3;
+		return this;
+	}
+
+	public int getImageCount() {
+		return imageCount;
 	}
 
 }

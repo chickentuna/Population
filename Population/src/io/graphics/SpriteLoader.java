@@ -39,6 +39,12 @@ public class SpriteLoader {
 			sheet = new Sprite("resource" + File.separatorChar + "water.png");
 			cache.put(Sprite.Waters, 	fromSheet(0, 1).setAutotile(true));
 
+			sheet = new Sprite("resource" + File.separatorChar + "chartemplate.png");
+			spriteWidth = 96;
+			spriteHeight = 128;
+			cache.put(Sprite.Villager, 	fromSheet(0, 0).setCharacter(true));
+
+			
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
