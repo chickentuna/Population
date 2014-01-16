@@ -40,8 +40,8 @@ public class SpriteLoader {
 			cache.put(Sprite.Waters, 	fromSheet(0, 1).setAutotile(true));
 
 			sheet = new Sprite("resource" + File.separatorChar + "chartemplate.png");
-			spriteWidth = 96;
-			spriteHeight = 128;
+			spriteWidth = sheet.getWidth();
+			spriteHeight = sheet.getHeight();
 			cache.put(Sprite.Villager, 	fromSheet(0, 0).setCharacter(true));
 
 			

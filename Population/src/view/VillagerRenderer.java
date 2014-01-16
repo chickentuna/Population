@@ -34,8 +34,8 @@ public class VillagerRenderer extends SpriteRenderer {
 	private List<Renderer> subRenderers;
 	private List<Runnable> differedInstructions;
 
-	private static final float PI = (float)Math.PI;
-	
+	private static final float PI = (float) Math.PI;
+
 	SpriteAnimation stateAnim = null;
 
 	public VillagerRenderer(Entity v) {
@@ -44,16 +44,13 @@ public class VillagerRenderer extends SpriteRenderer {
 		try {
 			villager = (Villager) v;
 		} catch (Exception e) {
-			throw new RuntimeException(
-					"Passing incorrect entity to renderer.\nEntity : "
-							+ v.getClass().getSimpleName() + "\nRenderer : "
-							+ getClass().getSimpleName());
+			throw new RuntimeException("Passing incorrect entity to renderer.\nEntity : " + v.getClass().getSimpleName() + "\nRenderer : " + getClass().getSimpleName());
 		}
 		spriteMap = initSpriteMap();
 		subRenderers = new LinkedList<>();
 		villager.getBus().register(this);
 		differedInstructions = Lists.newLinkedList();
-		imageSpeed = .6f;
+		imageSpeed = .1f;
 	}
 
 	private static HashMap<model.VState, Integer> initSpriteMap() {
@@ -83,15 +80,15 @@ public class VillagerRenderer extends SpriteRenderer {
 
 		int looking = Direction.RIGHT;
 		float d = villager.getDirection();
-		if (d >= 5*PI/4 && d < 7*PI/4)
+		if (d >= 5 * PI / 4 && d < 7 * PI / 4)
 			looking = Direction.DOWN;
-		if (d >= 3*PI/4 && d < 5*PI/4)
+		if (d >= 3 * PI / 4 && d < 5 * PI / 4)
 			looking = Direction.LEFT;
-		if (d >= PI/4 && d < 3*PI/4)
+		if (d >= PI / 4 && d < 3 * PI / 4)
 			looking = Direction.UP;
-		
-		super.render(g,looking);
-		g.drawString(""+villager.getDirection(), villager.getX(), villager.getY());
+
+		super.render(g, looking);
+
 		for (final Renderer r : subRenderers) {
 			differedInstructions.add(new Runnable() {
 				@Override
@@ -110,10 +107,10 @@ public class VillagerRenderer extends SpriteRenderer {
 			sprite = SpriteLoader.get(s);
 		}
 
-		/*if (villagerIsInDeepWater()) {
-			sprite = sprite.getSubSprite(0, 0, sprite.getWidth(),
-					sprite.getHeight() / 2);
-		}*/
+		/*
+		 * if (villagerIsInDeepWater()) { sprite = sprite.getSubSprite(0, 0,
+		 * sprite.getWidth(), sprite.getHeight() / 2); }
+		 */
 	}
 
 	private boolean villagerIsInDeepWater() {
@@ -123,8 +120,7 @@ public class VillagerRenderer extends SpriteRenderer {
 		}
 		Land.Type on = land.getType();
 		if (on == Land.Type.SEA) {// TODO: make this a property
-			Collection<Land> shores = WorldManager.get().getLandsAround(
-					villager, .5f);
+			Collection<Land> shores = WorldManager.get().getLandsAround(villager, .5f);
 			for (Land l : shores) {
 				if (l.getType() != Land.Type.SEA) {
 					return false;
@@ -148,12 +144,10 @@ public class VillagerRenderer extends SpriteRenderer {
 			differedInstructions.add(new Runnable() {
 				@Override
 				public void run() {
-					Point loc = villager.getLocation().withOffset(0,
-							-sprite.getHeight());
+					Point loc = villager.getLocation().withOffset(0, -sprite.getHeight() / Sprite.CHAR_SPRITE_ROWS);
 					Produce prod = villager.getCollecting();
 					if (prod != null) {
-						subRenderers.add(new ProduceRenderer(loc, prod,
-								subRenderers));
+						subRenderers.add(new ProduceRenderer(loc, prod, subRenderers));
 					}
 
 				}

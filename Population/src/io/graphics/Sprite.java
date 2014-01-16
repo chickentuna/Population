@@ -39,6 +39,10 @@ public class Sprite extends Image {
 	private int imageCount = 1;
 
 	// TODO : maybe : private int id ? from the above list
+	
+	public static final int CHAR_SPRITE_ROWS = 4;
+	public static final int CHAR_SPRITE_COLS = 3;
+	
 
 	public Sprite(String path) throws SlickException {
 		super(path);
@@ -164,7 +168,7 @@ public class Sprite extends Image {
 
 	public Sprite setCharacter(boolean b) {
 		character = b;
-		imageCount = 3;
+		imageCount = Sprite.CHAR_SPRITE_ROWS;
 		return this;
 	}
 

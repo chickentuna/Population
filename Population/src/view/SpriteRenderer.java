@@ -31,25 +31,35 @@ public class SpriteRenderer implements Renderer {
 
 	@Override
 	public void render(Graphics g) {
-		render(g,0);
+		render(g, 0);
 	}
-	
+
 	public void render(Graphics g, int direction) {
 		performAnimations();
 
-		int sw = sprite.getWidth() / sprite.getImageCount();
-		int sh = sprite.getHeight();
-		int col = ((int) imageNumber) * sw;
+		int sw;
+		int sh;
+		int col;
 		int sy = 0;
+
 		if (sprite.isCharacter()) {
-			sh/=4;
+			sw = sprite.getWidth() / Sprite.CHAR_SPRITE_COLS;
+			sh = sprite.getHeight() / Sprite.CHAR_SPRITE_ROWS;
 			sy = sh * direction;
+			if ((int) imageNumber == Sprite.CHAR_SPRITE_COLS)
+				col = sw;
+			else
+				col = ((int) imageNumber) * sw;
+		} else {
+			sw = sprite.getWidth() / sprite.getImageCount();
+			sh = sprite.getHeight();
+			col = ((int) imageNumber) * sw;
 		}
 		Sprite toDraw = sprite.getSubSprite(col, sy, sw, sh);
 
 		int x = (int) (location.getX() - toDraw.getWidth() / 2);
 		int y = (int) (location.getY() - toDraw.getHeight() / 2);
-		
+
 		if (xScale == 1 && yScale == 1) {
 			g.drawImage(toDraw, x, y);
 		} else {
@@ -68,8 +78,7 @@ public class SpriteRenderer implements Renderer {
 				yd1 += Math.abs(h);
 			}
 
-			g.drawImage(toDraw, xd1, yd1, xd2, yd2, 0, 0, toDraw.getWidth(),
-					toDraw.getHeight());
+			g.drawImage(toDraw, xd1, yd1, xd2, yd2, 0, 0, toDraw.getWidth(), toDraw.getHeight());
 		}
 		imageNumber += imageSpeed;
 		if (imageNumber >= sprite.getImageCount()) {
