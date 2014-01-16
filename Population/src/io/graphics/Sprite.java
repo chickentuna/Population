@@ -32,6 +32,11 @@ public class Sprite extends Image {
 	
 	// Character
 	public static final int Villager = 200;
+	public static final int VillagerWork = 201;
+	
+	//Game constants
+	public static final int CHAR_SPRITE_ROWS = 4;
+	public static final int CHAR_SPRITE_COLS = 3;
 	
 	private boolean autotile = false;
 	private boolean character = false;
@@ -40,8 +45,8 @@ public class Sprite extends Image {
 
 	// TODO : maybe : private int id ? from the above list
 	
-	public static final int CHAR_SPRITE_ROWS = 4;
-	public static final int CHAR_SPRITE_COLS = 3;
+	
+	
 	
 
 	public Sprite(String path) throws SlickException {
@@ -174,6 +179,11 @@ public class Sprite extends Image {
 
 	public int getImageCount() {
 		return imageCount;
+	}
+
+	public Sprite setImageCount(int i) {
+		imageCount = i;
+		return this;
 	}
 
 }

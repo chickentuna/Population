@@ -42,7 +42,13 @@ public class SpriteLoader {
 			sheet = new Sprite("resource" + File.separatorChar + "chartemplate.png");
 			spriteWidth = sheet.getWidth();
 			spriteHeight = sheet.getHeight();
-			cache.put(Sprite.Villager, 	fromSheet(0, 0).setCharacter(true));
+			cache.put(Sprite.Villager, 		fromSheet(0, 0).setCharacter(true));
+			
+			sheet = new Sprite("resource" + File.separatorChar + "charwork.png");
+			spriteWidth = 64;
+			spriteHeight = 32;			
+			cache.put(Sprite.VillagerWork, 	fromSheet(0, 0).setImageCount(2));
+			
 
 			
 		} catch (SlickException e) {

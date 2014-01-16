@@ -58,7 +58,7 @@ public class VillagerRenderer extends SpriteRenderer {
 			defaultSpriteMap = new HashMap<>();
 			int idle = Sprite.Villager;
 			int walking = Sprite.Villager;
-			int working = Sprite.Villager;
+			int working = Sprite.VillagerWork;
 			int collecting = Sprite.Villager;
 
 			defaultSpriteMap.put(VState.IDLE, idle);
@@ -144,7 +144,7 @@ public class VillagerRenderer extends SpriteRenderer {
 			differedInstructions.add(new Runnable() {
 				@Override
 				public void run() {
-					Point loc = villager.getLocation().withOffset(0, -sprite.getHeight() / Sprite.CHAR_SPRITE_ROWS);
+					Point loc = villager.getLocation().withOffset(0, -sprite.getHeight());
 					Produce prod = villager.getCollecting();
 					if (prod != null) {
 						subRenderers.add(new ProduceRenderer(loc, prod, subRenderers));

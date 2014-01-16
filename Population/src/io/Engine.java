@@ -35,9 +35,9 @@ public class Engine extends BasicGame {
 		GameBus.register(view);
 
 		// Start Game
-		//RessourceManager.get().villagerBirth(125, 125);
-		//RessourceManager.get().villagerBirth(100, 100);
-		//RessourceManager.get().villagerBirth(250, 125);
+		RessourceManager.get().villagerBirth(125, 125);
+		RessourceManager.get().villagerBirth(100, 100);
+		RessourceManager.get().villagerBirth(250, 125);
 		RessourceManager.get().villagerBirth(125, 250);
 	}
 
