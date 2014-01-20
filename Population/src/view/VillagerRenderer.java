@@ -90,15 +90,19 @@ public class VillagerRenderer extends SpriteRenderer {
 
 		super.render(g, looking);
 
-		for (final Renderer r : subRenderers) {
-			differedInstructions.add(new Runnable() {
-				@Override
-				public void run() {
-					r.render(g);
-				}
-			});
-
-		}
+//		g.setColor(Color.red);
+//		if (villager.getBehaviours().size() > 0)
+//				g.drawString("" + villager.getBehaviours().get(0), villager.getX(), villager.getY());
+//		
+//		for (final Renderer r : subRenderers) {
+//			differedInstructions.add(new Runnable() {
+//				@Override
+//				public void run() {
+//					r.render(g);
+//				}
+//			});
+//		}
+		
 	}
 
 	private void updateSprite() {
@@ -109,8 +113,13 @@ public class VillagerRenderer extends SpriteRenderer {
 		}
 
 		if (villagerIsInDeepWater()) {
-			if (bounds == null)
-				bounds = new Rectangle(0,0,sprite.getWidth()/Sprite.CHAR_SPRITE_COLS, sprite.getHeight()/Sprite.CHAR_SPRITE_ROWS/2);
+			if (bounds == null) {
+				if (sprite.isCharacter()) {
+					bounds = new Rectangle(0, 0, sprite.getWidth() / Sprite.CHAR_SPRITE_COLS, sprite.getHeight() / Sprite.CHAR_SPRITE_ROWS / 2);
+				} else {
+					bounds = new Rectangle(0, 0, sprite.getWidth() / sprite.getImageCount(), sprite.getHeight() / 2);
+				}
+			}
 		} else if (bounds != null) {
 			bounds = null;
 		}
@@ -124,7 +133,7 @@ public class VillagerRenderer extends SpriteRenderer {
 		}
 		Land.Type on = land.getType();
 		if (on == Land.Type.SEA) {// TODO: make this a property
-			Collection<Land> shores = WorldManager.get().getLandsAround(villager, .5f);
+			Collection<Land> shores = WorldManager.get().getLandsAround(villager, .33f);
 			for (Land l : shores) {
 				if (l.getType() != Land.Type.SEA) {
 					return false;

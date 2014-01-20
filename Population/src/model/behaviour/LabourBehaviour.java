@@ -41,13 +41,19 @@ public final class LabourBehaviour extends Behaviour {
 			
 			collecting = producer.getOneProduce();
 			if (collecting == null) {
-				throw new RuntimeException("No produce found");				
+				//throw new RuntimeException("No produce found");
+				waitingFor = null;
+				state = GATHER;
+				owner.setState(VState.IDLE);
+				deactivate();
+			} else {
+				
+				Behaviour intention = new CollectBehaviour(collecting);
+				state = GATHER;
+				owner.adoptBehaviour(intention);
+				waitingFor = intention;
+				deactivate();
 			}
-			Behaviour intention = new CollectBehaviour(collecting);
-			state = GATHER;
-			owner.adoptBehaviour(intention);
-			waitingFor = intention;
-			deactivate();
 		} else if (state == GATHER) {
 			deactivate();
 			owner.abandonBehaviour(this);
