@@ -1,4 +1,4 @@
-package ztest;
+
 
 import static org.junit.Assert.assertTrue;
 import kernel.events.QueryEvent;

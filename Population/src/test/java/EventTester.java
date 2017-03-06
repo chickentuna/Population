@@ -1,4 +1,4 @@
-package ztest;
+
 
 public interface EventTester {
 

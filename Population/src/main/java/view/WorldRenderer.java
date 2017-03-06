@@ -21,7 +21,8 @@ public class WorldRenderer implements Renderer {
 
 		this.world = world;
 		try {
-			worldImage = Image.createOffscreenImage(s * world.getWidth(), s * world.getHeight());
+			worldImage = new Image(s * world.getWidth(), s * world.getHeight());
+//			worldImage = Image.createOffscreenImage(s * world.getWidth(), s * world.getHeight());
 			generateWorldImage();
 		} catch (SlickException e) {
 			e.printStackTrace();

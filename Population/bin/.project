@@ -16,6 +16,13 @@
 			</arguments>
 		</buildCommand>
 	</buildSpec>
+	<dependencies>
+		<dependency>
+		    <groupId>org.lwjgl.lwjgl</groupId>
+		    <artifactId>lwjgl</artifactId>
+		    <version>2.8.4</version>
+		</dependency>
+	</dependencies>
 	<natures>
 		<nature>org.eclipse.m2e.core.maven2Nature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>

@@ -73,7 +73,6 @@ public class Engine extends BasicGame {
 			app.setTargetFrameRate(TARGET_FPS);
 			app.setShowFPS(false);
 			app.setDisplayMode(640, 480, false);
-			app.setResizable(true);
 			app.start();
 
 		} catch (SlickException e) {
