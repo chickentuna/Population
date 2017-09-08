@@ -39,9 +39,10 @@ public class Engine extends BasicGame {
 		RessourceManager.get().villagerBirth(125, 125);
 		RessourceManager.get().villagerBirth(100, 100);
 		RessourceManager.get().villagerBirth(250, 125);
-		Villager v = new Villager(125, 250);
-		EntityManager.get().spawn(v);
-		v.adoptBehaviour(new DebugBehaviour(container.getInput()));
+		RessourceManager.get().villagerBirth(125, 250);
+//		Villager v = new Villager(125, 250);
+//		EntityManager.get().spawn(v);
+//		v.adoptBehaviour(new DebugBehaviour(container.getInput()));
 
 	}
 

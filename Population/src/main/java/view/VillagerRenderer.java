@@ -1,14 +1,18 @@
 package view;
 
-import io.graphics.Sprite;
-import io.graphics.SpriteLoader;
-
 import java.awt.Rectangle;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.newdawn.slick.Graphics;
+
+import com.google.common.collect.Lists;
+import com.google.common.eventbus.Subscribe;
+
+import io.graphics.Sprite;
+import io.graphics.SpriteLoader;
 import kernel.Direction;
 import kernel.Entity;
 import kernel.Point;
@@ -17,13 +21,7 @@ import model.VState;
 import model.Villager;
 import model.nature.Land;
 import model.nature.Produce;
-
-import org.newdawn.slick.Graphics;
-
 import view.animation.SpriteAnimation;
-
-import com.google.common.collect.Lists;
-import com.google.common.eventbus.Subscribe;
 
 public class VillagerRenderer extends SpriteRenderer {
 
@@ -90,18 +88,19 @@ public class VillagerRenderer extends SpriteRenderer {
 
 		super.render(g, looking);
 
-//		g.setColor(Color.red);
-//		if (villager.getBehaviours().size() > 0)
-//				g.drawString("" + villager.getBehaviours().get(0), villager.getX(), villager.getY());
-//		
-//		for (final Renderer r : subRenderers) {
-//			differedInstructions.add(new Runnable() {
-//				@Override
-//				public void run() {
-//					r.render(g);
-//				}
-//			});
-//		}
+		/*
+		g.setColor(Color.red);
+		if (villager.getBehaviours().size() > 0)
+				g.drawString("" + villager.getBehaviours().get(0), villager.getX(), villager.getY());
+		*/
+		for (final Renderer r : subRenderers) {
+			differedInstructions.add(new Runnable() {
+				@Override
+				public void run() {
+					r.render(g);
+				}
+			});
+		}
 		
 	}
 
